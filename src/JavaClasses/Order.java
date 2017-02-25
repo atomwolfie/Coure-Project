@@ -66,4 +66,9 @@ public class Order {
 		this.orderId = orderId;
 	}
 
+	public Order() {
+		// TODO - implement Order.Order
+		throw new UnsupportedOperationException();
+	}
+
 }

@@ -66,4 +66,17 @@ public class Product {
 		this.prodId = prodId;
 	}
 
+	/**
+	 * 
+	 * @param prodName
+	 * @param type
+	 * @param provider
+	 * @param price
+	 * @param prodId
+	 */
+	public Product(string prodName, string type, string provider, double price, int prodId) {
+		// TODO - implement Product.Product
+		throw new UnsupportedOperationException();
+	}
+
 }

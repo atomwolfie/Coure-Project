@@ -53,4 +53,37 @@ public class Customer {
 		this.email = email;
 	}
 
+	/**
+	 * 
+	 * @param custName
+	 * @param custId
+	 */
+	public Customer(string custName, int custId) {
+		// TODO - implement Customer.Customer
+		throw new UnsupportedOperationException();
+	}
+
+	/**
+	 * 
+	 * @param custName
+	 * @param custId
+	 * @param phoneNumb
+	 */
+	public Customer(string custName, int custId, int phoneNumb) {
+		// TODO - implement Customer.Customer
+		throw new UnsupportedOperationException();
+	}
+
+	/**
+	 * 
+	 * @param custName
+	 * @param custId
+	 * @param phoneNumb
+	 * @param email
+	 */
+	public Customer(string custName, int custId, int phoneNumb, string email) {
+		// TODO - implement Customer.Customer
+		throw new UnsupportedOperationException();
+	}
+
 }

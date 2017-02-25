@@ -53,4 +53,25 @@ public class Purchases {
 		this.purchaseTotal = purchaseTotal;
 	}
 
+	/**
+	 * 
+	 * @param prodId
+	 * @param orderId
+	 */
+	public Purchases(int prodId, int orderId) {
+		// TODO - implement Purchases.Purchases
+		throw new UnsupportedOperationException();
+	}
+
+	/**
+	 * 
+	 * @param prodId
+	 * @param orderId
+	 * @param quantity
+	 */
+	public Purchases(int prodId, int orderId, int quantity) {
+		// TODO - implement Purchases.Purchases
+		throw new UnsupportedOperationException();
+	}
+
 }
