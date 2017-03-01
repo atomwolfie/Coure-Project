@@ -72,6 +72,8 @@ public class CheckoutRemove {
 
 	            if (e.getSource() == btnNewButton) { //removes items and return to checkout screen
 
+	            	
+	            	
 	            	this.setVisible(false);
 	            	Checkout check = new Checkout();
 	            	check.setVisible(true);

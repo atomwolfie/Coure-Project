@@ -26,7 +26,7 @@ public class AddProduct {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					CheckoutAddItem window = new CheckoutAddItem();
+					AddProduct window = new AddProduct();
 					window.frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
