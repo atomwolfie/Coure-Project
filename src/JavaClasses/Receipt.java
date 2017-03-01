@@ -44,6 +44,7 @@ public class Receipt {
 		JLabel lblReceipt = new JLabel("Receipt");
 		lblReceipt.setBounds(174, 6, 61, 29);
 		frame.getContentPane().add(lblReceipt);
+	
 		
 		JLabel lblNewLabel = new JLabel("Mr. Smith's Store");
 		lblNewLabel.setBounds(153, 47, 143, 23);
@@ -80,5 +81,10 @@ public class Receipt {
 		JLabel lblMrsmithgroceryemailcom = new JLabel("email: mrsmithgrocery@email.com");
 		lblMrsmithgroceryemailcom.setBounds(141, 396, 248, 16);
 		frame.getContentPane().add(lblMrsmithgroceryemailcom);
+	}
+
+	public void setVisible(boolean b) {
+		// TODO Auto-generated method stub
+		frame.setVisible(b);
 	}
 }

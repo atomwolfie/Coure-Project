@@ -2,10 +2,8 @@ import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JButton;
-import java.awt.BorderLayout;
-import javax.swing.JLabel;
 
-public class mainWindow {
+public class testThing {
 
 	private JFrame frame;
 
@@ -16,7 +14,7 @@ public class mainWindow {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					mainWindow window = new mainWindow();
+					testThing window = new testThing();
 					window.frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -28,7 +26,7 @@ public class mainWindow {
 	/**
 	 * Create the application.
 	 */
-	public mainWindow() {
+	public testThing() {
 		initialize();
 	}
 
@@ -41,16 +39,9 @@ public class mainWindow {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		
-		JButton btnInventory = new JButton("Inventory");
-		btnInventory.setBounds(50, 101, 149, 61);
-		frame.getContentPane().add(btnInventory);
-		
-		JLabel lblNewLabel = new JLabel("Store Management System");
-		lblNewLabel.setBounds(133, 36, 268, 16);
-		frame.getContentPane().add(lblNewLabel);
-		
-		JButton btnCheckout = new JButton("Checkout");
-		btnCheckout.setBounds(245, 101, 134, 61);
-		frame.getContentPane().add(btnCheckout);
+		JButton btnGoBack = new JButton("go back");
+		btnGoBack.setBounds(305, 243, 117, 29);
+		frame.getContentPane().add(btnGoBack);
 	}
+
 }

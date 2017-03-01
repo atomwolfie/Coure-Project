@@ -1,4 +1,6 @@
 import java.awt.EventQueue;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -55,17 +57,74 @@ public class Checkout {
 		btnNewButton.setBounds(17, 85, 117, 56);
 		frame.getContentPane().add(btnNewButton);
 		
-		JButton button = new JButton("Finish and Pay");
-		button.setBounds(17, 199, 117, 56);
-		frame.getContentPane().add(button);
+		JButton btnPay = new JButton("Finish and Pay");
+		btnPay.setBounds(17, 199, 117, 56);
+		frame.getContentPane().add(btnPay);
 		
-		JButton button_1 = new JButton("Start Over");
-		button_1.setBounds(17, 141, 117, 56);
-		frame.getContentPane().add(button_1);
+		JButton btnStarOver = new JButton("Start Over");
+		btnStarOver.setBounds(17, 141, 117, 56);
+		frame.getContentPane().add(btnStarOver);
+		
+		JButton btnGoBack = new JButton("go back");
+		btnGoBack.setBounds(305, 243, 117, 29);
+		frame.getContentPane().add(btnGoBack);
 		
 		table = new JTable();
 		table.setBounds(184, 50, 250, 180);
 		frame.getContentPane().add(table);
-	}
+	
 
+	ActionListener buttonListener = new ActionListener() {
+
+        //we have to define this method in order for an Action Listener to work
+        public void actionPerformed(ActionEvent e) { //'e' is the Action Event which is a button being clicked in our case
+
+            if (e.getSource() == btnGoBack) { //return to main screen
+
+            	this.setVisible(false);
+            	MainScreen main = new MainScreen();
+            	main.setVisible(true);
+            } 
+            if (e.getSource() == btnAddItem) { 
+
+            	this.setVisible(false);
+            	AddProduct add = new AddProduct();
+            	add.setVisible(true);
+            } 
+            if (e.getSource() == btnNewButton) { 
+
+            	this.setVisible(false);
+            	CheckoutRemove check = new CheckoutRemove();
+            	check.setVisible(true);
+            }
+            if (e.getSource() == btnStarOver) {  //start over button, starts everything over
+
+            	//WILL RESET EVERYTHING
+            	
+            }
+            if (e.getSource() == btnPay) { 
+
+            	this.setVisible(false);
+            	Payment paymnt = new Payment();
+            	paymnt.setVisible(true);
+            }
+        }
+
+		private void setVisible(boolean b) {
+			// TODO Auto-generated method stub
+			frame.setVisible(b);
+		}
+    };
+    
+	btnGoBack.addActionListener(buttonListener);
+	btnAddItem.addActionListener(buttonListener);
+	btnNewButton.addActionListener(buttonListener);
+	btnStarOver.addActionListener(buttonListener);
+	btnPay.addActionListener(buttonListener);
+}
+
+public void setVisible(boolean b) {
+	// TODO Auto-generated method stub
+	frame.setVisible(b);
+}
 }
