@@ -1,6 +1,7 @@
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.DecimalFormat;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -14,9 +15,9 @@ public class AddProduct {
 	private JTextField textField;
 	private JLabel lblEnterAmount;
 	private JButton btnScanItem;
-	private JLabel lblNewLabel_2;
-	private JLabel label;
-	private JLabel label_1;
+	private JLabel lblName;
+	private JLabel lblPrice;
+	private JLabel lblTotal;
 	private JButton btnAddItems;
 
 	/**
@@ -56,43 +57,43 @@ public class AddProduct {
 		frame.getContentPane().add(lblNewLabel);
 		
 		txtId = new JTextField();
-		txtId.setText("id");
+		txtId.setText("");
 		txtId.setBounds(151, 52, 130, 26);
 		frame.getContentPane().add(txtId);
 		txtId.setColumns(10);
 		
 		textField = new JTextField();
-		textField.setText("amount");
+		textField.setText("");
 		textField.setColumns(10);
 		textField.setBounds(151, 90, 130, 26);
 		frame.getContentPane().add(textField);
 		
-		JLabel lblNewLabel_1 = new JLabel("Enter id:");
-		lblNewLabel_1.setBounds(89, 57, 74, 16);
-		frame.getContentPane().add(lblNewLabel_1);
+		JLabel lblEnterId = new JLabel("Enter id:");
+		lblEnterId.setBounds(89, 57, 74, 16);
+		frame.getContentPane().add(lblEnterId);
 		
-		lblEnterAmount = new JLabel("Enter Amount:");
-		lblEnterAmount.setBounds(53, 95, 100, 16);
+		lblEnterAmount = new JLabel("Quantity:");
+		lblEnterAmount.setBounds(82, 95, 78, 16);
 		frame.getContentPane().add(lblEnterAmount);
 		
 		btnScanItem = new JButton("Scan Item");
 		btnScanItem.setBounds(304, 52, 117, 29);
 		frame.getContentPane().add(btnScanItem);
 		
-		lblNewLabel_2 = new JLabel("Name: ");
-		lblNewLabel_2.setBounds(28, 156, 111, 16);
-		frame.getContentPane().add(lblNewLabel_2);
+		lblName = new JLabel("Name: ");
+		lblName.setBounds(28, 156, 211, 16);
+		frame.getContentPane().add(lblName);
 		
-		label = new JLabel("Price: ");
-		label.setBounds(28, 194, 111, 16);
-		frame.getContentPane().add(label);
+		lblPrice = new JLabel("Price: ");
+		lblPrice.setBounds(28, 194, 211, 16);
+		frame.getContentPane().add(lblPrice);
 		
-		label_1 = new JLabel("Total: ");
-		label_1.setBounds(28, 232, 111, 16);
-		frame.getContentPane().add(label_1);
+		lblTotal = new JLabel("Total: ");
+		lblTotal.setBounds(28, 232, 211, 16);
+		frame.getContentPane().add(lblTotal);
 		
 		btnAddItems = new JButton("Add item(s)");
-		btnAddItems.setBounds(280, 162, 117, 83);
+		btnAddItems.setBounds(305, 152, 117, 83);
 		frame.getContentPane().add(btnAddItems);
 		
 		JButton btnGoBack = new JButton("go back");
@@ -109,8 +110,24 @@ public class AddProduct {
 	            	this.setVisible(false);
 	            	Checkout check = new Checkout();
 	            	check.setVisible(true);
-	            } 
-	            if (e.getSource() == btnGoBack) { //add items and return to checkout screen
+	            }
+				if (e.getSource() == btnScanItem) { //check if item exists
+					Purchases purchase = new Purchases(Integer.parseInt(txtId.getText()),1,Integer.parseInt(textField.getText()));
+					if(purchase.isValidOrder() && purchase.isValidProduct()) {
+						DecimalFormat dec = new DecimalFormat("#.00");
+						lblName.setText("Name: " + purchase.getProductName());
+						lblPrice.setText("Price: $" + dec.format(purchase.getProdPrice()));
+						lblTotal.setText("Total: $" + dec.format(purchase.getPurchaseTotal()));
+					}
+					else {
+						purchase = null;
+						lblName.setText("Name: INVALID ID");
+						lblPrice.setText("Price: -");
+						lblTotal.setText("Total: -");
+					}
+
+				}
+				if (e.getSource() == btnGoBack) { //add items and return to checkout screen
 
 	            	this.setVisible(false);
 	            	Checkout check = new Checkout();
@@ -127,6 +144,7 @@ public class AddProduct {
 	    
 	    btnAddItems.addActionListener(buttonListener);
 	    btnGoBack.addActionListener(buttonListener);
+	    btnScanItem.addActionListener(buttonListener);
 
 	}
 
