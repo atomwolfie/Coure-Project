@@ -1,16 +1,20 @@
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.DecimalFormat;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JTable;
 import javax.swing.JButton;
+import javax.swing.table.DefaultTableModel;
 
 public class Checkout {
 
 	private JFrame frame;
 	private JTable table;
+	private Order currentOrder;
+	private DefaultTableModel model;
 
 
 	/**
@@ -40,6 +44,7 @@ public class Checkout {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
+		currentOrder = new Order();
 		frame = new JFrame();
 		frame.setBounds(100, 100, 450, 300);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -68,11 +73,15 @@ public class Checkout {
 		JButton btnGoBack = new JButton("go back");
 		btnGoBack.setBounds(305, 243, 117, 29);
 		frame.getContentPane().add(btnGoBack);
-		
-		table = new JTable();
+
+		String[] columnNames = {"Product","Quantity","Price"};
+		//String[][] Data = {{"Bananas","1","$1.00"},{"Apples","2","$1.75"}};
+		String[][] Data = {};
+		table = new JTable(new DefaultTableModel(Data, columnNames));
+		model = (DefaultTableModel) table.getModel();
 		table.setBounds(184, 50, 250, 180);
 		frame.getContentPane().add(table);
-	
+
 
 	ActionListener buttonListener = new ActionListener() {
 
@@ -88,8 +97,7 @@ public class Checkout {
             if (e.getSource() == btnAddItem) { 
 
             	this.setVisible(false);
-            	AddProduct add = new AddProduct();
-            	add.setVisible(true);
+            	addProductGUI();
             } 
             if (e.getSource() == btnNewButton) { 
 
@@ -114,6 +122,7 @@ public class Checkout {
 			// TODO Auto-generated method stub
 			frame.setVisible(b);
 		}
+
     };
     
 	btnGoBack.addActionListener(buttonListener);
@@ -122,9 +131,26 @@ public class Checkout {
 	btnStarOver.addActionListener(buttonListener);
 	btnPay.addActionListener(buttonListener);
 }
+	private void addProductGUI(){
+		AddProduct add = new AddProduct(this);
+		add.setVisible(true);
+	}
+	public void addProdToOrder(Purchases purchase) {
+		int temp = currentOrder.addNewPurchase(purchase);
 
-public void setVisible(boolean b) {
-	// TODO Auto-generated method stub
-	frame.setVisible(b);
-}
+		DecimalFormat dec = new DecimalFormat("#.00");
+
+		if (temp < 0) {
+			model.addRow(new Object[]{purchase.getProductName(), purchase.getQuantity(), dec.format(purchase.getPurchaseTotal())});
+		}
+		else {
+			table.setValueAt(currentOrder.getPurchases().get(temp).getProductName(), temp, 0);
+			table.setValueAt(currentOrder.getPurchases().get(temp).getQuantity(), temp, 1);
+			table.setValueAt("$" + dec.format(currentOrder.getPurchases().get(temp).getPurchaseTotal()), temp, 2);
+		}
+	}
+	public void setVisible(boolean b) {
+		// TODO Auto-generated method stub
+		frame.setVisible(b);
+	}
 }

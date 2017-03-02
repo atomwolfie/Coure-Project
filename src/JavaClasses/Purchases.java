@@ -55,6 +55,10 @@ public class Purchases {
 		this.quantity = quantity;
 	}
 
+	public void incrementQuantity(int quantity) {
+		this.quantity += quantity;
+		this.purchaseTotal += this.prodPrice * quantity;
+	}
 
 
 	public double getProdPrice() { return prodPrice; }

@@ -19,6 +19,7 @@ public class AddProduct {
 	private JLabel lblPrice;
 	private JLabel lblTotal;
 	private JButton btnAddItems;
+	private Purchases purchase;
 
 	/**
 	 * Launch the application.
@@ -27,7 +28,7 @@ public class AddProduct {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					AddProduct window = new AddProduct();
+					AddProduct window = new AddProduct(new Checkout());
 					window.frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -39,14 +40,12 @@ public class AddProduct {
 	/**
 	 * Create the application.
 	 */
-	public AddProduct() {
-		initialize();
-	}
+	public AddProduct(Checkout checkoutGUI) { initialize(checkoutGUI); }
 
 	/**
 	 * Initialize the contents of the frame.
 	 */
-	private void initialize() {
+	private void initialize(Checkout checkoutGUI) {
 		frame = new JFrame();
 		frame.setBounds(100, 100, 450, 300);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -107,12 +106,17 @@ public class AddProduct {
 
 	            if (e.getSource() == btnAddItems) { //add items and return to checkout screen
 
-	            	this.setVisible(false);
-	            	Checkout check = new Checkout();
-	            	check.setVisible(true);
+	            	//this.setVisible(false);
+					if (purchase != null) {
+						checkoutGUI.addProdToOrder(purchase);
+					}
+	            	frame.dispose();
+					//Checkout check = new Checkout();
+	            	//check.setVisible(true);
+					checkoutGUI.setVisible(true);
 	            }
 				if (e.getSource() == btnScanItem) { //check if item exists
-					Purchases purchase = new Purchases(Integer.parseInt(txtId.getText()),1,Integer.parseInt(textField.getText()));
+					purchase = new Purchases(Integer.parseInt(txtId.getText()),1,Integer.parseInt(textField.getText()));
 					if(purchase.isValidOrder() && purchase.isValidProduct()) {
 						DecimalFormat dec = new DecimalFormat("#.00");
 						lblName.setText("Name: " + purchase.getProductName());
@@ -129,9 +133,11 @@ public class AddProduct {
 				}
 				if (e.getSource() == btnGoBack) { //add items and return to checkout screen
 
-	            	this.setVisible(false);
-	            	Checkout check = new Checkout();
-	            	check.setVisible(true);
+					//this.setVisible(false);
+					frame.dispose();
+					//Checkout check = new Checkout();
+					//check.setVisible(true);
+					checkoutGUI.setVisible(true);
 	            }
 	            
 	        }
