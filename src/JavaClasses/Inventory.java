@@ -13,6 +13,7 @@ import java.util.Comparator;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
@@ -23,6 +24,7 @@ import com.sun.xml.internal.ws.policy.privateutil.PolicyUtils.Collections;
 
 import javax.swing.JList;
 import javax.swing.JMenuBar;
+import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
 public class Inventory {
@@ -61,6 +63,10 @@ public class Inventory {
 		frame.setBounds(100, 100, 450, 300);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
+		
+		JPanel container = new JPanel(); //new
+		container.setLayout(new BoxLayout(container, BoxLayout.Y_AXIS)); //new
+		
 		
 		JLabel lblNewLabel = new JLabel("Inventory");
 		lblNewLabel.setBounds(175, 15, 117, 21);
@@ -111,20 +117,20 @@ public class Inventory {
 		}
 		
 
+		items.sort(String::compareToIgnoreCase); //sorts them first
 		
 		JList list = new JList(items.toArray(str));
 		
 		list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		list.setLayoutOrientation(JList.VERTICAL);
-	
 		list.setLayoutOrientation(JList.VERTICAL);
 		list.setSelectedIndex(1);
 		list.setBounds(21, 70, 182, 163);
 		frame.getContentPane().add(list);
 		//java.awt.Container contentPane = frame.getContentPane();
 	    //contentPane.add(scrollPane, BorderLayout.CENTER);
-
+		//JScrollPane scrollpane = new JScrollPane(list);
         
+		
 		ActionListener buttonListener = new ActionListener() {
 
 	        //we have to define this method in order for an Action Listener to work

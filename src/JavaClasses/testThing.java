@@ -2,6 +2,8 @@ import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JButton;
+import java.awt.ScrollPane;
+import javax.swing.JList;
 
 public class testThing {
 
@@ -42,6 +44,17 @@ public class testThing {
 		JButton btnGoBack = new JButton("go back");
 		btnGoBack.setBounds(305, 243, 117, 29);
 		frame.getContentPane().add(btnGoBack);
+		
+		ScrollPane scrollPane = new ScrollPane();
+		scrollPane.setBounds(35, 33, 100, 100);
+		frame.getContentPane().add(scrollPane);
+		
+		ScrollPane scrollPane_1 = new ScrollPane();
+		scrollPane_1.setBounds(254, 10, 100, 100);
+		frame.getContentPane().add(scrollPane_1);
+		
+		JList list = new JList();
+		list.setBounds(254, 10, 100, 100);
+		frame.getContentPane().add(list);
 	}
-
 }
