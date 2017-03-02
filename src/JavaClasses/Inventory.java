@@ -98,8 +98,8 @@ public class Inventory {
 		    e.printStackTrace();
 		} 
 		try {
-		    String url = "jdbc:mysql://localhost:3306/demo";
-		    Connection con = DriverManager.getConnection(url, "root", "W01fp@ck");		
+		    String url = "jdbc:mysql://localhost:3306/joestore?autoReconnect=true&useSSL=false";
+		    Connection con = DriverManager.getConnection(url, "java", "java");
 		Statement myStmt = con.createStatement();
 		
 		ResultSet myRs = myStmt.executeQuery("select * from products");

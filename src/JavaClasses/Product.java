@@ -1,12 +1,12 @@
 public class Product {
 
-	private string prodName;
-	private string type;
-	private string provider;
+	private String prodName;
+	private String type;
+	private String provider;
 	private double price;
 	private int prodId;
 
-	public string getProdName() {
+	public String getProdName() {
 		return this.prodName;
 	}
 
@@ -14,11 +14,11 @@ public class Product {
 	 * 
 	 * @param prodName
 	 */
-	public void setProdName(string prodName) {
+	public void setProdName(String prodName) {
 		this.prodName = prodName;
 	}
 
-	public string getType() {
+	public String getType() {
 		return this.type;
 	}
 
@@ -26,11 +26,11 @@ public class Product {
 	 * 
 	 * @param type
 	 */
-	public void setType(string type) {
+	public void setType(String type) {
 		this.type = type;
 	}
 
-	public string getProvider() {
+	public String getProvider() {
 		return this.provider;
 	}
 
@@ -38,7 +38,7 @@ public class Product {
 	 * 
 	 * @param provider
 	 */
-	public void setProvider(string provider) {
+	public void setProvider(String provider) {
 		this.provider = provider;
 	}
 
@@ -74,7 +74,7 @@ public class Product {
 	 * @param price
 	 * @param prodId
 	 */
-	public Product(string prodName, string type, string provider, double price, int prodId) {
+	public Product(String prodName, String type, String provider, double price, int prodId) {
 		// TODO - implement Product.Product
 		throw new UnsupportedOperationException();
 	}

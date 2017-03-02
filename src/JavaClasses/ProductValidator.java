@@ -4,7 +4,7 @@ public class ProductValidator {
 	 * 
 	 * @param prodName
 	 */
-	public bool prodNameIsValid(string prodName) {
+	public boolean prodNameIsValid(String prodName) {
 		// TODO - implement ProductValidator.prodNameIsValid
 		throw new UnsupportedOperationException();
 	}
@@ -13,7 +13,7 @@ public class ProductValidator {
 	 * 
 	 * @param prodType
 	 */
-	public bool typeIsValid(string prodType) {
+	public boolean typeIsValid(String prodType) {
 		// TODO - implement ProductValidator.typeIsValid
 		throw new UnsupportedOperationException();
 	}
@@ -22,7 +22,7 @@ public class ProductValidator {
 	 * 
 	 * @param provider
 	 */
-	public bool providerIsValid(string provider) {
+	public boolean providerIsValid(String provider) {
 		// TODO - implement ProductValidator.providerIsValid
 		throw new UnsupportedOperationException();
 	}
@@ -31,7 +31,7 @@ public class ProductValidator {
 	 * 
 	 * @param prodPrice
 	 */
-	public bool prodPriceIsValid(double prodPrice) {
+	public boolean prodPriceIsValid(double prodPrice) {
 		// TODO - implement ProductValidator.prodPriceIsValid
 		throw new UnsupportedOperationException();
 	}
@@ -40,7 +40,7 @@ public class ProductValidator {
 	 * 
 	 * @param prodId
 	 */
-	public bool prodIdIsValid(int prodId) {
+	public boolean prodIdIsValid(int prodId) {
 		// TODO - implement ProductValidator.prodIdIsValid
 		throw new UnsupportedOperationException();
 	}

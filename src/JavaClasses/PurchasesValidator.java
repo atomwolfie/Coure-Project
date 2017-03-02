@@ -4,7 +4,7 @@ public class PurchasesValidator {
 	 * 
 	 * @param quantity
 	 */
-	public bool quantityIsValid(int quantity) {
+	public boolean quantityIsValid(int quantity) {
 		// TODO - implement PurchasesValidator.quantityIsValid
 		throw new UnsupportedOperationException();
 	}
@@ -13,7 +13,7 @@ public class PurchasesValidator {
 	 * 
 	 * @param purchaseTotal
 	 */
-	public bool purchaseTotal(double purchaseTotal) {
+	public boolean purchaseTotal(double purchaseTotal) {
 		// TODO - implement PurchasesValidator.purchaseTotal
 		throw new UnsupportedOperationException();
 	}

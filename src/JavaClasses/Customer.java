@@ -1,11 +1,11 @@
 public class Customer {
 
-	private string custName;
+	private String custName;
 	private int custId;
 	private int phoneNumb;
-	private string email;
+	private String email;
 
-	public string getCustName() {
+	public String getCustName() {
 		return this.custName;
 	}
 
@@ -13,7 +13,7 @@ public class Customer {
 	 * 
 	 * @param custName
 	 */
-	public void setCustName(string custName) {
+	public void setCustName(String custName) {
 		this.custName = custName;
 	}
 
@@ -41,7 +41,7 @@ public class Customer {
 		this.phoneNumb = phoneNumb;
 	}
 
-	public string getEmail() {
+	public String getEmail() {
 		return this.email;
 	}
 
@@ -49,7 +49,7 @@ public class Customer {
 	 * 
 	 * @param email
 	 */
-	public void setEmail(string email) {
+	public void setEmail(String email) {
 		this.email = email;
 	}
 
@@ -58,7 +58,7 @@ public class Customer {
 	 * @param custName
 	 * @param custId
 	 */
-	public Customer(string custName, int custId) {
+	public Customer(String custName, int custId) {
 		// TODO - implement Customer.Customer
 		throw new UnsupportedOperationException();
 	}
@@ -69,7 +69,7 @@ public class Customer {
 	 * @param custId
 	 * @param phoneNumb
 	 */
-	public Customer(string custName, int custId, int phoneNumb) {
+	public Customer(String custName, int custId, int phoneNumb) {
 		// TODO - implement Customer.Customer
 		throw new UnsupportedOperationException();
 	}
@@ -81,7 +81,7 @@ public class Customer {
 	 * @param phoneNumb
 	 * @param email
 	 */
-	public Customer(string custName, int custId, int phoneNumb, string email) {
+	public Customer(String custName, int custId, int phoneNumb, String email) {
 		// TODO - implement Customer.Customer
 		throw new UnsupportedOperationException();
 	}

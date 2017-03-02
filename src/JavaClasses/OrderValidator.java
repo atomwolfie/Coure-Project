@@ -4,7 +4,7 @@ public class OrderValidator {
 	 * 
 	 * @param dateTime
 	 */
-	public bool dateTimeIsValid(string dateTime) {
+	public boolean dateTimeIsValid(String dateTime) {
 		// TODO - implement OrderValidator.dateTimeIsValid
 		throw new UnsupportedOperationException();
 	}
@@ -13,7 +13,7 @@ public class OrderValidator {
 	 * 
 	 * @param orderTotal
 	 */
-	public bool orderTotalIsValid(double orderTotal) {
+	public boolean orderTotalIsValid(double orderTotal) {
 		// TODO - implement OrderValidator.orderTotalIsValid
 		throw new UnsupportedOperationException();
 	}
@@ -22,7 +22,7 @@ public class OrderValidator {
 	 * 
 	 * @param custId
 	 */
-	public bool custIdIsValid(int custId) {
+	public boolean custIdIsValid(int custId) {
 		// TODO - implement OrderValidator.custIdIsValid
 		throw new UnsupportedOperationException();
 	}
@@ -31,7 +31,7 @@ public class OrderValidator {
 	 * 
 	 * @param paymentMethod
 	 */
-	public bool paymentMethodIsValid(string paymentMethod) {
+	public boolean paymentMethodIsValid(String paymentMethod) {
 		// TODO - implement OrderValidator.paymentMethodIsValid
 		throw new UnsupportedOperationException();
 	}
@@ -40,7 +40,7 @@ public class OrderValidator {
 	 * 
 	 * @param orderId
 	 */
-	public bool orderIdIsValid(int orderId) {
+	public boolean orderIdIsValid(int orderId) {
 		// TODO - implement OrderValidator.orderIdIsValid
 		throw new UnsupportedOperationException();
 	}

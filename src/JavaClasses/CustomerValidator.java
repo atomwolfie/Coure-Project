@@ -4,7 +4,7 @@ public class CustomerValidator {
 	 * 
 	 * @param custName
 	 */
-	public bool custNameIsValid(string custName) {
+	public boolean custNameIsValid(String custName) {
 		// TODO - implement CustomerValidator.custNameIsValid
 		throw new UnsupportedOperationException();
 	}
@@ -13,7 +13,7 @@ public class CustomerValidator {
 	 * 
 	 * @param custId
 	 */
-	public bool custIdIsValid(int custId) {
+	public boolean custIdIsValid(int custId) {
 		// TODO - implement CustomerValidator.custIdIsValid
 		throw new UnsupportedOperationException();
 	}
@@ -22,7 +22,7 @@ public class CustomerValidator {
 	 * 
 	 * @param phoneNumb
 	 */
-	public bool phoneNumbIsValid(int phoneNumb) {
+	public boolean phoneNumbIsValid(int phoneNumb) {
 		// TODO - implement CustomerValidator.phoneNumbIsValid
 		throw new UnsupportedOperationException();
 	}
@@ -31,7 +31,7 @@ public class CustomerValidator {
 	 * 
 	 * @param email
 	 */
-	public bool emailIsValid(string email) {
+	public boolean emailIsValid(String email) {
 		// TODO - implement CustomerValidator.emailIsValid
 		throw new UnsupportedOperationException();
 	}

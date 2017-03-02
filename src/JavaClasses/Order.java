@@ -1,12 +1,12 @@
 public class Order {
 
-	private string dateTime;
+	private String dateTime;
 	private double orderTotal;
 	private int custId;
-	private string paymentMethod;
+	private String paymentMethod;
 	private int orderId;
 
-	public string getDateTime() {
+	public String getDateTime() {
 		return this.dateTime;
 	}
 
@@ -14,7 +14,7 @@ public class Order {
 	 * 
 	 * @param dateTime
 	 */
-	public void setDateTime(string dateTime) {
+	public void setDateTime(String dateTime) {
 		this.dateTime = dateTime;
 	}
 
@@ -42,7 +42,7 @@ public class Order {
 		this.custId = custId;
 	}
 
-	public string getPaymentMethod() {
+	public String getPaymentMethod() {
 		return this.paymentMethod;
 	}
 
@@ -50,7 +50,7 @@ public class Order {
 	 * 
 	 * @param paymentMethod
 	 */
-	public void setPaymentMethod(string paymentMethod) {
+	public void setPaymentMethod(String paymentMethod) {
 		this.paymentMethod = paymentMethod;
 	}
 
