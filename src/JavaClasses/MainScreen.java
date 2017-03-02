@@ -19,30 +19,6 @@ public class MainScreen {
 	public static void main(String[] args) {
 		
 		
-		try {
-		    Class.forName("com.mysql.jdbc.Driver");
-		} 
-		catch (ClassNotFoundException e) {
-		    // TODO Auto-generated catch block
-		    e.printStackTrace();
-		} 
-		try {
-		    String url = "jdbc:mysql://localhost:3306/demo";
-		    Connection con = DriverManager.getConnection(url, "root", "W01fp@ck");		
-		Statement myStmt = con.createStatement();
-		
-		ResultSet myRs = myStmt.executeQuery("select * from customers");
-				
-		while(myRs.next()){
-			
-			System.out.println(myRs.getString("customername"));
-		}
-		
-		}
-		catch (Exception e){
-		    e.printStackTrace();
-		}
-		
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {

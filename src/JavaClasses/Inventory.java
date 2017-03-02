@@ -1,13 +1,29 @@
+import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import java.util.LinkedList;
+import java.util.ArrayList;
+import java.util.Comparator;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JButton;
 import javax.swing.JTextField;
+import javax.swing.ListSelectionModel;
+
+import com.sun.xml.internal.bind.v2.schemagen.xmlschema.List;
+import com.sun.xml.internal.ws.api.server.Container;
+import com.sun.xml.internal.ws.policy.privateutil.PolicyUtils.Collections;
+
 import javax.swing.JList;
 import javax.swing.JMenuBar;
+import javax.swing.JScrollPane;
 
 public class Inventory {
 
@@ -50,33 +66,65 @@ public class Inventory {
 		lblNewLabel.setBounds(175, 15, 117, 21);
 		frame.getContentPane().add(lblNewLabel);
 		
-		JButton btnSaveChanges = new JButton("Save Changes");
-		btnSaveChanges.setBounds(258, 211, 156, 29);
+		JButton btnSaveChanges = new JButton("add item");
+		btnSaveChanges.setBounds(220, 110, 156, 29);
 		frame.getContentPane().add(btnSaveChanges);
 		
 		JButton btnGoBack = new JButton("go back");
 		btnGoBack.setBounds(305, 243, 117, 29);
 		frame.getContentPane().add(btnGoBack);
 		
-		txtSearch = new JTextField();
-		txtSearch.setText("Search");
-		txtSearch.setBounds(294, 12, 130, 26);
-		frame.getContentPane().add(txtSearch);
-		txtSearch.setColumns(10);
 		
-		JButton btnEnter = new JButton("Enter");
-		btnEnter.setBounds(304, 38, 117, 29);
-		frame.getContentPane().add(btnEnter);
 		
-		JList list = new JList();
+		JButton btnEdit = new JButton("edit");
+		btnEdit.setBounds(220, 80, 117, 29);
+		frame.getContentPane().add(btnEdit);
+		
+		ArrayList <String> items = new ArrayList();
+		String[] str = new String[items.size()];
+		
+		
+		try {
+		    Class.forName("com.mysql.jdbc.Driver");
+		} 
+		catch (ClassNotFoundException e) {
+		    // TODO Auto-generated catch block
+		    e.printStackTrace();
+		} 
+		try {
+		    String url = "jdbc:mysql://localhost:3306/demo";
+		    Connection con = DriverManager.getConnection(url, "root", "W01fp@ck");		
+		Statement myStmt = con.createStatement();
+		
+		ResultSet myRs = myStmt.executeQuery("select * from products");
+				
+		while(myRs.next()){
+			
+			//System.out.println(myRs.getString("productname"));
+			items.add(myRs.getString("productname"));
+			
+		}
+		
+		}
+		catch (Exception e){
+		    e.printStackTrace();
+		}
+		
+
+		
+		JList list = new JList(items.toArray(str));
+		
+		list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		list.setLayoutOrientation(JList.VERTICAL);
+	
+		list.setLayoutOrientation(JList.VERTICAL);
+		list.setSelectedIndex(1);
 		list.setBounds(21, 70, 182, 163);
 		frame.getContentPane().add(list);
-		
-		JMenuBar menuBar = new JMenuBar();
-		menuBar.setBounds(21, 14, 132, 22);
-		frame.getContentPane().add(menuBar);
-	
-	
+		//java.awt.Container contentPane = frame.getContentPane();
+	    //contentPane.add(scrollPane, BorderLayout.CENTER);
+
+        
 		ActionListener buttonListener = new ActionListener() {
 
 	        //we have to define this method in order for an Action Listener to work
