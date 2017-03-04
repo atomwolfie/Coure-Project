@@ -4,11 +4,13 @@ import javax.swing.JFrame;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.text.DecimalFormat;
 import javax.swing.JLabel;
 
 public class Payment {
 
 	private JFrame frame;
+	private Order currentOrder;
 
 	/**
 	 * Launch the application.
@@ -17,7 +19,7 @@ public class Payment {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					Payment window = new Payment();
+					Payment window = new Payment(new Order());
 					window.frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -29,14 +31,15 @@ public class Payment {
 	/**
 	 * Create the application.
 	 */
-	public Payment() {
-		initialize();
+	public Payment(Order currentOrder) {
+		initialize(currentOrder);
 	}
 
 	/**
 	 * Initialize the contents of the frame.
 	 */
-	private void initialize() {
+	private void initialize(Order currentOrder) {
+		this.currentOrder = currentOrder;
 		frame = new JFrame();
 		frame.setBounds(100, 100, 450, 300);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -57,6 +60,13 @@ public class Payment {
 		JLabel lblNewLabel = new JLabel("Payment Method");
 		lblNewLabel.setBounds(158, 19, 126, 16);
 		frame.getContentPane().add(lblNewLabel);
+
+		Double tax = this.currentOrder.getOrderTotal() * .03;
+
+		DecimalFormat dec = new DecimalFormat("#.00");
+		JLabel lblTotal = new JLabel("Total: $" + dec.format(this.currentOrder.getOrderTotal() + tax));
+		lblTotal.setBounds(158, 55, 150, 16);
+		frame.getContentPane().add(lblTotal);
 		
 		ActionListener buttonListener = new ActionListener() {
 
@@ -66,19 +76,19 @@ public class Payment {
 	            if (e.getSource() == btnGoBack) { //return to checkout screen
 
 	            	this.setVisible(false);
-	            	Checkout check = new Checkout();
+	            	Checkout check = new Checkout(currentOrder);
 	            	check.setVisible(true);
 	            } 
 	            if (e.getSource() == btnCash) { //return to checkout screen
 
 	            	this.setVisible(false);
-	            	Cash cash = new Cash();
+	            	Cash cash = new Cash(currentOrder);
 	            	cash.setVisible(true);
 	            } 
 	            if (e.getSource() == btnCard) { //return to checkout screen
 
 	            	this.setVisible(false);
-	            	Card card = new Card();
+	            	Card card = new Card(currentOrder);
 	            	card.setVisible(true);
 	            }
 	            

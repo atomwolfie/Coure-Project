@@ -1,4 +1,4 @@
-import java.awt.EventQueue;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -16,6 +16,7 @@ public class Card {
 	private JTextField textField_3;
 	private JLabel lblNewLabel_3;
 	private JLabel lblCrv;
+	private Order currentOrder;
 
 	/**
 	 * Launch the application.
@@ -24,7 +25,7 @@ public class Card {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					Card window = new Card();
+					Card window = new Card(new Order());
 					window.frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -36,14 +37,15 @@ public class Card {
 	/**
 	 * Create the application.
 	 */
-	public Card() {
-		initialize();
+	public Card(Order curOrder) {
+		initialize(curOrder);
 	}
 
 	/**
 	 * Initialize the contents of the frame.
 	 */
-	private void initialize() {
+	private void initialize(Order curOrder) {
+		this.currentOrder = curOrder;
 		frame = new JFrame();
 		frame.setBounds(100, 100, 450, 300);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -56,9 +58,10 @@ public class Card {
 		JLabel lblNewLabel_1 = new JLabel("Swipe card or enter info");
 		lblNewLabel_1.setBounds(138, 38, 215, 16);
 		frame.getContentPane().add(lblNewLabel_1);
-		
+
 		JButton btnPrintReceipt = new JButton("Print Receipt");
-		btnPrintReceipt.setBounds(289, 167, 117, 70);
+		btnPrintReceipt.setBounds(281, 184, 150, 67);
+		btnPrintReceipt.setBackground(new Color(95,186,125));
 		frame.getContentPane().add(btnPrintReceipt);
 		
 		textField = new JTextField();
@@ -109,17 +112,17 @@ public class Card {
 	            if (e.getSource() == btnGoBack) { //return to checkout screen
 
 	            	this.setVisible(false);
-	            	Payment payment = new Payment();
+	            	Payment payment = new Payment(currentOrder);
 	            	payment.setVisible(true);
 	            } 	          
 	            if (e.getSource() == btnPrintReceipt) { //go to receipt screen
 
 	            	this.setVisible(false);
-	            	Receipt receipt = new Receipt();
-	            	receipt.setVisible(true);
-	            	
+	            	//Write new data to mysql db
 	            	MainScreen main = new MainScreen();
 	            	main.setVisible(true);
+					Receipt receipt = new Receipt(currentOrder);
+					receipt.setVisible(true);
 	            }
 	            
 	        }

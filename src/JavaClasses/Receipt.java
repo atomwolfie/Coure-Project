@@ -1,13 +1,19 @@
 import java.awt.EventQueue;
 
-import javax.swing.JFrame;
-import javax.swing.JLabel;
+import javax.swing.*;
+import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.DefaultTableModel;
 import java.awt.List;
-import javax.swing.JList;
+import java.text.DecimalFormat;
+import java.util.ArrayList;
+
+import static com.sun.xml.internal.fastinfoset.alphabet.BuiltInRestrictedAlphabets.table;
 
 public class Receipt {
 
 	private JFrame frame;
+	private JTable table;
+	private DefaultTableModel model;
 
 	/**
 	 * Launch the application.
@@ -16,7 +22,7 @@ public class Receipt {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					Receipt window = new Receipt();
+					Receipt window = new Receipt(new Order());
 					window.frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -28,17 +34,17 @@ public class Receipt {
 	/**
 	 * Create the application.
 	 */
-	public Receipt() {
-		initialize();
+	public Receipt(Order curOrder) {
+		initialize(curOrder);
 	}
 
 	/**
 	 * Initialize the contents of the frame.
 	 */
-	private void initialize() {
+	private void initialize(Order curOrder) {
 		frame = new JFrame();
 		frame.setBounds(100, 100, 450, 468);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		
 		JLabel lblReceipt = new JLabel("Receipt");
@@ -61,18 +67,34 @@ public class Receipt {
 		JLabel label_1 = new JLabel("----------------------------------------");
 		label_1.setBounds(45, 305, 373, 16);
 		frame.getContentPane().add(label_1);
-		
-		JLabel lblTax = new JLabel("tax:");
-		lblTax.setBounds(174, 285, 61, 16);
+
+		Double tax = curOrder.getOrderTotal() * .03;
+
+		DecimalFormat dec = new DecimalFormat("#.00");
+
+		JLabel lblTax = new JLabel("tax: $" + dec.format(tax));
+		lblTax.setBounds(104, 285, 150, 16);
 		frame.getContentPane().add(lblTax);
 		
-		JLabel lblTotal = new JLabel("total:");
-		lblTotal.setBounds(174, 327, 61, 16);
+		JLabel lblTotal = new JLabel("total: $" + dec.format((curOrder.getOrderTotal() + tax)));
+		lblTotal.setBounds(104, 327, 150, 16);
 		frame.getContentPane().add(lblTotal);
-		
-		JList list = new JList();
-		list.setBounds(55, 98, 317, 148);
-		frame.getContentPane().add(list);
+
+		String[] columnNames = {"Product","Quantity","Price"};
+		String[][] Data = {};
+		table = new JTable(new DefaultTableModel(Data, columnNames));
+		model = (DefaultTableModel) table.getModel();
+		table.setBounds(55, 98, 317, 148);
+		DefaultTableCellRenderer rightRenderer = new DefaultTableCellRenderer();
+		rightRenderer.setHorizontalAlignment(SwingConstants.RIGHT);
+		DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
+		centerRenderer.setHorizontalAlignment(SwingConstants.CENTER);
+		table.getColumnModel().getColumn(1).setCellRenderer(centerRenderer);
+		table.getColumnModel().getColumn(2).setCellRenderer(rightRenderer);
+		fillTable(curOrder);
+		JScrollPane scrollPane = new JScrollPane(table);
+		scrollPane.setBounds(55,95,317,148);
+		frame.getContentPane().add(scrollPane);
 		
 		JLabel lblNewLabel_2 = new JLabel("tel: (435) 757 - 2211");
 		lblNewLabel_2.setBounds(141, 368, 143, 16);
@@ -81,6 +103,16 @@ public class Receipt {
 		JLabel lblMrsmithgroceryemailcom = new JLabel("email: mrsmithgrocery@email.com");
 		lblMrsmithgroceryemailcom.setBounds(141, 396, 248, 16);
 		frame.getContentPane().add(lblMrsmithgroceryemailcom);
+	}
+
+	public void fillTable(Order curOrder) {
+		ArrayList<Purchases> purch = curOrder.getPurchases();
+
+		DecimalFormat dec = new DecimalFormat("#.00");
+
+		for (int i = 0; i < purch.size(); i++) {
+			model.addRow(new Object[]{purch.get(i).getProductName(), purch.get(i).getQuantity(), "$" + dec.format(purch.get(i).getPurchaseTotal())});
+		}
 	}
 
 	public void setVisible(boolean b) {

@@ -1,18 +1,18 @@
-import java.awt.EventQueue;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.DecimalFormat;
+import java.util.ArrayList;
 
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JTable;
-import javax.swing.JButton;
+import javax.swing.*;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 
 public class Checkout {
 
 	private JFrame frame;
 	private JTable table;
+	private JLabel lblTotal;
 	private Order currentOrder;
 	private DefaultTableModel model;
 
@@ -39,12 +39,17 @@ public class Checkout {
 	public Checkout() {
 		initialize();
 	}
+	public Checkout(Order curOrder) {
+		initialize();
+		this.currentOrder = curOrder;
+		populateTable();
+	}
 
 	/**
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
-		currentOrder = new Order();
+		this.currentOrder = new Order();
 		frame = new JFrame();
 		frame.setBounds(100, 100, 450, 300);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -55,32 +60,43 @@ public class Checkout {
 		frame.getContentPane().add(lblNewLabel);
 		
 		JButton btnAddItem = new JButton("Add Item");
-		btnAddItem.setBounds(17, 28, 117, 56);
+		btnAddItem.setBounds(30, 35, 125, 40);
 		frame.getContentPane().add(btnAddItem);
 		
-		JButton btnNewButton = new JButton("Remove Item");
-		btnNewButton.setBounds(17, 85, 117, 56);
-		frame.getContentPane().add(btnNewButton);
+		JButton btnRemoveItem = new JButton("Remove Item");
+		btnRemoveItem.setBounds(30, 92, 125, 40);
+		frame.getContentPane().add(btnRemoveItem);
 		
 		JButton btnPay = new JButton("Finish and Pay");
-		btnPay.setBounds(17, 199, 117, 56);
+		btnPay.setBounds(17, 160, 150, 56);
+		btnPay.setBackground(new Color(95,186,125));
 		frame.getContentPane().add(btnPay);
 		
-		JButton btnStarOver = new JButton("Start Over");
-		btnStarOver.setBounds(17, 141, 117, 56);
-		frame.getContentPane().add(btnStarOver);
+		JButton btnStartOver = new JButton("Start Over");
+		btnStartOver.setBounds(17, 218, 150, 26);
+		frame.getContentPane().add(btnStartOver);
 		
 		JButton btnGoBack = new JButton("go back");
 		btnGoBack.setBounds(305, 243, 117, 29);
 		frame.getContentPane().add(btnGoBack);
 
+		lblTotal = new JLabel("Total: $0.00");
+		lblTotal.setBounds(190, 218, 150, 16);
+		frame.getContentPane().add(lblTotal);
+
 		String[] columnNames = {"Product","Quantity","Price"};
-		//String[][] Data = {{"Bananas","1","$1.00"},{"Apples","2","$1.75"}};
 		String[][] Data = {};
 		table = new JTable(new DefaultTableModel(Data, columnNames));
+		DefaultTableCellRenderer rightRenderer = new DefaultTableCellRenderer();
+		rightRenderer.setHorizontalAlignment(SwingConstants.RIGHT);
+		DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
+		centerRenderer.setHorizontalAlignment(SwingConstants.CENTER);
+		table.getColumnModel().getColumn(1).setCellRenderer(centerRenderer);
+		table.getColumnModel().getColumn(2).setCellRenderer(rightRenderer);
 		model = (DefaultTableModel) table.getModel();
-		table.setBounds(184, 50, 250, 180);
-		frame.getContentPane().add(table);
+		JScrollPane scrollPane = new JScrollPane(table);
+		scrollPane.setBounds(184,35,250,180);
+		frame.getContentPane().add(scrollPane);
 
 
 	ActionListener buttonListener = new ActionListener() {
@@ -99,21 +115,31 @@ public class Checkout {
             	this.setVisible(false);
             	addProductGUI();
             } 
-            if (e.getSource() == btnNewButton) { 
+            if (e.getSource() == btnRemoveItem) {
 
-            	this.setVisible(false);
+            	int[] rowsToDelete = table.getSelectedRows();
+
+            	for (int i = rowsToDelete.length - 1; i >= 0; i--) {
+            		currentOrder.removePurchase(rowsToDelete[i]);
+            		model.removeRow(rowsToDelete[i]);
+				}
+				lblTotal.setText("Total: $0.00");
+            	/*this.setVisible(false);
             	CheckoutRemove check = new CheckoutRemove();
-            	check.setVisible(true);
+            	check.setVisible(true);*/
             }
-            if (e.getSource() == btnStarOver) {  //start over button, starts everything over
+            if (e.getSource() == btnStartOver) {  //start over button, starts everything over
 
-            	//WILL RESET EVERYTHING
+				currentOrder.reset();
+            	currentOrder.clearPurchases();
+            	model.setRowCount(0);
+				lblTotal.setText("Total: $0.00");
             	
             }
             if (e.getSource() == btnPay) { 
 
             	this.setVisible(false);
-            	Payment paymnt = new Payment();
+            	Payment paymnt = new Payment(currentOrder);
             	paymnt.setVisible(true);
             }
         }
@@ -127,8 +153,8 @@ public class Checkout {
     
 	btnGoBack.addActionListener(buttonListener);
 	btnAddItem.addActionListener(buttonListener);
-	btnNewButton.addActionListener(buttonListener);
-	btnStarOver.addActionListener(buttonListener);
+	btnRemoveItem.addActionListener(buttonListener);
+	btnStartOver.addActionListener(buttonListener);
 	btnPay.addActionListener(buttonListener);
 }
 	private void addProductGUI(){
@@ -140,6 +166,8 @@ public class Checkout {
 
 		DecimalFormat dec = new DecimalFormat("#.00");
 
+		lblTotal.setText("Total: $" + dec.format(this.currentOrder.getOrderTotal()));
+
 		if (temp < 0) {
 			model.addRow(new Object[]{purchase.getProductName(), purchase.getQuantity(), dec.format(purchase.getPurchaseTotal())});
 		}
@@ -149,6 +177,19 @@ public class Checkout {
 			table.setValueAt("$" + dec.format(currentOrder.getPurchases().get(temp).getPurchaseTotal()), temp, 2);
 		}
 	}
+
+	public void populateTable() {
+		ArrayList<Purchases> purch = currentOrder.getPurchases();
+
+		DecimalFormat dec = new DecimalFormat("#.00");
+
+		lblTotal.setText("Total: $" + dec.format(this.currentOrder.getOrderTotal()));
+
+		for (int i = 0; i < purch.size(); i++) {
+			model.addRow(new Object[]{purch.get(i).getProductName(), purch.get(i).getQuantity(), "$" + dec.format(purch.get(i).getPurchaseTotal())});
+		}
+	}
+
 	public void setVisible(boolean b) {
 		// TODO Auto-generated method stub
 		frame.setVisible(b);
