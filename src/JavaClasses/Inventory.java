@@ -102,10 +102,8 @@ public class Inventory {
 		    e.printStackTrace();
 		} 
 		try {
-
-		String url = "jdbc:mysql://localhost:3306/store?autoReconnect=true&useSSL=false";
-		Connection con = DriverManager.getConnection(url, "storeuser", "*fad!@plo*");
-
+		    String url = "jdbc:mysql://localhost:3306/demo?autoReconnect=true&useSSL=false";
+		    Connection con = DriverManager.getConnection(url, "root", "W01fp@ck");
 		Statement myStmt = con.createStatement();
 		
 		ResultSet myRs = myStmt.executeQuery("select * from products");
@@ -132,6 +130,10 @@ public class Inventory {
 		list.setSelectedIndex(1);
 		list.setBounds(21, 70, 182, 163);
 		frame.getContentPane().add(list);
+		
+		JLabel lblItemList = new JLabel("Item List");
+		lblItemList.setBounds(45, 44, 61, 16);
+		frame.getContentPane().add(lblItemList);
 	
         
 		
