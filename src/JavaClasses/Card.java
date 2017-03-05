@@ -70,7 +70,7 @@ public class Card {
 		frame.getContentPane().add(btnPrintReceipt);
 
 		txtfldName = new JTextField();
-		txtfldName.setText("Fulano");
+		txtfldName.setText("Fulano Smith");
 		txtfldName.setBounds(180, 65, 213, 26);
 		frame.getContentPane().add(txtfldName);
 		txtfldName.setColumns(10);

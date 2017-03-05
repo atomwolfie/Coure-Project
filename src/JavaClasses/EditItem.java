@@ -69,67 +69,67 @@ public class EditItem {
 		frame.getContentPane().add(btnEditItem);
 		
 		JLabel lblNameOfItem = new JLabel("Name of item to edit:");
-		lblNameOfItem.setBounds(6, 56, 146, 16);
+		lblNameOfItem.setBounds(3, 56, 156, 16);
 		frame.getContentPane().add(lblNameOfItem);
 		
 		txtName = new JTextField();
 		txtName.setText("name");
-		txtName.setBounds(148, 51, 130, 26);
+		txtName.setBounds(153, 51, 130, 26);
 		frame.getContentPane().add(txtName);
 		txtName.setColumns(10);
 		
 		JLabel lblEditId = new JLabel("edit id:");
-		lblEditId.setBounds(75, 104, 61, 16);
+		lblEditId.setBounds(102, 104, 50, 16);
 		frame.getContentPane().add(lblEditId);
 		
 		txtNewId = new JTextField();
 		txtNewId.setText("");
-		txtNewId.setBounds(148, 99, 130, 26);
+		txtNewId.setBounds(153, 99, 130, 26);
 		frame.getContentPane().add(txtNewId);
 		txtNewId.setColumns(10);
 		
 		txtNewName = new JTextField();
 		txtNewName.setText("");
-		txtNewName.setBounds(148, 133, 130, 26);
+		txtNewName.setBounds(153, 133, 130, 26);
 		frame.getContentPane().add(txtNewName);
 		txtNewName.setColumns(10);
 		
 		JLabel lblEditName = new JLabel("edit name:");
-		lblEditName.setBounds(54, 138, 75, 16);
+		lblEditName.setBounds(76, 138, 105, 16);
 		frame.getContentPane().add(lblEditName);
 		
 		txtNewPrice = new JTextField();
 		txtNewPrice.setText("");
-		txtNewPrice.setBounds(148, 168, 130, 26);
+		txtNewPrice.setBounds(153, 168, 130, 26);
 		frame.getContentPane().add(txtNewPrice);
 		txtNewPrice.setColumns(10);
 		
 		JLabel lblEditPrice = new JLabel("edit price:");
-		lblEditPrice.setBounds(54, 173, 71, 16);
+		lblEditPrice.setBounds(79, 173, 101, 16);
 		frame.getContentPane().add(lblEditPrice);
 		
 		txtNewType = new JTextField();
 		txtNewType.setText("");
-		txtNewType.setBounds(148, 206, 130, 26);
+		txtNewType.setBounds(153, 206, 130, 26);
 		frame.getContentPane().add(txtNewType);
 		txtNewType.setColumns(10);
 		
 		JLabel lblEditType = new JLabel("edit type:");
-		lblEditType.setBounds(54, 211, 61, 16);
+		lblEditType.setBounds(82, 211, 91, 16);
 		frame.getContentPane().add(lblEditType);
 		
 		txtNewProvider = new JTextField();
 		txtNewProvider.setText("");
-		txtNewProvider.setBounds(148, 244, 130, 26);
+		txtNewProvider.setBounds(153, 244, 130, 26);
 		frame.getContentPane().add(txtNewProvider);
 		txtNewProvider.setColumns(10);
 		
 		JLabel lblEditProvider = new JLabel("edit provider:");
-		lblEditProvider.setBounds(35, 249, 94, 16);
+		lblEditProvider.setBounds(55, 249, 114, 16);
 		frame.getContentPane().add(lblEditProvider);
 		
-		JLabel lblLeaveBlankIf = new JLabel("Leave blank");
-		lblLeaveBlankIf.setBounds(304, 6, 117, 52);
+		JLabel lblLeaveBlankIf = new JLabel("Leave field blank");
+		lblLeaveBlankIf.setBounds(304, 6, 127, 52);
 		frame.getContentPane().add(lblLeaveBlankIf);
 		
 		JLabel lblIfNotBeing = new JLabel("if not being");
@@ -137,7 +137,7 @@ public class EditItem {
 		frame.getContentPane().add(lblIfNotBeing);
 		
 		JLabel lblEdited = new JLabel("edited");
-		lblEdited.setBounds(383, 42, 61, 16);
+		lblEdited.setBounds(387, 42, 61, 16);
 		frame.getContentPane().add(lblEdited);
 				
 		txtNewId.getDocument().addDocumentListener(new DocumentListener() {
@@ -180,8 +180,8 @@ public class EditItem {
 	        		
 	        		//EDIT ITEM IN DATABASE
 	        		try {
-	        		    String url = "jdbc:mysql://localhost:3306/demo?autoReconnect=true&useSSL=false";
-	        		    Connection myCon = (Connection) DriverManager.getConnection(url, "root", "W01fp@ck");
+	        		    String url = "jdbc:mysql://localhost:3306/store?autoReconnect=true&useSSL=false";
+	        		    Connection myCon = (Connection) DriverManager.getConnection(url, "storeuser", "*fad!@plo*");
 	        		Statement myStmt = (Statement) myCon.createStatement();
 	        		
 	        		

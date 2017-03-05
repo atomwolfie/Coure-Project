@@ -94,7 +94,7 @@ public class AddProduct {
 		
 		btnAddItems = new JButton("Add item(s)");
 		btnAddItems.setBounds(305, 152, 117, 83);
-		btnAddItems.setToolTipText("After you've entered scanned an item, click here to add them.");
+		btnAddItems.setToolTipText("After you've entered and scanned an item, click here to add them.");
 		btnAddItems.setEnabled(false);
 		frame.getContentPane().add(btnAddItems);
 		

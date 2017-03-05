@@ -1,4 +1,4 @@
-import java.awt.EventQueue;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.Connection;
@@ -65,11 +65,12 @@ public class DeleteItem {
 		txtName.setColumns(10);
 		
 		JButton btnDeleteItem = new JButton("Delete Item");
-		btnDeleteItem.setBounds(289, 147, 117, 62);
+		btnDeleteItem.setBounds(179, 147, 117, 62);
+		btnDeleteItem.setBackground(new Color(208,48,44));
 		frame.getContentPane().add(btnDeleteItem);
-		
+
 		JButton btnGoBack = new JButton("go back");
-		btnGoBack.setBounds(289, 223, 117, 29);
+		btnGoBack.setBounds(179, 223, 117, 29);
 		frame.getContentPane().add(btnGoBack);
 	
 

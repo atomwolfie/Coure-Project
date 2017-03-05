@@ -1,4 +1,4 @@
-import java.awt.EventQueue;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.DriverManager;
@@ -62,28 +62,28 @@ public class AddItem {
 		frame.getContentPane().add(lblNewItem);
 		
 		JLabel lblItemId = new JLabel("Item id:");
-		lblItemId.setBounds(55, 38, 61, 16);
+		lblItemId.setBounds(70, 58, 61, 16);
 		frame.getContentPane().add(lblItemId);
 		
 		JLabel lblItemName = new JLabel("Item name:");
-		lblItemName.setBounds(32, 79, 84, 16);
+		lblItemName.setBounds(45, 99, 84, 16);
 		frame.getContentPane().add(lblItemName);
 		
 		JLabel lblItemPrice = new JLabel("Item price:");
-		lblItemPrice.setBounds(36, 122, 80, 16);
+		lblItemPrice.setBounds(49, 142, 80, 16);
 		frame.getContentPane().add(lblItemPrice);
 		
 		JLabel lblItemType = new JLabel("Item type:");
-		lblItemType.setBounds(32, 165, 84, 16);
+		lblItemType.setBounds(51, 185, 84, 16);
 		frame.getContentPane().add(lblItemType);
 		
 		JLabel lblProvider = new JLabel("Provider:");
-		lblProvider.setBounds(36, 204, 80, 16);
+		lblProvider.setBounds(59, 224, 80, 16);
 		frame.getContentPane().add(lblProvider);
 		
 		txtId = new JTextField();
 		txtId.setText("id");
-		txtId.setBounds(128, 34, 130, 26);
+		txtId.setBounds(128, 54, 130, 26);
 		frame.getContentPane().add(txtId);
 		txtId.setColumns(10);
 		
@@ -91,7 +91,7 @@ public class AddItem {
 		
 		txtName = new JTextField();
 		txtName.setText("name");
-		txtName.setBounds(125, 74, 130, 26);
+		txtName.setBounds(128, 94, 130, 26);
 		frame.getContentPane().add(txtName);
 		txtName.setColumns(10);
 		
@@ -101,7 +101,7 @@ public class AddItem {
 		
 		txtPrice = new JTextField();
 		txtPrice.setText("price");
-		txtPrice.setBounds(125, 117, 130, 26);
+		txtPrice.setBounds(128, 137, 130, 26);
 		frame.getContentPane().add(txtPrice);
 		txtPrice.setColumns(10);
 				
@@ -113,7 +113,7 @@ public class AddItem {
 		
 		txtType = new JTextField();
 		txtType.setText("type");
-		txtType.setBounds(125, 160, 130, 26);
+		txtType.setBounds(128, 180, 130, 26);
 		frame.getContentPane().add(txtType);
 		txtType.setColumns(10);
 		
@@ -124,7 +124,7 @@ public class AddItem {
 		
 		txtProvider = new JTextField();
 		txtProvider.setText("Provider");
-		txtProvider.setBounds(128, 199, 130, 26);
+		txtProvider.setBounds(128, 219, 130, 26);
 		frame.getContentPane().add(txtProvider);
 		txtProvider.setColumns(10);
 		
@@ -135,14 +135,26 @@ public class AddItem {
 		
 		
 		JButton btnSaveItem = new JButton("Save Item");
-		btnSaveItem.setBounds(309, 199, 117, 55);
+		btnSaveItem.setBounds(304, 135, 117, 68);
+		btnSaveItem.setBackground(new Color(95,186,125));
 		frame.getContentPane().add(btnSaveItem);
+
+		JButton btnGoBack = new JButton("go back");
+		btnGoBack.setBounds(304, 215, 117, 29);
+		frame.getContentPane().add(btnGoBack);
 	
 		ActionListener buttonListener = new ActionListener() {
 
 	        //we have to define this method in order for an Action Listener to work
 	        public void actionPerformed(ActionEvent e) { //'e' is the Action Event which is a button being clicked in our case
 
+				if (e.getSource() == btnGoBack) {
+
+					this.setVisible(false);
+					Inventory invent = new Inventory();
+					invent.setVisible(true);
+
+				}
 	            if (e.getSource() == btnSaveItem) { //check to see if the source is the checkout
 
 	            	String stringId = txtId.getText();
@@ -206,7 +218,8 @@ public class AddItem {
 				frame.setVisible(b);
 			}
 	    };
-	    
+
+		btnGoBack.addActionListener(buttonListener);
 	    btnSaveItem.addActionListener(buttonListener);
 	}
 

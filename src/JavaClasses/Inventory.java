@@ -1,6 +1,4 @@
-import java.awt.BorderLayout;
-import java.awt.Dimension;
-import java.awt.EventQueue;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.Connection;
@@ -72,12 +70,14 @@ public class Inventory {
 		lblNewLabel.setBounds(175, 15, 117, 21);
 		frame.getContentPane().add(lblNewLabel);
 		
-		JButton btnSaveChanges = new JButton("add item");
+		JButton btnSaveChanges = new JButton("Add item");
 		btnSaveChanges.setBounds(220, 110, 156, 29);
+		btnSaveChanges.setBackground(new Color(95,186,125));
 		frame.getContentPane().add(btnSaveChanges);
 		
-		JButton btnDeleteItem = new JButton("delete item");
+		JButton btnDeleteItem = new JButton("Delete item");
 		btnDeleteItem.setBounds(220, 140, 156, 29);
+		btnDeleteItem.setBackground(new Color(208,48,44));
 		frame.getContentPane().add(btnDeleteItem);
 		
 		JButton btnGoBack = new JButton("go back");
@@ -86,7 +86,7 @@ public class Inventory {
 		
 		
 		
-		JButton btnEdit = new JButton("edit item");
+		JButton btnEdit = new JButton("Edit item");
 		btnEdit.setBounds(220, 80, 117, 29);
 		frame.getContentPane().add(btnEdit);
 		
@@ -102,8 +102,8 @@ public class Inventory {
 		    e.printStackTrace();
 		} 
 		try {
-		    String url = "jdbc:mysql://localhost:3306/demo?autoReconnect=true&useSSL=false";
-		    Connection con = DriverManager.getConnection(url, "root", "W01fp@ck");
+			String url = "jdbc:mysql://localhost:3306/store?autoReconnect=true&useSSL=false";
+			Connection con = DriverManager.getConnection(url, "storeuser", "*fad!@plo*");
 		Statement myStmt = con.createStatement();
 		
 		ResultSet myRs = myStmt.executeQuery("select * from products");
@@ -155,12 +155,6 @@ public class Inventory {
 	            	this.setVisible(false);
 	            	MainScreen main = new MainScreen();
 	            	main.setVisible(true);
-	            } 
-	            if (e.getSource() == btnSaveChanges) { 
-
-	            	this.setVisible(false);
-	            	AddItem add = new AddItem();
-	            	add.setVisible(true);
 	            }
 	            if (e.getSource() == btnDeleteItem) { //return to main screen
 
