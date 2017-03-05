@@ -127,6 +127,18 @@ public class EditItem {
 		JLabel lblEditProvider = new JLabel("edit provider:");
 		lblEditProvider.setBounds(35, 249, 94, 16);
 		frame.getContentPane().add(lblEditProvider);
+		
+		JLabel lblLeaveBlankIf = new JLabel("Leave blank");
+		lblLeaveBlankIf.setBounds(304, 6, 117, 52);
+		frame.getContentPane().add(lblLeaveBlankIf);
+		
+		JLabel lblIfNotBeing = new JLabel("if not being");
+		lblIfNotBeing.setBounds(304, 42, 117, 16);
+		frame.getContentPane().add(lblIfNotBeing);
+		
+		JLabel lblEdited = new JLabel("edited");
+		lblEdited.setBounds(383, 42, 61, 16);
+		frame.getContentPane().add(lblEdited);
 				
 		txtNewId.getDocument().addDocumentListener(new DocumentListener() {
 			  public void changedUpdate(DocumentEvent e) {
