@@ -81,11 +81,11 @@ public class DeleteItem {
 	            if (e.getSource() == btnDeleteItem) { 
 
 	            	String productName = txtName.getText();
-	            	String url = "jdbc:mysql://localhost:3306/demo?autoReconnect=true&useSSL=false";
+	            	String url = "jdbc:mysql://localhost:3306/store?autoReconnect=true&useSSL=false";
 	            	//try catch here
 	            	try {
 	            		// 1. Get a connection to database
-	            		Connection myConn = DriverManager.getConnection(url, "root", "W01fp@ck");
+	            		Connection myConn = DriverManager.getConnection(url, "storeuser", "*fad!@plo*");
 	            		// 2. Create a statement
 	            		Statement myStmt = myConn.createStatement();
 	            		// 3. Execute SQL query

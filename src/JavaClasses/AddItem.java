@@ -167,8 +167,8 @@ public class AddItem {
 	        		//try catch here
 	        		
 	        		try {
-	        		    String url = "jdbc:mysql://localhost:3306/demo?autoReconnect=true&useSSL=false";
-	        		    Connection myCon = (Connection) DriverManager.getConnection(url, "root", "W01fp@ck");
+	        		    String url = "jdbc:mysql://localhost:3306/store?autoReconnect=true&useSSL=false";
+	        		    Connection myCon = (Connection) DriverManager.getConnection(url, "storeuser", "*fad!@plo*");
 	        		Statement myStmt = (Statement) myCon.createStatement();
 	        		
 	        		

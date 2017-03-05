@@ -103,7 +103,7 @@ public class Inventory {
 		} 
 		try {
 
-		String url = "jdbc:mysql://localhost:3306/joestore?autoReconnect=true&useSSL=false";
+		String url = "jdbc:mysql://localhost:3306/store?autoReconnect=true&useSSL=false";
 		Connection con = DriverManager.getConnection(url, "storeuser", "*fad!@plo*");
 
 		Statement myStmt = con.createStatement();
@@ -169,8 +169,8 @@ public class Inventory {
 	            if (e.getSource() == btnEdit) { 
 
 	            	this.setVisible(false);
-	            	EditItem edit = new EditItem();
-	            	edit.setVisible(true);
+	            	//EditItem edit = new EditItem();
+	            	//edit.setVisible(true);
 	            }
 	        }
 
