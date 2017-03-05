@@ -13,6 +13,7 @@ public class Checkout {
 	private JFrame frame;
 	private JTable table;
 	private JLabel lblTotal;
+	private JButton btnPay;
 	private Order currentOrder;
 	private DefaultTableModel model;
 
@@ -65,11 +66,13 @@ public class Checkout {
 		
 		JButton btnRemoveItem = new JButton("Remove Item");
 		btnRemoveItem.setBounds(30, 92, 125, 40);
+		btnRemoveItem.setToolTipText("Select rows and then click here to remove them.");
 		frame.getContentPane().add(btnRemoveItem);
 		
-		JButton btnPay = new JButton("Finish and Pay");
+		btnPay = new JButton("Finish and Pay");
 		btnPay.setBounds(17, 160, 150, 56);
 		btnPay.setBackground(new Color(95,186,125));
+		btnPay.setEnabled(false);
 		frame.getContentPane().add(btnPay);
 		
 		JButton btnStartOver = new JButton("Start Over");
@@ -123,16 +126,20 @@ public class Checkout {
             		currentOrder.removePurchase(rowsToDelete[i]);
             		model.removeRow(rowsToDelete[i]);
 				}
-				lblTotal.setText("Total: $0.00");
-            	/*this.setVisible(false);
-            	CheckoutRemove check = new CheckoutRemove();
-            	check.setVisible(true);*/
+            	if (currentOrder.getOrderTotal() == 0) {
+					btnPay.setEnabled(false);
+					lblTotal.setText("Total: $0.00");
+				}
+				else {
+					lblTotal.setText("Total: $" + currentOrder.getOrderTotal());
+				}
             }
             if (e.getSource() == btnStartOver) {  //start over button, starts everything over
 
 				currentOrder.reset();
             	currentOrder.clearPurchases();
             	model.setRowCount(0);
+				btnPay.setEnabled(false);
 				lblTotal.setText("Total: $0.00");
             	
             }
@@ -145,7 +152,6 @@ public class Checkout {
         }
 
 		private void setVisible(boolean b) {
-			// TODO Auto-generated method stub
 			frame.setVisible(b);
 		}
 
@@ -176,6 +182,7 @@ public class Checkout {
 			table.setValueAt(currentOrder.getPurchases().get(temp).getQuantity(), temp, 1);
 			table.setValueAt("$" + dec.format(currentOrder.getPurchases().get(temp).getPurchaseTotal()), temp, 2);
 		}
+		this.btnPay.setEnabled(true);
 	}
 
 	public void populateTable() {
@@ -191,7 +198,6 @@ public class Checkout {
 	}
 
 	public void setVisible(boolean b) {
-		// TODO Auto-generated method stub
 		frame.setVisible(b);
 	}
 }

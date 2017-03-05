@@ -112,7 +112,9 @@ public class Cash {
 	            if (e.getSource() == btnPrintReceipt) { //go to receipt screen, also brings up main screen to start again
 
 	            	this.setVisible(false);
-
+	            	currentOrder.setPaymentMethod("Cash");
+					currentOrder.writeToDatabase();
+					frame.dispose();
 					//Write new data to mysql db
 
 	            	MainScreen main = new MainScreen();
@@ -124,7 +126,6 @@ public class Cash {
 	        }
 
 			private void setVisible(boolean b) {
-				// TODO Auto-generated method stub
 				frame.setVisible(b);
 			}
 	    };
@@ -135,7 +136,6 @@ public class Cash {
 	}
 
 	public void setVisible(boolean b) {
-		// TODO Auto-generated method stub
 		frame.setVisible(b);
 	}
-	}
+}

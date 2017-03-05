@@ -10,13 +10,17 @@ import javax.swing.JTextField;
 public class Card {
 
 	private JFrame frame;
-	private JTextField textField;
-	private JTextField textField_1;
-	private JTextField textField_2;
-	private JTextField textField_3;
-	private JLabel lblNewLabel_3;
+	private JTextField txtfldName;
+	private JTextField txtfldCardNumb;
+	private JTextField txtfldExpMonth;
+	private JTextField txtfldExpYear;
+	private JTextField txtfldCRV;
+	private JLabel lblExpDate;
+	private JLabel lblCardNumb;
 	private JLabel lblCrv;
+	private JLabel lblName;
 	private Order currentOrder;
+	private CardValidator validator;
 
 	/**
 	 * Launch the application.
@@ -45,6 +49,7 @@ public class Card {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize(Order curOrder) {
+		this.validator = new CardValidator();
 		this.currentOrder = curOrder;
 		frame = new JFrame();
 		frame.setBounds(100, 100, 450, 300);
@@ -63,41 +68,51 @@ public class Card {
 		btnPrintReceipt.setBounds(281, 184, 150, 67);
 		btnPrintReceipt.setBackground(new Color(95,186,125));
 		frame.getContentPane().add(btnPrintReceipt);
+
+		txtfldName = new JTextField();
+		txtfldName.setText("Fulano");
+		txtfldName.setBounds(180, 65, 213, 26);
+		frame.getContentPane().add(txtfldName);
+		txtfldName.setColumns(10);
 		
-		textField = new JTextField();
-		textField.setText("4244-4232-4322-4323");
-		textField.setBounds(180, 66, 213, 26);
-		frame.getContentPane().add(textField);
-		textField.setColumns(10);
+		txtfldCardNumb = new JTextField();
+		txtfldCardNumb.setText("4244-4232-4322-4323");
+		txtfldCardNumb.setBounds(180, 104, 213, 26);
+		frame.getContentPane().add(txtfldCardNumb);
+		txtfldCardNumb.setColumns(10);
 		
-		textField_1 = new JTextField();
-		textField_1.setText("08");
-		textField_1.setBounds(179, 104, 35, 26);
-		frame.getContentPane().add(textField_1);
-		textField_1.setColumns(10);
+		txtfldExpMonth = new JTextField();
+		txtfldExpMonth.setText("08");
+		txtfldExpMonth.setBounds(179, 141, 35, 26);
+		frame.getContentPane().add(txtfldExpMonth);
+		txtfldExpMonth.setColumns(10);
 		
-		textField_2 = new JTextField();
-		textField_2.setText("2019");
-		textField_2.setBounds(223, 104, 48, 26);
-		frame.getContentPane().add(textField_2);
-		textField_2.setColumns(10);
+		txtfldExpYear = new JTextField();
+		txtfldExpYear.setText("2019");
+		txtfldExpYear.setBounds(223, 141, 48, 26);
+		frame.getContentPane().add(txtfldExpYear);
+		txtfldExpYear.setColumns(10);
 		
-		textField_3 = new JTextField();
-		textField_3.setText("093");
-		textField_3.setBounds(180, 141, 41, 26);
-		frame.getContentPane().add(textField_3);
-		textField_3.setColumns(10);
+		txtfldCRV = new JTextField();
+		txtfldCRV.setText("093");
+		txtfldCRV.setBounds(180, 180, 41, 26);
+		frame.getContentPane().add(txtfldCRV);
+		txtfldCRV.setColumns(10);
+
+		lblName = new JLabel("Full Name:");
+		lblName.setBounds(70, 71, 108, 16);
+		frame.getContentPane().add(lblName);
 		
-		JLabel lblNewLabel_2 = new JLabel("Card number:");
-		lblNewLabel_2.setBounds(60, 71, 108, 16);
-		frame.getContentPane().add(lblNewLabel_2);
+		lblCardNumb = new JLabel("Card number:");
+		lblCardNumb.setBounds(60, 109, 108, 16);
+		frame.getContentPane().add(lblCardNumb);
 		
-		lblNewLabel_3 = new JLabel("Exp. Date:");
-		lblNewLabel_3.setBounds(81, 109, 74, 16);
-		frame.getContentPane().add(lblNewLabel_3);
+		lblExpDate = new JLabel("Exp. Date:");
+		lblExpDate.setBounds(81, 146, 74, 16);
+		frame.getContentPane().add(lblExpDate);
 		
 		lblCrv = new JLabel("CRV:");
-		lblCrv.setBounds(114, 146, 61, 16);
+		lblCrv.setBounds(114, 185, 61, 16);
 		frame.getContentPane().add(lblCrv);
 		
 		JButton btnGoBack = new JButton("Go Back");
@@ -116,8 +131,46 @@ public class Card {
 	            	payment.setVisible(true);
 	            } 	          
 	            if (e.getSource() == btnPrintReceipt) { //go to receipt screen
+					boolean infoValid = true;
+					if (!validator.fullNameIsValid(txtfldName.getText())) {
+						invalidInfo(lblName);
+						infoValid = false;
+					}
+					else {
+						validInfo(lblName);
+					}
+					if (!validator.cardNumberIsValid(txtfldCardNumb.getText())) {
+						invalidInfo(lblCardNumb);
+						infoValid = false;
+					}
+					else {
+						validInfo(lblCardNumb);
+					}
+					if (!validator.expDateIsValid(Integer.parseInt(txtfldExpMonth.getText()), Integer.parseInt(txtfldExpYear.getText()))) {
+						invalidInfo(lblExpDate);
+						infoValid = false;
+					}
+					else {
+						validInfo(lblExpDate);
+					}
+					if (!validator.crvIsValid(txtfldCRV.getText())) {
+						invalidInfo(lblCrv);
+						infoValid = false;
+					}
+					else {
+						validInfo(lblCrv);
+					}
+					if (!infoValid) {
+						return;
+					}
 
 	            	this.setVisible(false);
+	            	Customer cust = new Customer(txtfldName.getText());
+					int custId = cust.writeToDatabase();
+					currentOrder.setPaymentMethod("Card");
+					currentOrder.setCustId(custId);
+					currentOrder.writeToDatabase();
+					frame.dispose();
 	            	//Write new data to mysql db
 	            	MainScreen main = new MainScreen();
 	            	main.setVisible(true);
@@ -128,7 +181,6 @@ public class Card {
 	        }
 
 			private void setVisible(boolean b) {
-				// TODO Auto-generated method stub
 				frame.setVisible(b);
 			}
 	    };
@@ -137,11 +189,15 @@ public class Card {
 		btnPrintReceipt.addActionListener(buttonListener);
 	}
 
-
+	public void invalidInfo(JLabel lbl) {
+		lbl.setForeground(Color.RED);
+	}
+	public void validInfo(JLabel lbl) {
+		lbl.setForeground(Color.GREEN);
+	}
 
 	public void setVisible(boolean b) {
-		// TODO Auto-generated method stub
 		frame.setVisible(b);
 
 	}
-	}
+}

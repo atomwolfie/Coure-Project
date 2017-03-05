@@ -1,3 +1,8 @@
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.Statement;
+
 public class Customer {
 
 	private String custName;
@@ -9,10 +14,6 @@ public class Customer {
 		return this.custName;
 	}
 
-	/**
-	 * 
-	 * @param custName
-	 */
 	public void setCustName(String custName) {
 		this.custName = custName;
 	}
@@ -21,10 +22,6 @@ public class Customer {
 		return this.custId;
 	}
 
-	/**
-	 * 
-	 * @param custId
-	 */
 	public void setCustId(int custId) {
 		this.custId = custId;
 	}
@@ -33,57 +30,54 @@ public class Customer {
 		return this.phoneNumb;
 	}
 
-	/**
-	 * 
-	 * @param phoneNumb
-	 */
 	public void setPhoneNumb(int phoneNumb) {
-		this.phoneNumb = phoneNumb;
+		CustomerValidator validator = new CustomerValidator();
+		if (validator.phoneNumbIsValid(phoneNumb)) {
+			this.phoneNumb = phoneNumb;
+		}
 	}
 
 	public String getEmail() {
 		return this.email;
 	}
 
-	/**
-	 * 
-	 * @param email
-	 */
 	public void setEmail(String email) {
-		this.email = email;
+		CustomerValidator validator = new CustomerValidator();
+		if (validator.emailIsValid(email)) {
+			this.email = email;
+		}
 	}
 
-	/**
-	 * 
-	 * @param custName
-	 * @param custId
-	 */
-	public Customer(String custName, int custId) {
-		// TODO - implement Customer.Customer
-		throw new UnsupportedOperationException();
+	public int writeToDatabase() {
+		int customerid = -1;
+		try {
+			String url = "jdbc:mysql://localhost:3306/store?autoReconnect=true&useSSL=false";
+			Connection con = DriverManager.getConnection(url, "storeuser", "*fad!@plo*");
+			Statement myStmt = con.createStatement();
+			ResultSet myRsProducts = myStmt.executeQuery("SELECT * FROM customers WHERE customername='" + this.custName + "'");
+			if (!myRsProducts.next()) {
+				myStmt.executeUpdate("INSERT INTO customers (customername,email,phonenumber) VALUES ("
+						+ "'" +this.custName + "'"
+						+ ", NULL"
+						+ ", NULL"
+						+ ")");
+				ResultSet myRsProducts2 = myStmt.executeQuery("SELECT * FROM customers ORDER BY customerid DESC LIMIT 1");
+				myRsProducts2.next();
+				customerid = myRsProducts2.getInt("customerid");
+			}
+			// In the future when we collect additional info update records here
+			else {
+				customerid = myRsProducts.getInt("customerid");
+			}
+
+		}
+		catch (Exception e){
+			e.printStackTrace();
+		}
+		return customerid;
 	}
 
-	/**
-	 * 
-	 * @param custName
-	 * @param custId
-	 * @param phoneNumb
-	 */
-	public Customer(String custName, int custId, int phoneNumb) {
-		// TODO - implement Customer.Customer
-		throw new UnsupportedOperationException();
+	public Customer(String custName) {
+		this.custName = custName;
 	}
-
-	/**
-	 * 
-	 * @param custName
-	 * @param custId
-	 * @param phoneNumb
-	 * @param email
-	 */
-	public Customer(String custName, int custId, int phoneNumb, String email) {
-		// TODO - implement Customer.Customer
-		throw new UnsupportedOperationException();
-	}
-
 }

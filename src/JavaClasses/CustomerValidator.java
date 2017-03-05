@@ -1,39 +1,28 @@
 public class CustomerValidator {
 
-	/**
-	 * 
-	 * @param custName
-	 */
-	public boolean custNameIsValid(String custName) {
-		// TODO - implement CustomerValidator.custNameIsValid
-		throw new UnsupportedOperationException();
-	}
-
-	/**
-	 * 
-	 * @param custId
-	 */
-	public boolean custIdIsValid(int custId) {
-		// TODO - implement CustomerValidator.custIdIsValid
-		throw new UnsupportedOperationException();
-	}
-
-	/**
-	 * 
-	 * @param phoneNumb
-	 */
 	public boolean phoneNumbIsValid(int phoneNumb) {
-		// TODO - implement CustomerValidator.phoneNumbIsValid
-		throw new UnsupportedOperationException();
+		return String.valueOf(phoneNumb).length() == 10;
 	}
 
-	/**
-	 * 
-	 * @param email
-	 */
 	public boolean emailIsValid(String email) {
-		// TODO - implement CustomerValidator.emailIsValid
-		throw new UnsupportedOperationException();
+		boolean containsAmpersand = false;
+		boolean containsPeriodAfterAmp = false;
+		char temp;
+		for (int i = 0; i < email.length(); i++) {
+			temp = email.charAt(i);
+			if (temp == '@') {
+				if (containsAmpersand) {
+					return false;
+				}
+				else {
+					containsAmpersand = true;
+				}
+			}
+			else if (containsAmpersand && temp == '.') {
+				containsPeriodAfterAmp = true;
+			}
+		}
+		return containsAmpersand && containsPeriodAfterAmp;
 	}
 
 }

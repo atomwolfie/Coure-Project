@@ -77,6 +77,7 @@ public class AddProduct {
 		
 		btnScanItem = new JButton("Scan Item");
 		btnScanItem.setBounds(304, 52, 117, 29);
+		btnScanItem.setToolTipText("Enter product ID and quantity then click here to get product information.");
 		frame.getContentPane().add(btnScanItem);
 		
 		lblName = new JLabel("Name: ");
@@ -93,6 +94,8 @@ public class AddProduct {
 		
 		btnAddItems = new JButton("Add item(s)");
 		btnAddItems.setBounds(305, 152, 117, 83);
+		btnAddItems.setToolTipText("After you've entered scanned an item, click here to add them.");
+		btnAddItems.setEnabled(false);
 		frame.getContentPane().add(btnAddItems);
 		
 		JButton btnGoBack = new JButton("go back");
@@ -116,12 +119,18 @@ public class AddProduct {
 					checkoutGUI.setVisible(true);
 	            }
 				if (e.getSource() == btnScanItem) { //check if item exists
-					purchase = new Purchases(Integer.parseInt(txtId.getText()),1,Integer.parseInt(textField.getText()));
-					if(purchase.isValidOrder() && purchase.isValidProduct()) {
+					purchase = new Purchases(Integer.parseInt(txtId.getText()),Integer.parseInt(textField.getText()));
+					if(purchase.isValidProduct()) {
 						DecimalFormat dec = new DecimalFormat("#.00");
 						lblName.setText("Name: " + purchase.getProductName());
 						lblPrice.setText("Price: $" + dec.format(purchase.getProdPrice()));
 						lblTotal.setText("Total: $" + dec.format(purchase.getPurchaseTotal()));
+						if (purchase.getQuantity() > 0) {
+							btnAddItems.setEnabled(true);
+						}
+						else {
+							btnAddItems.setEnabled(false);
+						}
 					}
 					else {
 						purchase = null;
@@ -143,7 +152,6 @@ public class AddProduct {
 	        }
 
 			private void setVisible(boolean b) {
-				// TODO Auto-generated method stub
 				frame.setVisible(b);
 			}
 	    };
@@ -155,7 +163,6 @@ public class AddProduct {
 	}
 
 	public void setVisible(boolean b) {
-		// TODO Auto-generated method stub
 		frame.setVisible(b);
 	}
-	}
+}

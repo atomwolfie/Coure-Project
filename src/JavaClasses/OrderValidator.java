@@ -1,48 +1,30 @@
 public class OrderValidator {
 
-	/**
-	 * 
-	 * @param dateTime
-	 */
 	public boolean dateTimeIsValid(String dateTime) {
-		// TODO - implement OrderValidator.dateTimeIsValid
-		throw new UnsupportedOperationException();
+		if (dateTime.length() != 19) { return false; }
+		for (int i = 0; i < 4; i++){
+			if (!Character.isDigit(dateTime.charAt(i))) { return false; }
+		}
+		for (int i = 4; i < 10; i += 3) {
+			if (dateTime.charAt(i) != '-') { return false; }
+			if (!Character.isDigit(dateTime.charAt(i + 1)) || !Character.isDigit(dateTime.charAt(i + 2))) { return false; }
+		}
+		if (dateTime.charAt(10) != ' ') { return false; }
+		for (int i = 11; i < 17; i += 3) {
+			if (!Character.isDigit(dateTime.charAt(i)) || !Character.isDigit(dateTime.charAt(i + 1))) { return false; }
+			if (dateTime.charAt(i + 2) != ':') { return false; }
+		}
+		if (!Character.isDigit(dateTime.charAt(17)) || !Character.isDigit(dateTime.charAt(18))) { return false; }
+
+		return true;
 	}
 
-	/**
-	 * 
-	 * @param orderTotal
-	 */
 	public boolean orderTotalIsValid(double orderTotal) {
-		// TODO - implement OrderValidator.orderTotalIsValid
-		throw new UnsupportedOperationException();
+		return orderTotal > 0;
 	}
 
-	/**
-	 * 
-	 * @param custId
-	 */
-	public boolean custIdIsValid(int custId) {
-		// TODO - implement OrderValidator.custIdIsValid
-		throw new UnsupportedOperationException();
-	}
-
-	/**
-	 * 
-	 * @param paymentMethod
-	 */
 	public boolean paymentMethodIsValid(String paymentMethod) {
-		// TODO - implement OrderValidator.paymentMethodIsValid
-		throw new UnsupportedOperationException();
-	}
-
-	/**
-	 * 
-	 * @param orderId
-	 */
-	public boolean orderIdIsValid(int orderId) {
-		// TODO - implement OrderValidator.orderIdIsValid
-		throw new UnsupportedOperationException();
+		return paymentMethod == "Cash" || paymentMethod == "Card";
 	}
 
 }

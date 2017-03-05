@@ -1,3 +1,8 @@
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 public class Order {
@@ -6,8 +11,8 @@ public class Order {
 	private double orderTotal;
 	private int custId;
 	private String paymentMethod;
-	private int orderId;
 	private ArrayList<Purchases> purchases;
+	private OrderValidator validator;
 
 	public int addNewPurchase(Purchases purchase) {
 
@@ -25,11 +30,15 @@ public class Order {
 	}
 
 	public void removePurchase(Purchases purchase) {
-		// TODO Implement
+		for (int i=0; i < this.purchases.size(); i++) {
+			if (this.purchases.get(i) == purchase) {
+				this.orderTotal -= this.purchases.get(i).getPurchaseTotal();
+				this.purchases.remove(i);
+			}
+		}
 	}
 
 	public void removePurchase(int purchaseIndex) {
-		// TODO Implement
 		this.orderTotal -= this.purchases.get(purchaseIndex).getPurchaseTotal();
 		this.purchases.remove(purchaseIndex);
 	}
@@ -42,34 +51,26 @@ public class Order {
 		return this.dateTime;
 	}
 
-	/**
-	 * 
-	 * @param dateTime
-	 */
 	public void setDateTime(String dateTime) {
-		this.dateTime = dateTime;
+		if (this.validator.dateTimeIsValid(dateTime)) {
+			this.dateTime = dateTime;
+		}
 	}
 
 	public double getOrderTotal() {
 		return this.orderTotal;
 	}
 
-	/**
-	 * 
-	 * @param orderTotal
-	 */
 	public void setOrderTotal(double orderTotal) {
-		this.orderTotal = orderTotal;
+		if (this.validator.orderTotalIsValid((orderTotal))) {
+			this.orderTotal = orderTotal;
+		}
 	}
 
 	public int getCustId() {
 		return this.custId;
 	}
 
-	/**
-	 * 
-	 * @param custId
-	 */
 	public void setCustId(int custId) {
 		this.custId = custId;
 	}
@@ -78,24 +79,10 @@ public class Order {
 		return this.paymentMethod;
 	}
 
-	/**
-	 * 
-	 * @param paymentMethod
-	 */
 	public void setPaymentMethod(String paymentMethod) {
-		this.paymentMethod = paymentMethod;
-	}
-
-	public int getOrderId() {
-		return this.orderId;
-	}
-
-	/**
-	 * 
-	 * @param orderId
-	 */
-	public void setOrderId(int orderId) {
-		this.orderId = orderId;
+		if (validator.paymentMethodIsValid(paymentMethod)) {
+			this.paymentMethod = paymentMethod;
+		}
 	}
 
 	public void reset(){
@@ -104,16 +91,58 @@ public class Order {
 		clearPurchases();
 	}
 
+	public int writeToDatabase(){
+		int orderid = -1;
+		try {
+			String url = "jdbc:mysql://localhost:3306/store?autoReconnect=true&useSSL=false";
+			Connection con = DriverManager.getConnection(url, "storeuser", "*fad!@plo*");
+			Statement myStmt = con.createStatement();
+			DecimalFormat dec = new DecimalFormat("#.00");
+			if (this.custId != -1) {
+				myStmt.executeUpdate("INSERT INTO orders (customerid,ordertotal,paymentmethod,date_time) VALUES ("
+						+ "'" + this.custId
+						+ "','" + dec.format(this.orderTotal * 1.03)
+						+ "','" + this.paymentMethod
+						+ "','" + this.dateTime
+						+ "')");
+			}
+			else {
+				myStmt.executeUpdate("INSERT INTO orders (customerid,ordertotal,paymentmethod,date_time) VALUES (NULL"
+						+ ",'" + dec.format(this.orderTotal * 1.03)
+						+ "','" + this.paymentMethod
+						+ "','" + this.dateTime
+						+ "')");
+			}
+
+			ResultSet myRsProducts = myStmt.executeQuery("SELECT * FROM orders ORDER BY orderid DESC LIMIT 1");
+			myRsProducts.next();
+			orderid = myRsProducts.getInt("orderid");
+
+			for (int i = 0; i < this.purchases.size(); i++) {
+				this.purchases.get(i).setOrderId(orderid);
+				this.purchases.get(i).writeToDatabase();
+			}
+		}
+		catch (Exception e){
+			e.printStackTrace();
+		}
+		return orderid;
+	}
+
 	public Order() {
 		java.util.Date date = new java.util.Date();
 
 		java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-
-		dateTime = sdf.format(date);
+		this.validator = new OrderValidator();
+		if (this.validator.dateTimeIsValid(sdf.format(date))) {
+			dateTime = sdf.format(date);
+		}
+		else {
+			dateTime = "1000-01-01 00:00:00";
+		}
 		this.orderTotal = 0;
-		//custId;
+		this.custId = -1;
 		this.paymentMethod = null;
-		//this.orderId;
 		this.purchases = new ArrayList();
 
 	}

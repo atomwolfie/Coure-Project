@@ -1,21 +1,10 @@
 public class PurchasesValidator {
 
-	/**
-	 * 
-	 * @param quantity
-	 */
 	public boolean quantityIsValid(int quantity) {
-		// TODO - implement PurchasesValidator.quantityIsValid
-		throw new UnsupportedOperationException();
+		return quantity > 0;
 	}
 
-	/**
-	 * 
-	 * @param purchaseTotal
-	 */
-	public boolean purchaseTotal(double purchaseTotal) {
-		// TODO - implement PurchasesValidator.purchaseTotal
-		throw new UnsupportedOperationException();
+	public boolean purchaseTotalIsValid(double purchaseTotal) {
+		return purchaseTotal > 0;
 	}
-
 }

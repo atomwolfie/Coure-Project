@@ -96,7 +96,6 @@ public class Payment {
 	        }
 
 			private void setVisible(boolean b) {
-				// TODO Auto-generated method stub
 				frame.setVisible(b);
 			}
 	    };
@@ -108,7 +107,6 @@ public class Payment {
 	}
 
 	public void setVisible(boolean b) {
-		// TODO Auto-generated method stub
 		frame.setVisible(b);
 	}
-	}
+}

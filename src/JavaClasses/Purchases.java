@@ -1,8 +1,8 @@
-import javax.swing.*;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 public class Purchases {
@@ -15,18 +15,15 @@ public class Purchases {
 	private double purchaseTotal;
 	private boolean isValidProduct;
 	private boolean isValidOrder;
+	private PurchasesValidator validator;
 	private ArrayList<String> items;
 	private	String[] str;
-	private String url = "jdbc:mysql://localhost:3306/joestore?autoReconnect=true&useSSL=false";
+	private String url = "jdbc:mysql://localhost:3306/store?autoReconnect=true&useSSL=false";
 
 	public int getProdId() {
 		return this.prodId;
 	}
 
-	/**
-	 * 
-	 * @param prodId
-	 */
 	public void setProdId(int prodId) {
 		this.prodId = prodId;
 	}
@@ -35,10 +32,6 @@ public class Purchases {
 		return this.orderId;
 	}
 
-	/**
-	 * 
-	 * @param orderId
-	 */
 	public void setOrderId(int orderId) {
 		this.orderId = orderId;
 	}
@@ -47,12 +40,10 @@ public class Purchases {
 		return this.quantity;
 	}
 
-	/**
-	 * 
-	 * @param quantity
-	 */
 	public void setQuantity(int quantity) {
-		this.quantity = quantity;
+		if (this.validator.quantityIsValid(quantity)) {
+			this.quantity = quantity;
+		}
 	}
 
 	public void incrementQuantity(int quantity) {
@@ -69,12 +60,10 @@ public class Purchases {
 		return this.purchaseTotal;
 	}
 
-	/**
-	 * 
-	 * @param purchaseTotal
-	 */
 	public void setPurchaseTotal(double purchaseTotal) {
-		this.purchaseTotal = purchaseTotal;
+		if (this.validator.purchaseTotalIsValid(purchaseTotal)) {
+			this.purchaseTotal = purchaseTotal;
+		}
 	}
 
 
@@ -82,12 +71,26 @@ public class Purchases {
 
 	public boolean isValidOrder() {	return isValidOrder; }
 
-	/**
-	 * 
-	 * @param prodId
-	 * @param orderId
-	 */
-	public Purchases(int prodId, int orderId) {
+	public void writeToDatabase() {
+		try {
+			String url = "jdbc:mysql://localhost:3306/store?autoReconnect=true&useSSL=false";
+			Connection con = DriverManager.getConnection(url, "storeuser", "*fad!@plo*");
+			Statement myStmt = con.createStatement();
+			DecimalFormat dec = new DecimalFormat("#.00");
+			myStmt.executeUpdate("INSERT INTO purchases VALUES ('"
+					+ this.prodId
+					+ "','" + this.orderId
+					+ "','" + this.quantity
+					+ "','" + dec.format(this.purchaseTotal)
+					+ "')");
+		}
+		catch (Exception e){
+			e.printStackTrace();
+		}
+	}
+
+	public Purchases(int prodId, int quantity) {
+		this.validator = new PurchasesValidator();
 		items = new ArrayList();
 		str = new String[items.size()];
 
@@ -96,28 +99,28 @@ public class Purchases {
 			Class.forName("com.mysql.jdbc.Driver");
 		}
 		catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		try {
-			Connection con = DriverManager.getConnection(url, "java", "java");
+			Connection con = DriverManager.getConnection(url, "storeuser", "*fad!@plo*");
 			Statement myStmt = con.createStatement();
 			ResultSet myRsProducts = myStmt.executeQuery("select * from products where productid=" + prodId);
-
+			this.orderId = -1;
 			if(myRsProducts.next()){
 				this.prodId = prodId;
-				this.quantity = 1;
+				if (this.validator.quantityIsValid(quantity)) {
+					this.quantity = quantity;
+				}
+				else {
+					this.isValidProduct = false;
+				}
 				this.prodPrice = myRsProducts.getFloat("productprice");
-				this.purchaseTotal = this.prodPrice;
+				this.purchaseTotal = this.prodPrice * this.quantity;
 				this.productName = myRsProducts.getString("productname");
 				this.isValidProduct = true;
 			}
-
-			ResultSet myRsOrders = myStmt.executeQuery("select * from orders where orderid=" + orderId);
-
-			if(myRsOrders.next()){
-				this.orderId = orderId;
-				this.isValidOrder = true;
+			else {
+				this.isValidProduct = false;
 			}
 
 		}
@@ -126,14 +129,9 @@ public class Purchases {
 		}
 	}
 
-	/**
-	 * 
-	 * @param prodId
-	 * @param orderId
-	 * @param quantity
-	 */
 	public Purchases(int prodId, int orderId, int quantity) {
 
+		this.validator = new PurchasesValidator();
 		items = new ArrayList();
 		str = new String[items.size()];
 
@@ -142,17 +140,21 @@ public class Purchases {
 			Class.forName("com.mysql.jdbc.Driver");
 		}
 		catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		try {
-			Connection con = DriverManager.getConnection(url, "java", "java");
+			Connection con = DriverManager.getConnection(url, "storeuser", "*fad!@plo*");
 			Statement myStmt = con.createStatement();
 			ResultSet myRsProducts = myStmt.executeQuery("select * from products where productid=" + prodId);
 
 			if(myRsProducts.next()){
 				this.prodId = prodId;
-				this.quantity = quantity;
+				if (this.validator.quantityIsValid(quantity)) {
+					this.quantity = quantity;
+				}
+				else {
+					this.isValidProduct = false;
+				}
 				this.prodPrice = myRsProducts.getFloat("productprice");
 				this.purchaseTotal = this.quantity*this.prodPrice;
 				this.productName = myRsProducts.getString("productname");
@@ -171,5 +173,4 @@ public class Purchases {
 			e.printStackTrace();
 		}
 	}
-
 }
