@@ -169,8 +169,8 @@ public class Inventory {
 	            if (e.getSource() == btnEdit) { 
 
 	            	this.setVisible(false);
-	            	//EditItem edit = new EditItem();
-	            	//edit.setVisible(true);
+	            	EditItem edit = new EditItem();
+	            	edit.setVisible(true);
 	            }
 	        }
 
