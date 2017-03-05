@@ -76,13 +76,17 @@ public class Inventory {
 		btnSaveChanges.setBounds(220, 110, 156, 29);
 		frame.getContentPane().add(btnSaveChanges);
 		
+		JButton btnDeleteItem = new JButton("delete item");
+		btnDeleteItem.setBounds(220, 140, 156, 29);
+		frame.getContentPane().add(btnDeleteItem);
+		
 		JButton btnGoBack = new JButton("go back");
 		btnGoBack.setBounds(305, 243, 117, 29);
 		frame.getContentPane().add(btnGoBack);
 		
 		
 		
-		JButton btnEdit = new JButton("edit");
+		JButton btnEdit = new JButton("edit item");
 		btnEdit.setBounds(220, 80, 117, 29);
 		frame.getContentPane().add(btnEdit);
 		
@@ -98,8 +102,8 @@ public class Inventory {
 		    e.printStackTrace();
 		} 
 		try {
-		    String url = "jdbc:mysql://localhost:3306/joestore?autoReconnect=true&useSSL=false";
-		    Connection con = DriverManager.getConnection(url, "java", "java");
+		    String url = "jdbc:mysql://localhost:3306/demo?autoReconnect=true&useSSL=false";
+		    Connection con = DriverManager.getConnection(url, "root", "W01fp@ck");
 		Statement myStmt = con.createStatement();
 		
 		ResultSet myRs = myStmt.executeQuery("select * from products");
@@ -126,9 +130,7 @@ public class Inventory {
 		list.setSelectedIndex(1);
 		list.setBounds(21, 70, 182, 163);
 		frame.getContentPane().add(list);
-		//java.awt.Container contentPane = frame.getContentPane();
-	    //contentPane.add(scrollPane, BorderLayout.CENTER);
-		//JScrollPane scrollpane = new JScrollPane(list);
+	
         
 		
 		ActionListener buttonListener = new ActionListener() {
@@ -136,19 +138,38 @@ public class Inventory {
 	        //we have to define this method in order for an Action Listener to work
 	        public void actionPerformed(ActionEvent e) { //'e' is the Action Event which is a button being clicked in our case
 
-	            if (e.getSource() == btnSaveChanges) { //saves changes to database and closes window and returns to main screen
+	            if (e.getSource() == btnSaveChanges) { //add item to database
 
 	            	this.setVisible(false);
 	               // check.setVisible(true);
-	            	MainScreen main = new MainScreen();
-	            	main.setVisible(true);
+	            	AddItem add = new AddItem();
+	            	add.setVisible(true);            	            	
+	          
 	            } 
-	            if (e.getSource() == btnGoBack) { //return to main screen
+	            if (e.getSource() == btnGoBack) { 
 
 	            	this.setVisible(false);
 	            	MainScreen main = new MainScreen();
 	            	main.setVisible(true);
 	            } 
+	            if (e.getSource() == btnSaveChanges) { 
+
+	            	this.setVisible(false);
+	            	AddItem add = new AddItem();
+	            	add.setVisible(true);
+	            }
+	            if (e.getSource() == btnDeleteItem) { //return to main screen
+
+	            	this.setVisible(false);
+	            	DeleteItem delete = new DeleteItem();
+	            	delete.setVisible(true);
+	            }
+	            if (e.getSource() == btnEdit) { 
+
+	            	this.setVisible(false);
+	            	EditItem edit = new EditItem();
+	            	edit.setVisible(true);
+	            }
 	        }
 
 			private void setVisible(boolean b) {
@@ -159,7 +180,8 @@ public class Inventory {
 	    
 		btnSaveChanges.addActionListener(buttonListener);
 		btnGoBack.addActionListener(buttonListener);
-
+		btnDeleteItem.addActionListener(buttonListener);
+		btnEdit.addActionListener(buttonListener);
 	}
 
 	public void setVisible(boolean b) {
