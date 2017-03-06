@@ -128,9 +128,11 @@ public class Inventory {
 		list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		list.setLayoutOrientation(JList.VERTICAL);
 		list.setSelectedIndex(1);
-		list.setBounds(21, 70, 182, 163);
-		frame.getContentPane().add(list);
-		
+		JScrollPane scrollPane = new JScrollPane(list);
+		scrollPane.setBounds(21, 70, 182, 163);
+		frame.getContentPane().add(scrollPane);
+
+
 		JLabel lblItemList = new JLabel("Item List");
 		lblItemList.setBounds(45, 44, 61, 16);
 		frame.getContentPane().add(lblItemList);
