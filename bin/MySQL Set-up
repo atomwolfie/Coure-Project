@@ -15,6 +15,7 @@ productname VARCHAR(255),
 productprice FLOAT(10,2), 
 provider VARCHAR(255), 
 type VARCHAR(255), 
+UNIQUE (productname), 
 PRIMARY KEY (productid) 
 );
 CREATE TABLE orders ( 
