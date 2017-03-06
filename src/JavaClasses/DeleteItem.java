@@ -17,6 +17,7 @@ public class DeleteItem {
 
 	private JFrame frame;
 	private JTextField txtName;
+	private String prodName;
 
 	/**
 	 * Launch the application.
@@ -38,6 +39,16 @@ public class DeleteItem {
 	 * Create the application.
 	 */
 	public DeleteItem() {
+		this.prodName = "name";
+		initialize();
+	}
+
+
+	/**
+	 * Create the application.
+	 */
+	public DeleteItem(String prodName) {
+		this.prodName = prodName;
 		initialize();
 	}
 
@@ -59,7 +70,7 @@ public class DeleteItem {
 		frame.getContentPane().add(lblEnterNameOf);
 		
 		txtName = new JTextField();
-		txtName.setText("name");
+		txtName.setText(prodName);
 		txtName.setBounds(204, 67, 130, 26);
 		frame.getContentPane().add(txtName);
 		txtName.setColumns(10);

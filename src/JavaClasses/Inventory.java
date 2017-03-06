@@ -150,7 +150,7 @@ public class Inventory {
 	               // check.setVisible(true);
 	            	AddItem add = new AddItem();
 	            	add.setVisible(true);            	            	
-	          
+
 	            } 
 	            if (e.getSource() == btnGoBack) { 
 
@@ -160,15 +160,32 @@ public class Inventory {
 	            }
 	            if (e.getSource() == btnDeleteItem) { //return to main screen
 
-	            	this.setVisible(false);
-	            	DeleteItem delete = new DeleteItem();
-	            	delete.setVisible(true);
+					int index = list.getSelectedIndex();
+					this.setVisible(false);
+					if (index != -1) {
+						DeleteItem delete = new DeleteItem(list.getSelectedValue().toString());
+						delete.setVisible(true);
+					}
+					else {
+						DeleteItem delete = new DeleteItem();
+						delete.setVisible(true);
+					}
 	            }
-	            if (e.getSource() == btnEdit) { 
+	            if (e.getSource() == btnEdit) {
 
-	            	this.setVisible(false);
-	            	EditItem edit = new EditItem();
-	            	edit.setVisible(true);
+					int index = list.getSelectedIndex();
+					this.setVisible(false);
+					if (index != -1) {
+						EditItem edit = new EditItem(list.getSelectedValue().toString());
+						edit.setVisible(true);
+					}
+					else {
+						EditItem edit = new EditItem();
+						edit.setVisible(true);
+					}
+	            	//this.setVisible(false);
+	            	//EditItem edit = new EditItem();
+	            	//edit.setVisible(true);
 	            }
 	        }
 

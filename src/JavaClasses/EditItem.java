@@ -23,6 +23,7 @@ public class EditItem {
 	private JTextField txtNewPrice;
 	private JTextField txtNewType;
 	private JTextField txtNewProvider;
+	private String prodName;
 
 	/**
 	 * Launch the application.
@@ -44,8 +45,17 @@ public class EditItem {
 	 * Create the application.
 	 */
 	public EditItem() {
+		this.prodName = "Name";
 		initialize();
 	}
+	/**
+	 * Create the application.
+	 */
+	public EditItem(String s) {
+		this.prodName = s;
+		initialize();
+	}
+
 
 	/**
 	 * Initialize the contents of the frame.
@@ -73,7 +83,7 @@ public class EditItem {
 		frame.getContentPane().add(lblNameOfItem);
 		
 		txtName = new JTextField();
-		txtName.setText("name");
+		txtName.setText(this.prodName);
 		txtName.setBounds(153, 51, 130, 26);
 		frame.getContentPane().add(txtName);
 		txtName.setColumns(10);
