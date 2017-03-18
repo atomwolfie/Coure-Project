@@ -51,6 +51,10 @@ public class Purchases {
 		this.purchaseTotal += this.prodPrice * quantity;
 	}
 
+	public void decrementQuantity(int quantity) {
+		this.quantity -= quantity;
+		this.purchaseTotal -= this.prodPrice * quantity;
+	}
 
 	public double getProdPrice() { return prodPrice; }
 
@@ -83,6 +87,46 @@ public class Purchases {
 					+ "','" + this.quantity
 					+ "','" + dec.format(this.purchaseTotal)
 					+ "')");
+		}
+		catch (Exception e){
+			e.printStackTrace();
+		}
+	}
+
+	public Purchases(String name, int quantity) {
+		this.validator = new PurchasesValidator();
+		items = new ArrayList();
+		str = new String[items.size()];
+
+
+		try {
+			Class.forName("com.mysql.jdbc.Driver");
+		}
+		catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		}
+		try {
+			Connection con = DriverManager.getConnection(url, "storeuser", "*fad!@plo*");
+			Statement myStmt = con.createStatement();
+			ResultSet myRsProducts = myStmt.executeQuery("SELECT * FROM products WHERE productname=\"" + name + "\"");
+			this.orderId = -1;
+			if(myRsProducts.next()){
+				this.prodId = myRsProducts.getInt("productid");
+				if (this.validator.quantityIsValid(quantity)) {
+					this.quantity = quantity;
+				}
+				else {
+					this.isValidProduct = false;
+				}
+				this.prodPrice = myRsProducts.getFloat("productprice");
+				this.purchaseTotal = this.prodPrice * this.quantity;
+				this.productName = myRsProducts.getString("productname");
+				this.isValidProduct = true;
+			}
+			else {
+				this.isValidProduct = false;
+			}
+
 		}
 		catch (Exception e){
 			e.printStackTrace();

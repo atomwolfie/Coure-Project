@@ -43,7 +43,7 @@ public class Receipt {
 	 */
 	private void initialize(Order curOrder) {
 		frame = new JFrame();
-		frame.setBounds(100, 100, 450, 468);
+		frame.setBounds(400, 100, 450, 700);
 		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		

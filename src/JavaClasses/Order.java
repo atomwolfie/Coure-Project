@@ -57,6 +57,16 @@ public class Order {
 		}
 	}
 
+	public void incrementPurchaseQuantity(int purchIndex, int decrAmount) {
+		this.purchases.get(purchIndex).incrementQuantity(decrAmount);
+		this.orderTotal += this.purchases.get(purchIndex).getProdPrice() * decrAmount;
+	}
+
+	public void decrementPurchaseQuantity(int purchIndex, int decrAmount) {
+		this.purchases.get(purchIndex).decrementQuantity(decrAmount);
+		this.orderTotal -= this.purchases.get(purchIndex).getProdPrice() * decrAmount;
+	}
+
 	public double getOrderTotal() {
 		return this.orderTotal;
 	}

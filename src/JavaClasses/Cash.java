@@ -43,7 +43,7 @@ public class Cash {
 	private void initialize(Order curOrder) {
 		this.currentOrder = curOrder;
 		frame = new JFrame();
-		frame.setBounds(100, 100, 450, 300);
+		 frame.setBounds(400, 100, 900, 700);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		
@@ -118,9 +118,9 @@ public class Cash {
 					//Write new data to mysql db
 
 	            	MainScreen main = new MainScreen();
-	            	main.setVisible(true);
-
 					Receipt receipt = new Receipt(currentOrder);
+					
+					main.setVisible(true);
 					receipt.setVisible(true);
 	            }
 	        }

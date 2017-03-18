@@ -43,22 +43,22 @@ public class MainScreen {
 	 */
 	private void initialize() {
 		frame = new JFrame();
-		frame.setBounds(100, 100, 450, 300);
+		frame.setBounds(400, 100, 900, 700);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		
 		JButton btnInventory = new JButton("Inventory");
-		btnInventory.setBounds(50, 101, 149, 61);
+		btnInventory.setBounds(210, 251, 149, 150);
 		frame.getContentPane().add(btnInventory);
 
 		
 				
 		JLabel lblNewLabel = new JLabel("Store Management System");
-		lblNewLabel.setBounds(133, 36, 268, 16);
+		lblNewLabel.setBounds(342, 160, 268, 16);
 		frame.getContentPane().add(lblNewLabel);
 		
 		JButton btnCheckout = new JButton("Checkout");
-		btnCheckout.setBounds(245, 101, 134, 61);
+		btnCheckout.setBounds(525, 251, 148, 150);
 		frame.getContentPane().add(btnCheckout);
 		
 		

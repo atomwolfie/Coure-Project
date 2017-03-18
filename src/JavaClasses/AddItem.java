@@ -4,6 +4,7 @@ import java.awt.event.ActionListener;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.ArrayList;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -53,7 +54,7 @@ public class AddItem {
 	 */
 	private void initialize() {
 		frame = new JFrame();
-		frame.setBounds(100, 100, 450, 300);
+		 frame.setBounds(400, 100, 900, 700);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		
@@ -172,7 +173,7 @@ public class AddItem {
 	        		String productType = txtType.getText();
 	        		System.out.println("product type:" + productType);
 	        		
-	        		String productProvider = txtType.getText();
+	        		String productProvider = txtProvider.getText();
 	        		System.out.println("product provider:" + productProvider);
 	        		
 	        		
@@ -210,6 +211,7 @@ public class AddItem {
 	        		this.setVisible(true);
 	        		Inventory inv = new Inventory();
 	                inv.setVisible(true);
+	                frame.dispose();
 	            } 
 	        }
 
