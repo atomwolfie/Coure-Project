@@ -18,7 +18,7 @@ public class Purchases {
 	private PurchasesValidator validator;
 	private ArrayList<String> items;
 	private	String[] str;
-	private String url = "jdbc:mysql://localhost:3306/store?autoReconnect=true&useSSL=false";
+	private String url = "jdbc:mysql://localhost:3306/demo?autoReconnect=true&useSSL=false";
 
 	public int getProdId() {
 		return this.prodId;
@@ -77,8 +77,8 @@ public class Purchases {
 
 	public void writeToDatabase() {
 		try {
-			String url = "jdbc:mysql://localhost:3306/store?autoReconnect=true&useSSL=false";
-			Connection con = DriverManager.getConnection(url, "storeuser", "*fad!@plo*");
+			String url = "jdbc:mysql://localhost:3306/demo?autoReconnect=true&useSSL=false";
+			Connection con = DriverManager.getConnection(url, "root", "W01fp@ck");
 			Statement myStmt = con.createStatement();
 			DecimalFormat dec = new DecimalFormat("#.00");
 			myStmt.executeUpdate("INSERT INTO purchases VALUES ('"
@@ -106,7 +106,7 @@ public class Purchases {
 			e.printStackTrace();
 		}
 		try {
-			Connection con = DriverManager.getConnection(url, "storeuser", "*fad!@plo*");
+			Connection con = DriverManager.getConnection(url, "root", "W01fp@ck");
 			Statement myStmt = con.createStatement();
 			ResultSet myRsProducts = myStmt.executeQuery("SELECT * FROM products WHERE productname=\"" + name + "\"");
 			this.orderId = -1;
@@ -146,7 +146,7 @@ public class Purchases {
 			e.printStackTrace();
 		}
 		try {
-			Connection con = DriverManager.getConnection(url, "storeuser", "*fad!@plo*");
+			Connection con = DriverManager.getConnection(url, "root", "W01fp@ck");
 			Statement myStmt = con.createStatement();
 			ResultSet myRsProducts = myStmt.executeQuery("select * from products where productid=" + prodId);
 			this.orderId = -1;
@@ -187,7 +187,7 @@ public class Purchases {
 			e.printStackTrace();
 		}
 		try {
-			Connection con = DriverManager.getConnection(url, "storeuser", "*fad!@plo*");
+			Connection con = DriverManager.getConnection(url, "root", "W01fp@ck");
 			Statement myStmt = con.createStatement();
 			ResultSet myRsProducts = myStmt.executeQuery("select * from products where productid=" + prodId);
 

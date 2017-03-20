@@ -48,17 +48,17 @@ public class MainScreen {
 		frame.getContentPane().setLayout(null);
 		
 		JButton btnInventory = new JButton("Inventory");
-		btnInventory.setBounds(210, 251, 149, 150);
+		btnInventory.setBounds(190, 251, 250, 190);
 		frame.getContentPane().add(btnInventory);
 
 		
 				
 		JLabel lblNewLabel = new JLabel("Store Management System");
-		lblNewLabel.setBounds(342, 160, 268, 16);
+		lblNewLabel.setBounds(392, 160, 268, 16);
 		frame.getContentPane().add(lblNewLabel);
 		
 		JButton btnCheckout = new JButton("Checkout");
-		btnCheckout.setBounds(525, 251, 148, 150);
+		btnCheckout.setBounds(500, 251, 250, 190);
 		frame.getContentPane().add(btnCheckout);
 		
 		

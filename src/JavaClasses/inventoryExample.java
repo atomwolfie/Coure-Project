@@ -21,9 +21,9 @@ import javax.swing.table.*;
 
 
 
-public class Inventory {
+public class inventoryExample {
 
-	private JFrame frame;
+	JFrame frame;
 	private JTable table;
 	private JTextField txtId;
 	private JTextField txtName;
@@ -59,7 +59,7 @@ public class Inventory {
 	/**
 	 * Create the application.
 	 */
-	public Inventory() {
+	public inventoryExample() {
 		initialize();
 	}
 
@@ -390,10 +390,4 @@ public class Inventory {
 		});
 	
 			}
-
-	public void setVisible(boolean b) {
-		// TODO Auto-generated method stub
-		this.frame.setVisible(b);
-
-	}
 }

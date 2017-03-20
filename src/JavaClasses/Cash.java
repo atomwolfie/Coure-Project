@@ -48,42 +48,42 @@ public class Cash {
 		frame.getContentPane().setLayout(null);
 		
 		JLabel lblCash = new JLabel("Cash");
-		lblCash.setBounds(178, 20, 91, 16);
+		lblCash.setBounds(392, 160, 268, 16);
 		frame.getContentPane().add(lblCash);
 		
 		JButton btnPrintReceipt = new JButton("Print Receipt");
-		btnPrintReceipt.setBounds(281, 184, 150, 67);
+		btnPrintReceipt.setBounds(370, 400, 150, 67);
 		btnPrintReceipt.setBackground(new Color(95,186,125));
 		btnPrintReceipt.setEnabled(false);
 		frame.getContentPane().add(btnPrintReceipt);
 		
 		textField = new JTextField();
 		textField.setText("");
-		textField.setBounds(206, 52, 130, 26);
+		textField.setBounds(380, 240, 130, 26);
 		frame.getContentPane().add(textField);
 		textField.setColumns(10);
 		
 		JLabel lblEnterAmmount = new JLabel("Enter amount:");
-		lblEnterAmmount.setBounds(96, 57, 150, 16);
+		lblEnterAmmount.setBounds(280, 245, 150, 16);
 		frame.getContentPane().add(lblEnterAmmount);
 
 		Double tax = this.currentOrder.getOrderTotal() * .03;
 
 		DecimalFormat dec = new DecimalFormat("#.00");
 		JLabel lblTotal = new JLabel("Total: $" + dec.format(this.currentOrder.getOrderTotal() + tax));
-		lblTotal.setBounds(157, 100, 150, 16);
+		lblTotal.setBounds(380, 185, 150, 16);
 		frame.getContentPane().add(lblTotal);
 		
 		JLabel lblChange = new JLabel("Change:");
-		lblChange.setBounds(138, 141, 150, 16);
+		lblChange.setBounds(280, 285, 150, 16);
 		frame.getContentPane().add(lblChange);
 		
 		JButton btnEnter = new JButton("enter");
-		btnEnter.setBounds(343, 50, 91, 29);
+		btnEnter.setBounds(520, 240, 91, 29);
 		frame.getContentPane().add(btnEnter);
 		
 		JButton btnGoBack = new JButton("Go Back");
-		btnGoBack.setBounds(18, 222, 117, 29);
+		btnGoBack.setBounds(700, 610, 117, 29);
 		frame.getContentPane().add(btnGoBack);
 		
 		ActionListener buttonListener = new ActionListener() {

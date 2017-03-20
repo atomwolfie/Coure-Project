@@ -46,26 +46,26 @@ public class Payment {
 		frame.getContentPane().setLayout(null);
 		
 		JButton btnCash = new JButton("Cash");
-		btnCash.setBounds(58, 87, 143, 76);
+		btnCash.setBounds(190, 251, 250, 190);
 		frame.getContentPane().add(btnCash);
 		
 		JButton btnCard = new JButton("Credit Card");
-		btnCard.setBounds(229, 87, 143, 76);
+		btnCard.setBounds(500, 251, 250, 190);
 		frame.getContentPane().add(btnCard);
 		
 		JButton btnGoBack = new JButton("Go Back");
-		btnGoBack.setBounds(18, 222, 117, 29);
+		btnGoBack.setBounds(700, 610, 117, 29);
 		frame.getContentPane().add(btnGoBack);
 		
 		JLabel lblNewLabel = new JLabel("Payment Method");
-		lblNewLabel.setBounds(158, 19, 126, 16);
+		lblNewLabel.setBounds(392, 160, 268, 16);
 		frame.getContentPane().add(lblNewLabel);
 
 		Double tax = this.currentOrder.getOrderTotal() * .03;
 
 		DecimalFormat dec = new DecimalFormat("#.00");
 		JLabel lblTotal = new JLabel("Total: $" + dec.format(this.currentOrder.getOrderTotal() + tax));
-		lblTotal.setBounds(158, 55, 150, 16);
+		lblTotal.setBounds(405, 190, 268, 16);
 		frame.getContentPane().add(lblTotal);
 		
 		ActionListener buttonListener = new ActionListener() {

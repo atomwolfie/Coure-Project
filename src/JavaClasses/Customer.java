@@ -51,8 +51,8 @@ public class Customer {
 	public int writeToDatabase() {
 		int customerid = -1;
 		try {
-			String url = "jdbc:mysql://localhost:3306/store?autoReconnect=true&useSSL=false";
-			Connection con = DriverManager.getConnection(url, "storeuser", "*fad!@plo*");
+			String url = "jdbc:mysql://localhost:3306/demo?autoReconnect=true&useSSL=false";
+			Connection con = DriverManager.getConnection(url, "root", "W01fp@ck");
 			Statement myStmt = con.createStatement();
 			ResultSet myRsProducts = myStmt.executeQuery("SELECT * FROM customers WHERE customername='" + this.custName + "'");
 			if (!myRsProducts.next()) {
