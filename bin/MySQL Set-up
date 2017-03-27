@@ -1,0 +1,46 @@
+CREATE DATABASE store;
+CREATE USER 'storeuser'@'localhost' IDENTIFIED BY '*fad!@plo*';
+GRANT ALL ON store.* TO 'storeuser'@'localhost' IDENTIFIED BY '*fad!@plo*';
+USE store;
+CREATE TABLE customers ( 
+customerid MEDIUMINT NOT NULL AUTO_INCREMENT, 
+customername VARCHAR(255), 
+email VARCHAR(255), 
+phonenumber VARCHAR(255), 
+PRIMARY KEY (customerid) 
+);
+CREATE TABLE products ( 
+productid MEDIUMINT NOT NULL, 
+productname VARCHAR(255), 
+productprice FLOAT(10,2), 
+provider VARCHAR(255), 
+type VARCHAR(255), 
+UNIQUE KEY (productname), 
+PRIMARY KEY (productid) 
+);
+CREATE TABLE orders ( 
+orderid MEDIUMINT NOT NULL AUTO_INCREMENT, 
+customerid MEDIUMINT, 
+ordertotal FLOAT(10,2), 
+paymentmethod VARCHAR(50), 
+date_time DATETIME, 
+PRIMARY KEY (orderid), 
+FOREIGN KEY (customerid) REFERENCES customers(customerid) 
+);
+CREATE TABLE purchases (
+productid MEDIUMINT NOT NULL,
+orderid MEDIUMINT NOT NULL,
+quantity MEDIUMINT,
+purchasetotal FLOAT(10,2),
+PRIMARY KEY (productid,orderid),
+FOREIGN KEY (productid) REFERENCES products(productid),
+FOREIGN KEY (orderid) REFERENCES orders(orderid)
+);
+CREATE TABLE employees (
+employeeid MEDIUMINT NOT NULL AUTO_INCREMENT,
+employeefirstname VARCHAR(255),
+employeelastname VARCHAR(255),
+employeestatus VARCHAR(255),
+employeepicfilepath VARCHAR(510),
+PRIMARY KEY(employeeid)
+);
