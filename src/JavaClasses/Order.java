@@ -103,7 +103,41 @@ public class Order {
 
 	public int writeToDatabase(){
 		int orderid = -1;
+		String tableAndCols = "orders (customerid,ordertotal,paymentmethod,date_time)";
+		String values;
+
+		DecimalFormat dec = new DecimalFormat("#.00");
+
+		if (this.custId != -1) {
+			values = "\"" + this.custId + "\",\""
+					+ dec.format(this.orderTotal * 1.03) + "\",\""
+					+ this.paymentMethod + "\",\""
+					+ this.dateTime + "\"";
+			DBConnection.dbInsertInto(tableAndCols, values);
+		}
+		else {
+			values = "NULL,\""
+					+ dec.format(this.orderTotal * 1.03) + "\",\""
+					+ this.paymentMethod + "\",\""
+					+ this.dateTime + "\"";
+			DBConnection.dbInsertInto(tableAndCols, values);
+		}
+
+		ResultSet myRsProducts = DBConnection.dbSelectAllFromTableOrderBy("orders", "orderid DESC LIMIT 1");
 		try {
+			myRsProducts.next();
+			orderid = myRsProducts.getInt("orderid");
+
+			for (int i = 0; i < this.purchases.size(); i++) {
+				this.purchases.get(i).setOrderId(orderid);
+				this.purchases.get(i).writeToDatabase();
+			}
+		}
+		catch (Exception e){
+			e.printStackTrace();
+		}
+
+		/*try {
 			String url = "jdbc:mysql://localhost:3306/demo?autoReconnect=true&useSSL=false";
 			Connection con = DriverManager.getConnection(url, "root", "W01fp@ck");
 			Statement myStmt = con.createStatement();
@@ -135,7 +169,7 @@ public class Order {
 		}
 		catch (Exception e){
 			e.printStackTrace();
-		}
+		}*/
 		return orderid;
 	}
 

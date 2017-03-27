@@ -175,11 +175,13 @@ public class AddItem {
 	        		
 	        		String productProvider = txtProvider.getText();
 	        		System.out.println("product provider:" + productProvider);
-	        		
-	        		
+
+	        		DBConnection.dbInsertInto("products (productid,productname,productprice,provider,type)", id
+							+ ",\"" + productName + "\"," + productPrice + ",\"" + productProvider + "\",\"" + productType + "\"");
+
 	        		//try catch here
 	        		
-	        		try {
+	        		/*try {
 	        		    String url = "jdbc:mysql://localhost:3306/store?autoReconnect=true&useSSL=false";
 	        		    Connection myCon = (Connection) DriverManager.getConnection(url, "storeuser", "*fad!@plo*");
 	        		Statement myStmt = (Statement) myCon.createStatement();
@@ -206,7 +208,7 @@ public class AddItem {
 	        		}
 	        		catch (Exception e1){
 	        		    e1.printStackTrace();
-	        		}
+	        		}*/
 	        		
 	        		this.setVisible(true);
 	        		Inventory inv = new Inventory();

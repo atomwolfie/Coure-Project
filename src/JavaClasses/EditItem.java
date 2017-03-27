@@ -190,8 +190,9 @@ public class EditItem {
 	        		
 	        		//EDIT ITEM IN DATABASE
 	        		try {
-	        		    String url = "jdbc:mysql://localhost:3306/demo?autoReconnect=true&useSSL=false";
-	        		    Connection myCon = (Connection) DriverManager.getConnection(url, "root", "W01fp@ck");
+	        		    //String url = "jdbc:mysql://localhost:3306/demo?autoReconnect=true&useSSL=false";
+	        		    //Connection myCon = (Connection) DriverManager.getConnection(url, "root", "W01fp@ck");
+						Connection myCon = (Connection) DriverManager.getConnection(DBConnection.dbUrl, DBConnection.dbUser, DBConnection.dbPassword);
 	        		Statement myStmt = (Statement) myCon.createStatement();
 	        		
 	        		

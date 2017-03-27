@@ -49,8 +49,8 @@ public class Checkout {
 		initialize();
 	}
 	public Checkout(Order curOrder) {
-		initialize();
 		this.currentOrder = curOrder;
+		initialize();
 		populateTable();
 	}
 
@@ -59,7 +59,9 @@ public class Checkout {
 	 */
 	private void initialize() {
 		dec = new DecimalFormat("#.00");
-		this.currentOrder = new Order();
+		if (this.currentOrder == null) {
+			this.currentOrder = new Order();
+		}
 		frame = new JFrame();
 		 frame.setBounds(400, 100, 900, 700);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -112,15 +114,15 @@ public class Checkout {
 		btnAddItem.setBounds(135, 288, 100, 40);
 		frame.getContentPane().add(btnAddItem);
 		
-		/*JButton btnRemoveItem = new JButton("Remove Item");
-		btnRemoveItem.setBounds(30, 92, 125, 40);
-		btnRemoveItem.setToolTipText("Select rows and then click here to remove them.");
-		frame.getContentPane().add(btnRemoveItem);*/
-		
 		btnPay = new JButton("Finish and Pay");
 		btnPay.setBounds(57, 470, 150, 56);
 		btnPay.setBackground(new Color(95,186,125));
-		btnPay.setEnabled(false);
+		if (this.currentOrder == null || this.currentOrder.getOrderTotal() == 0) {
+			btnPay.setEnabled(false);
+		}
+		else {
+			btnPay.setEnabled(true);
+		}
 		frame.getContentPane().add(btnPay);
 		
 		JButton btnStartOver = new JButton("Start Over");
@@ -175,37 +177,20 @@ public class Checkout {
             	MainScreen main = new MainScreen();
             	main.setVisible(true);
             	frame.dispose();
-            } 
+            }
+
             if (e.getSource() == btnAddItem) {
 				scanForItem();
-            	/*this.setVisible(false);
-            	addProductGUI();*/
             } 
-            /*if (e.getSource() == btnRemoveItem) {
 
-            	int[] rowsToDelete = table.getSelectedRows();
-
-            	for (int i = rowsToDelete.length - 1; i >= 0; i--) {
-            		currentOrder.removePurchase(rowsToDelete[i]);
-            		model.removeRow(rowsToDelete[i]);
-				}
-            	if (currentOrder.getOrderTotal() == 0) {
-					btnPay.setEnabled(false);
-					lblTotal.setText("Total: $0.00");
-				}
-				else {
-					lblTotal.setText("Total: $" + dec.format(currentOrder.getOrderTotal()));
-				}
-            }*/
             if (e.getSource() == btnStartOver) {  //start over button, starts everything over
-
 				currentOrder.reset();
             	currentOrder.clearPurchases();
             	model.setRowCount(0);
 				btnPay.setEnabled(false);
 				lblTotal.setText("Total: $0.00");
-            	
             }
+
             if (e.getSource() == btnPay) { 
 
             	this.setVisible(false);
@@ -222,7 +207,6 @@ public class Checkout {
     
 	btnGoBack.addActionListener(buttonListener);
 	btnAddItem.addActionListener(buttonListener);
-	//btnRemoveItem.addActionListener(buttonListener);
 	btnStartOver.addActionListener(buttonListener);
 	btnPay.addActionListener(buttonListener);
 
@@ -241,11 +225,6 @@ public class Checkout {
 		}
 	});
 }
-
-	/*private void addProductGUI(){
-		AddProduct add = new AddProduct(this);
-		add.setVisible(true);
-	}*/
 
 	private void incrRow(int row) {
 		currentOrder.incrementPurchaseQuantity(row, 1);

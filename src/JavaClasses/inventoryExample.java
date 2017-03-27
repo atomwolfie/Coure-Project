@@ -8,7 +8,7 @@ import com.mysql.jdbc.Connection;
 import com.mysql.jdbc.PreparedStatement;
 import com.mysql.jdbc.Statement;
 
-import net.proteanit.sql.DbUtils;
+//import net.proteanit.sql.DbUtils;
 
 import javax.swing.JScrollPane;
 import java.awt.event.ActionListener;
@@ -85,7 +85,7 @@ public class inventoryExample {
 				java.sql.PreparedStatement  pst = con.prepareStatement(query);
 				ResultSet rs = pst.executeQuery();
 				
-				table.setModel(DbUtils.resultSetToTableModel(rs));
+				//table.setModel(DbUtils.resultSetToTableModel(rs));
 						//do stuff
 				
 				

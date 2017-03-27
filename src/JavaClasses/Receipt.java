@@ -61,11 +61,11 @@ public class Receipt {
 		frame.getContentPane().add(lblNewLabel_1);
 		
 		JLabel label = new JLabel("----------------------------------------");
-		label.setBounds(45, 258, 373, 16);
+		label.setBounds(45, 508, 373, 16);
 		frame.getContentPane().add(label);
 		
 		JLabel label_1 = new JLabel("----------------------------------------");
-		label_1.setBounds(45, 305, 373, 16);
+		label_1.setBounds(45, 555, 373, 16);
 		frame.getContentPane().add(label_1);
 
 		Double tax = curOrder.getOrderTotal() * .03;
@@ -73,11 +73,11 @@ public class Receipt {
 		DecimalFormat dec = new DecimalFormat("#.00");
 
 		JLabel lblTax = new JLabel("tax: $" + dec.format(tax));
-		lblTax.setBounds(104, 285, 150, 16);
+		lblTax.setBounds(104, 535, 150, 16);
 		frame.getContentPane().add(lblTax);
 		
 		JLabel lblTotal = new JLabel("total: $" + dec.format((curOrder.getOrderTotal() + tax)));
-		lblTotal.setBounds(104, 327, 150, 16);
+		lblTotal.setBounds(104, 577, 150, 16);
 		frame.getContentPane().add(lblTotal);
 
 		String[] columnNames = {"Product","Quantity","Price"};
@@ -93,15 +93,15 @@ public class Receipt {
 		table.getColumnModel().getColumn(2).setCellRenderer(rightRenderer);
 		fillTable(curOrder);
 		JScrollPane scrollPane = new JScrollPane(table);
-		scrollPane.setBounds(55,95,317,148);
+		scrollPane.setBounds(55,95,317,398);
 		frame.getContentPane().add(scrollPane);
 		
 		JLabel lblNewLabel_2 = new JLabel("tel: (435) 757 - 2211");
-		lblNewLabel_2.setBounds(141, 368, 143, 16);
+		lblNewLabel_2.setBounds(141, 618, 143, 16);
 		frame.getContentPane().add(lblNewLabel_2);
 		
 		JLabel lblMrsmithgroceryemailcom = new JLabel("email: mrsmithgrocery@email.com");
-		lblMrsmithgroceryemailcom.setBounds(141, 396, 248, 16);
+		lblMrsmithgroceryemailcom.setBounds(141, 646, 248, 16);
 		frame.getContentPane().add(lblMrsmithgroceryemailcom);
 	}
 

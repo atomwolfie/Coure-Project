@@ -30,7 +30,6 @@ public class MainScreen {
 			}
 		});
 	}
-
 	/**
 	 * Create the application.
 	 */

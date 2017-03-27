@@ -8,7 +8,9 @@ import com.mysql.jdbc.Connection;
 import com.mysql.jdbc.PreparedStatement;
 import com.mysql.jdbc.Statement;
 
-import net.proteanit.sql.DbUtils;
+//~~~~~~~~~~~~~~~ I commented this code out to test if the db connection stuff would work ~~~~~~~~~~~~~~~~~~~~
+//import net.proteanit.sql.DbUtils;
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 import javax.swing.JScrollPane;
 import java.awt.event.ActionListener;
@@ -35,12 +37,6 @@ public class Inventory {
 	/**
 	 * Launch the application.
 	 */
-	
-	
-	
-	
-	
-	
 	
 	
 	public static void main(String[] args) {
@@ -75,25 +71,28 @@ public class Inventory {
 		JButton btnLoadProducts = new JButton("Load Products");
 		btnLoadProducts.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-			
+
 				try {
-					String url = "jdbc:mysql://localhost:3306/demo?autoReconnect=true&useSSL=false";
-					Connection con = (Connection) DriverManager.getConnection(url, "root", "W01fp@ck");
-							
+					//String url = "jdbc:mysql://localhost:3306/demo?autoReconnect=true&useSSL=false";
+					//Connection con = (Connection) DriverManager.getConnection(url, "root", "W01fp@ck");
+					Connection con = (Connection) DriverManager.getConnection(DBConnection.dbUrl, DBConnection.dbUser, DBConnection.dbPassword);
 				String query  = "select * from products";
 				
 				java.sql.PreparedStatement  pst = con.prepareStatement(query);
 				ResultSet rs = pst.executeQuery();
-				
-				table.setModel(DbUtils.resultSetToTableModel(rs));
-						//do stuff
+
+				//~~~~~~~~~~~~~~~ I commented this code out to test if the db connection stuff would work ~~~~~~~~~~~~~~~~~~~~
+				//table.setModel(DbUtils.resultSetToTableModel(rs));
+				//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+					//do stuff
 				
 				
 				}
 			
 				catch (Exception e1){
 				    e1.printStackTrace();
-				}	
+				}
 			
 			}
 		});
@@ -214,8 +213,9 @@ public class Inventory {
 				
 				//EDIT ITEM IN DATABASE
         		try {
-        		    String url = "jdbc:mysql://localhost:3306/demo?autoReconnect=true&useSSL=false";
-        		    Connection myCon = (Connection) DriverManager.getConnection(url, "root", "W01fp@ck");
+					//String url = "jdbc:mysql://localhost:3306/demo?autoReconnect=true&useSSL=false";
+					//Connection con = (Connection) DriverManager.getConnection(url, "root", "W01fp@ck");
+					Connection myCon = (Connection) DriverManager.getConnection(DBConnection.dbUrl, DBConnection.dbUser, DBConnection.dbPassword);
         		Statement myStmt = (Statement) myCon.createStatement();
         		
         		
@@ -309,10 +309,10 @@ public class Inventory {
 			txtName.setText("name");	
 			 
 			 try {
-	            	String url = "jdbc:mysql://localhost:3306/demo?autoReconnect=true&useSSL=false";
 
-				 // 1. Get a connection to database
-         		java.sql.Connection myConn2 = DriverManager.getConnection(url, "root", "W01fp@ck");
+				 //String url = "jdbc:mysql://localhost:3306/demo?autoReconnect=true&useSSL=false";
+				 //Connection con = (Connection) DriverManager.getConnection(url, "root", "W01fp@ck");
+				 Connection myConn2 = (Connection) DriverManager.getConnection(DBConnection.dbUrl, DBConnection.dbUser, DBConnection.dbPassword);
          		// 2. Create a statement
          		java.sql.Statement myStmt = myConn2.createStatement();
          		// 3. Execute SQL query
@@ -357,8 +357,9 @@ public class Inventory {
         		
         		
         		try {
-        		    String url = "jdbc:mysql://localhost:3306/demo?autoReconnect=true&useSSL=false";
-        		    Connection myCon = (Connection) DriverManager.getConnection(url, "root", "W01fp@ck");
+					//String url = "jdbc:mysql://localhost:3306/demo?autoReconnect=true&useSSL=false";
+					//Connection con = (Connection) DriverManager.getConnection(url, "root", "W01fp@ck");
+					Connection myCon = (Connection) DriverManager.getConnection(DBConnection.dbUrl, DBConnection.dbUser, DBConnection.dbPassword);
         		Statement myStmt = (Statement) myCon.createStatement();
         		       		
         		
@@ -387,6 +388,7 @@ public class Inventory {
         		    e1.printStackTrace();
         		}
 			}
+
 		});
 	
 			}

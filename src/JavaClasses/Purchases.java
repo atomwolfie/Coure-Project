@@ -18,7 +18,7 @@ public class Purchases {
 	private PurchasesValidator validator;
 	private ArrayList<String> items;
 	private	String[] str;
-	private String url = "jdbc:mysql://localhost:3306/demo?autoReconnect=true&useSSL=false";
+	//private String url = "jdbc:mysql://localhost:3306/demo?autoReconnect=true&useSSL=false";
 
 	public int getProdId() {
 		return this.prodId;
@@ -76,7 +76,10 @@ public class Purchases {
 	public boolean isValidOrder() {	return isValidOrder; }
 
 	public void writeToDatabase() {
-		try {
+		DecimalFormat dec = new DecimalFormat("#.00");
+		DBConnection.dbInsertInto("purchases", "\"" + this.prodId + "\",\"" + this.orderId + "\",\""
+				+ this.quantity + "\",\"" + dec.format(this.purchaseTotal) + "\"");
+		/*try {
 			String url = "jdbc:mysql://localhost:3306/demo?autoReconnect=true&useSSL=false";
 			Connection con = DriverManager.getConnection(url, "root", "W01fp@ck");
 			Statement myStmt = con.createStatement();
@@ -90,7 +93,7 @@ public class Purchases {
 		}
 		catch (Exception e){
 			e.printStackTrace();
-		}
+		}*/
 	}
 
 	public Purchases(String name, int quantity) {
@@ -98,8 +101,30 @@ public class Purchases {
 		items = new ArrayList();
 		str = new String[items.size()];
 
+		ResultSet myRsProducts = DBConnection.dbSelectAllFromTableWhere("products", "productname=\"" + name + "\"");
 
+		this.orderId = -1;
 		try {
+			if (myRsProducts.next()) {
+				this.prodId = myRsProducts.getInt("productid");
+				if (this.validator.quantityIsValid(quantity)) {
+					this.quantity = quantity;
+				} else {
+					this.isValidProduct = false;
+				}
+				this.prodPrice = myRsProducts.getFloat("productprice");
+				this.purchaseTotal = this.prodPrice * this.quantity;
+				this.productName = myRsProducts.getString("productname");
+				this.isValidProduct = true;
+			} else {
+				this.isValidProduct = false;
+			}
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		/*try {
 			Class.forName("com.mysql.jdbc.Driver");
 		}
 		catch (ClassNotFoundException e) {
@@ -130,7 +155,7 @@ public class Purchases {
 		}
 		catch (Exception e){
 			e.printStackTrace();
-		}
+		}*/
 	}
 
 	public Purchases(int prodId, int quantity) {
@@ -138,17 +163,18 @@ public class Purchases {
 		items = new ArrayList();
 		str = new String[items.size()];
 
+		ResultSet myRsProducts = DBConnection.dbSelectAllFromTableWhere("products", "productid=\"" + prodId + "\"");
 
-		try {
+		/*try {
 			Class.forName("com.mysql.jdbc.Driver");
 		}
 		catch (ClassNotFoundException e) {
 			e.printStackTrace();
-		}
+		}*/
 		try {
-			Connection con = DriverManager.getConnection(url, "root", "W01fp@ck");
+			/*Connection con = DriverManager.getConnection(url, "root", "W01fp@ck");
 			Statement myStmt = con.createStatement();
-			ResultSet myRsProducts = myStmt.executeQuery("select * from products where productid=" + prodId);
+			ResultSet myRsProducts = myStmt.executeQuery("select * from products where productid=" + prodId);*/
 			this.orderId = -1;
 			if(myRsProducts.next()){
 				this.prodId = prodId;
@@ -180,16 +206,19 @@ public class Purchases {
 		str = new String[items.size()];
 
 
-		try {
+		/*try {
 			Class.forName("com.mysql.jdbc.Driver");
 		}
 		catch (ClassNotFoundException e) {
 			e.printStackTrace();
-		}
+		}*/
+
+		ResultSet myRsProducts = DBConnection.dbSelectAllFromTableWhere("products", "productid=\"" + prodId + "\"");
+
 		try {
-			Connection con = DriverManager.getConnection(url, "root", "W01fp@ck");
+			/*Connection con = DriverManager.getConnection(url, "root", "W01fp@ck");
 			Statement myStmt = con.createStatement();
-			ResultSet myRsProducts = myStmt.executeQuery("select * from products where productid=" + prodId);
+			ResultSet myRsProducts = myStmt.executeQuery("select * from products where productid=" + prodId);*/
 
 			if(myRsProducts.next()){
 				this.prodId = prodId;
@@ -205,7 +234,9 @@ public class Purchases {
 				this.isValidProduct = true;
 			}
 
-			ResultSet myRsOrders = myStmt.executeQuery("select * from orders where orderid=" + orderId);
+			ResultSet myRsOrders = DBConnection.dbSelectAllFromTableWhere("orders", "orderid=\"" + orderId + "\"");
+
+			//ResultSet myRsOrders = myStmt.executeQuery("select * from orders where orderid=" + orderId);
 
 			if(myRsOrders.next()){
 				this.orderId = orderId;
