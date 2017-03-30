@@ -1,17 +1,18 @@
-import java.awt.EventQueue;
+import java.awt.*;
 
-import javax.swing.JFrame;
-import javax.swing.JButton;
-import java.awt.BorderLayout;
-import javax.swing.JLabel;
+import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.sql.*;
 
 
 public class MainScreen {
 
 	private JFrame frame;
+	private JLabel imageLabel;
+	private Employee curEmployee;
 
 	/**
 	 * Launch the application.
@@ -37,6 +38,12 @@ public class MainScreen {
 		initialize();
 	}
 
+
+	public MainScreen(Employee empl) {
+		this.curEmployee = empl;
+		initialize();
+	}
+
 	/**
 	 * Initialize the contents of the frame.
 	 */
@@ -45,25 +52,51 @@ public class MainScreen {
 		frame.setBounds(400, 100, 900, 700);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
-		
-		JButton btnInventory = new JButton("Inventory");
-		btnInventory.setBounds(190, 251, 250, 190);
-		frame.getContentPane().add(btnInventory);
-
-		
 				
 		JLabel lblNewLabel = new JLabel("Store Management System");
 		lblNewLabel.setBounds(392, 160, 268, 16);
 		frame.getContentPane().add(lblNewLabel);
-		
+
 		JButton btnCheckout = new JButton("Checkout");
 		btnCheckout.setBounds(500, 251, 250, 190);
 		frame.getContentPane().add(btnCheckout);
-		
-		
-		
-		
-		
+
+		JButton btnInventory = new JButton("Inventory");
+		btnInventory.setBounds(190, 251, 250, 190);
+
+		JButton btnReturnItem = new JButton("Return Item");
+		btnReturnItem.setBounds(190, 251, 250, 190);
+
+		JButton btnMngEmployees = new JButton("Manage Employees");
+		btnMngEmployees.setBounds(340, 501, 250, 50);
+
+		JButton btnLogout = new JButton("Logout");
+		btnLogout.setBounds(10,160,100,25);
+
+		if (this.curEmployee == null) {
+			frame.getContentPane().add(btnInventory);
+		}
+		else {
+			if (this.curEmployee.getIsManager()) {
+				frame.getContentPane().add(btnInventory);
+				frame.getContentPane().add(btnMngEmployees);
+			}
+			else {
+				frame.getContentPane().add(btnReturnItem);
+			}
+			frame.getContentPane().add(btnLogout);
+
+			// Load and display employee picture
+			int labelWidth = 100;
+			int labelHeight = 150;
+			ImageIcon image = new ImageIcon(curEmployee.loadEmployeePic().getScaledInstance(labelWidth, labelHeight,
+					Image.SCALE_SMOOTH));
+			imageLabel = new JLabel(image);
+			imageLabel.setBounds(10,10,labelWidth,labelHeight);
+			frame.getContentPane().add(imageLabel);
+			imageLabel.setVisible(true);
+		}
+
 		ActionListener buttonListener = new ActionListener() {
 
 	        //we have to define this method in order for an Action Listener to work
@@ -74,29 +107,66 @@ public class MainScreen {
 	            	this.setVisible(false);
 	                Checkout check = new Checkout();
 	                check.setVisible(true);
-	            	 
+					frame.dispose();
 
 	            } else if (e.getSource() == btnInventory) { //check to see if the source is the inventory
 	            	
 	            	this.setVisible(false);
 	                Inventory inv = new Inventory();
 	                inv.setVisible(true);
+	                frame.dispose();
 	            }
+				else if (e.getSource() == btnLogout) {
+	            	this.setVisible(false);
+	            	LoginScreen login = new LoginScreen();
+	            	login.setVisible(true);
+	            	frame.dispose();
+				}
+				else if (e.getSource() == btnMngEmployees) {
+					this.setVisible(false);
+					//TODO add btnMngEmployees
+					//EmployeeManagement mngEmpl = new EmployeeManagement();
+					//mngEmpl.setVisible(true);
+					frame.dispose();
+				}
+				else if (e.getSource() == btnMngEmployees) {
+					this.setVisible(false);
+					//TODO add btnReturnItem
+					//ReturnItem retItem = new ReturnItem();
+					//retItem.setVisible(true);
+					frame.dispose();
+				}
 	        }
 
 			private void setVisible(boolean b) {
-				// TODO Auto-generated method stub
 				frame.setVisible(b);
 			}
 	    };
 	    
 		btnInventory.addActionListener(buttonListener);
 		btnCheckout.addActionListener(buttonListener);
+		btnLogout.addActionListener(buttonListener);
+		btnMngEmployees.addActionListener(buttonListener);
+		btnReturnItem.addActionListener(buttonListener);
+		imageLabel.addMouseListener(new MouseListener() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				//TODO open window to edit employee pic
+				//ChangeEmplPic changePic = new ChangeEmplPic();
+				//changePic.setVisible(true);
+			}
+			@Override
+			public void mousePressed(MouseEvent e) { }
+			@Override
+			public void mouseReleased(MouseEvent e) { }
+			@Override
+			public void mouseEntered(MouseEvent e) { }
+			@Override
+			public void mouseExited(MouseEvent e) { }
+		});
 	}
 
 	public void setVisible(boolean b) {
-		// TODO Auto-generated method stub
 		frame.setVisible(b);
-
 	}
 }
