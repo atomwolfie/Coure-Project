@@ -148,22 +148,28 @@ public class MainScreen {
 		btnLogout.addActionListener(buttonListener);
 		btnMngEmployees.addActionListener(buttonListener);
 		btnReturnItem.addActionListener(buttonListener);
-		imageLabel.addMouseListener(new MouseListener() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				//TODO open window to edit employee pic
-				//ChangeEmplPic changePic = new ChangeEmplPic();
-				//changePic.setVisible(true);
-			}
-			@Override
-			public void mousePressed(MouseEvent e) { }
-			@Override
-			public void mouseReleased(MouseEvent e) { }
-			@Override
-			public void mouseEntered(MouseEvent e) { }
-			@Override
-			public void mouseExited(MouseEvent e) { }
-		});
+		if (imageLabel != null) {
+			imageLabel.addMouseListener(new MouseListener() {
+				@Override
+				public void mouseClicked(MouseEvent e) {
+					//TODO open window to edit employee pic
+					//ChangeEmplPic changePic = new ChangeEmplPic();
+					//changePic.setVisible(true);
+				}
+				@Override
+				public void mousePressed(MouseEvent e) {
+				}
+				@Override
+				public void mouseReleased(MouseEvent e) {
+				}
+				@Override
+				public void mouseEntered(MouseEvent e) {
+				}
+				@Override
+				public void mouseExited(MouseEvent e) {
+				}
+			});
+		}
 	}
 
 	public void setVisible(boolean b) {
