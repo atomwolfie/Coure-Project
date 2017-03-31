@@ -22,13 +22,8 @@ public class Employee {
                 m_id = employeeId;
                 m_firstName = rs.getString("employeefirstname");
                 m_lastName = rs.getString("employeelastname");
-                if (rs.getString("employeestatus") == "Manager") {
-                    m_isManager = true;
-                }
-                else {
-                    m_isManager = false;
-                }
-                m_picFilePath = rs.getString("employeepicfilepath");
+                m_isManager = rs.getString("employeestatus").equals("Manager");
+                m_picFilePath = System.getProperty("user.dir") + rs.getString("employeepicfilepath");
             }
             else {
                 m_id = -1;
@@ -108,6 +103,11 @@ public class Employee {
     }
 
     public String toString() {
-        return m_id + "  " + m_firstName + "  " + m_lastName + "  " + m_picFilePath;
+        if (m_isManager) {
+            return m_id + "  " + m_firstName + "  " + m_lastName + "  MANAGER  " + m_picFilePath;
+        }
+        else {
+            return m_id + "  " + m_firstName + "  " + m_lastName + "  CASHIER  " + m_picFilePath;
+        }
     }
 }
