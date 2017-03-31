@@ -8,9 +8,7 @@ import com.mysql.jdbc.Connection;
 import com.mysql.jdbc.PreparedStatement;
 import com.mysql.jdbc.Statement;
 
-//~~~~~~~~~~~~~~~ I commented this code out to test if the db connection stuff would work ~~~~~~~~~~~~~~~~~~~~
-//import net.proteanit.sql.DbUtils;
-//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+import net.proteanit.sql.DbUtils;
 
 import javax.swing.JScrollPane;
 import java.awt.event.ActionListener;
@@ -43,7 +41,7 @@ public class Inventory {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					inventoryExample window = new inventoryExample();
+					Inventory window = new Inventory();
 					window.frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -68,36 +66,36 @@ public class Inventory {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		
-		JButton btnLoadProducts = new JButton("Load Products");
-		btnLoadProducts.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-
-				try {
-					//String url = "jdbc:mysql://localhost:3306/demo?autoReconnect=true&useSSL=false";
-					//Connection con = (Connection) DriverManager.getConnection(url, "root", "W01fp@ck");
-					Connection con = (Connection) DriverManager.getConnection(DBConnection.dbUrl, DBConnection.dbUser, DBConnection.dbPassword);
-				String query  = "select * from products";
-				
-				java.sql.PreparedStatement  pst = con.prepareStatement(query);
-				ResultSet rs = pst.executeQuery();
-
-				//~~~~~~~~~~~~~~~ I commented this code out to test if the db connection stuff would work ~~~~~~~~~~~~~~~~~~~~
-				//table.setModel(DbUtils.resultSetToTableModel(rs));
-				//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-					//do stuff
-				
-				
-				}
-			
-				catch (Exception e1){
-				    e1.printStackTrace();
-				}
-			
-			}
-		});
-		btnLoadProducts.setBounds(589, 98, 117, 29);
-		frame.getContentPane().add(btnLoadProducts);
+		
+		
+		
+		
+//		JButton btnLoadProducts = new JButton("Load Products");
+//		btnLoadProducts.addActionListener(new ActionListener() {
+//			public void actionPerformed(ActionEvent e) {
+//
+//				try {
+//					Connection con = (Connection) DriverManager.getConnection(DBConnection.dbUrl, DBConnection.dbUser, DBConnection.dbPassword);
+//				String query  = "select * from products";
+//				
+//				java.sql.PreparedStatement  pst = con.prepareStatement(query);
+//				ResultSet rs = pst.executeQuery();
+//
+//				//~~~~~~~~~~~~~~~ I commented this code out to test if the db connection stuff would work ~~~~~~~~~~~~~~~~~~~~
+//				table.setModel(DbUtils.resultSetToTableModel(rs));
+//				//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+//					//do stuff				
+//				}
+//			
+//				catch (Exception e1){
+//				    System.out.println("NOT WORKING");
+//					e1.printStackTrace();
+//				}
+//			
+//			}
+//		});
+//		btnLoadProducts.setBounds(589, 98, 117, 29);
+//		frame.getContentPane().add(btnLoadProducts);
 		
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setBounds(292, 139, 426, 292);
@@ -180,6 +178,25 @@ public class Inventory {
 		btnGoBack.setBounds(601, 477, 117, 29);
 		frame.getContentPane().add(btnGoBack);
 		
+		btnGoBack.addActionListener(new ActionListener() {
+		public void actionPerformed(ActionEvent e) {
+				
+			System.out.println("go back was pushed");
+			this.setVisible(false);
+            	MainScreen main = new MainScreen();
+            	main.setVisible(true);
+            	frame.dispose();		
+			}
+
+			public void setVisible(boolean b) {
+				// TODO Auto-generated method stub
+				//this.frame.setVisible(b);		
+			}
+			});
+		
+		
+		
+		
 		JButton btnEditSelectedItem = new JButton("edit selected item");
 		btnEditSelectedItem.setBounds(302, 436, 181, 29);
 		frame.getContentPane().add(btnEditSelectedItem);
@@ -216,7 +233,7 @@ public class Inventory {
 					//String url = "jdbc:mysql://localhost:3306/demo?autoReconnect=true&useSSL=false";
 					//Connection con = (Connection) DriverManager.getConnection(url, "root", "W01fp@ck");
 					Connection myCon = (Connection) DriverManager.getConnection(DBConnection.dbUrl, DBConnection.dbUser, DBConnection.dbPassword);
-        		Statement myStmt = (Statement) myCon.createStatement();
+					Statement myStmt = (Statement) myCon.createStatement();
         		
         		
         			if(txtPrice.getText().isEmpty()){
@@ -225,7 +242,7 @@ public class Inventory {
         				String price = txtPrice.getText();
     	        		double  newProductPrice = Double.parseDouble(price);
         				
-        				String updateTableSQL = "UPDATE products SET productprice = ? WHERE productname = ?";
+        		String updateTableSQL = "UPDATE products SET productprice = ? WHERE productname = ?";
         		java.sql.PreparedStatement preparedStatement = myCon.prepareStatement(updateTableSQL);
            		preparedStatement.setDouble(1, newProductPrice);
         		preparedStatement.setString(2, productName);
@@ -291,8 +308,35 @@ public class Inventory {
         				
 				
 				int row = table.getSelectedRow();			
+			
+				
+				
+			
+			
 			}
 			});
+		
+		
+		//Loads the products immediatlley so you don't have to click load products like before
+		try {
+			Connection con = (Connection) DriverManager.getConnection(DBConnection.dbUrl, DBConnection.dbUser, DBConnection.dbPassword);
+		String query  = "select * from products";
+		
+		java.sql.PreparedStatement  pst = con.prepareStatement(query);
+		ResultSet rs = pst.executeQuery();
+
+		//~~~~~~~~~~~~~~~ I commented this code out to test if the db connection stuff would work ~~~~~~~~~~~~~~~~~~~~
+		table.setModel(DbUtils.resultSetToTableModel(rs));
+		//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+			//do stuff				
+		}
+	
+		catch (Exception e1){
+		    System.out.println("NOT WORKING");
+			e1.printStackTrace();
+		}
+		
+		
 		
 		
 		JButton btnDelete = new JButton("delete selected item");
@@ -310,13 +354,12 @@ public class Inventory {
 			 
 			 try {
 
-				 //String url = "jdbc:mysql://localhost:3306/demo?autoReconnect=true&useSSL=false";
-				 //Connection con = (Connection) DriverManager.getConnection(url, "root", "W01fp@ck");
+				 
 				 Connection myConn2 = (Connection) DriverManager.getConnection(DBConnection.dbUrl, DBConnection.dbUser, DBConnection.dbPassword);
          		// 2. Create a statement
          		java.sql.Statement myStmt = myConn2.createStatement();
          		// 3. Execute SQL query
-         		String sql = "delete from products where productname = ?";
+         		String sql = "delete from employees where productname = ?";
          		
          		PreparedStatement preparedStmt = (PreparedStatement) myConn2.prepareStatement(sql);
          		
@@ -325,10 +368,10 @@ public class Inventory {
          		}
          		catch (Exception exc) {
          		exc.printStackTrace();
-         		}
-			 
-			 
-			 
+         		}		 
+			 Inventory myInv = new Inventory();
+         	myInv.setVisible(true);
+         	frame.dispose();
 			}
 			});
 		
@@ -387,8 +430,11 @@ public class Inventory {
         		catch (Exception e1){
         		    e1.printStackTrace();
         		}
+        		Inventory myInv = new Inventory();
+            	myInv.setVisible(true);
+            	frame.dispose();
 			}
-
+			
 		});
 	
 			}

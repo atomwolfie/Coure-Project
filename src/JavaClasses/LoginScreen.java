@@ -1,58 +1,88 @@
-import sun.rmi.runtime.Log;
+import java.awt.EventQueue;
+import java.awt.Window;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
-import javax.swing.*;
-import java.awt.*;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.ArrayList;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JButton;
 
-/**
- * Created by jeff on 3/25/17.
- */
 public class LoginScreen {
 
-    private JFrame frame;
+	private JFrame frame;
 
-    private ArrayList<Employee> employeeList;
+	/**
+	 * Launch the application.
+	 */
+	public static void main(String[] args) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					LoginScreen window = new LoginScreen();
+					window.frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
 
-    /**
-     * Launch the application.
-     */
-    public static void main(String[] args) {
+	/**
+	 * Create the application.
+	 */
+	public LoginScreen() {
+		initialize();
+	}
 
+	/**
+	 * Initialize the contents of the frame.
+	 */
+	private void initialize() {
+		frame = new JFrame();
+		frame.setBounds(400, 100, 900, 700);
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.getContentPane().setLayout(null);
+		
+		JButton btnEmployeeLogin = new JButton("Employee Login");
+		btnEmployeeLogin.setBounds(308, 211, 210, 114);
+		frame.getContentPane().add(btnEmployeeLogin);
+		
+		
+		
+		
+		JLabel lblStoreManagementSystem = new JLabel("Store Management System");
+		lblStoreManagementSystem.setBounds(336, 117, 196, 16);
+		frame.getContentPane().add(lblStoreManagementSystem);
+		
+		JButton btnClose = new JButton("close");
+		btnClose.setBounds(716, 610, 117, 29);
+		frame.getContentPane().add(btnClose);
+	
+		ActionListener buttonListener = new ActionListener() {
 
-        EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                try {
-                    LoginScreen window = new LoginScreen();
-                    window.frame.setVisible(true);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        });
-    }
+	        //we have to define this method in order for an Action Listener to work
+	        public void actionPerformed(ActionEvent e) { //'e' is the Action Event which is a button being clicked in our case
 
-    LoginScreen() {
-        employeeList = new ArrayList<>();
-        ResultSet rs = DBConnection.dbGetColumnDataFromTable("employees", "employeeid");
-        try {
-            while(rs.next()) {
-                employeeList.add(new Employee(rs.getInt("employeeid")));
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+	            if (e.getSource() == btnEmployeeLogin) { //check to see if the source is the checkout
 
+	            	this.setVisible(false);
+	                employeeLogin emp = new employeeLogin();
+	                emp.setVisible(true);	            	 
+	            } 
+	        }
 
-        frame = new JFrame();
-        frame.setBounds(400, 100, 900, 700);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.getContentPane().setLayout(null);
+			private void setVisible(boolean b) {
+				// TODO Auto-generated method stub
+				frame.setVisible(b);
+			}
+	    };
+	    
+	    btnEmployeeLogin.addActionListener(buttonListener);
+	}
 
-        JList list = new JList(employeeList.toArray());
-        list.setBounds(50,50,800,500);
-        frame.getContentPane().add(list);
+	public void setVisible(boolean b) {
+		// TODO Auto-generated method stub
+		frame.setVisible(b);
 
-    }
+	}
 }

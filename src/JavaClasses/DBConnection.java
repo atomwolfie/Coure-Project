@@ -9,9 +9,9 @@ import java.text.DecimalFormat;
  * Created by jeff on 3/24/17.
  */
 public class DBConnection {
-    public static final String dbUrl = "jdbc:mysql://localhost:3306/store?autoReconnect=true&useSSL=false";
-    public static final String dbUser = "storeuser";
-    public static final String dbPassword = "*fad!@plo*";
+    public static final String dbUrl = "jdbc:mysql://localhost:3306/demo?autoReconnect=true&useSSL=false";
+    public static final String dbUser = "root";
+    public static final String dbPassword = "W01fp@ck";
 
     public static int dbGetRecordCountForTable(String table) {
         try {
