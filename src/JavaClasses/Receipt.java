@@ -14,6 +14,7 @@ public class Receipt {
 	private JFrame frame;
 	private JTable table;
 	private DefaultTableModel model;
+	private boolean isReturn;
 
 	/**
 	 * Launch the application.
@@ -38,6 +39,12 @@ public class Receipt {
 		initialize(curOrder);
 	}
 
+
+	public Receipt(Order curOrder, boolean isReturn) {
+		this.isReturn = isReturn;
+		initialize(curOrder);
+	}
+
 	/**
 	 * Initialize the contents of the frame.
 	 */
@@ -49,6 +56,10 @@ public class Receipt {
 		
 		JLabel lblReceipt = new JLabel("Receipt");
 		lblReceipt.setBounds(174, 6, 61, 29);
+		if (this.isReturn) {
+			lblReceipt.setText("Receipt - REFUND");
+			lblReceipt.setBounds(154, 6, 121, 29);
+		}
 		frame.getContentPane().add(lblReceipt);
 	
 		
@@ -73,10 +84,16 @@ public class Receipt {
 		DecimalFormat dec = new DecimalFormat("#.00");
 
 		JLabel lblTax = new JLabel("tax: $" + dec.format(tax));
+		if (this.isReturn) {
+			lblTax.setText("tax: -$" + dec.format(-1 * tax));
+		}
 		lblTax.setBounds(104, 535, 150, 16);
 		frame.getContentPane().add(lblTax);
 		
 		JLabel lblTotal = new JLabel("total: $" + dec.format((curOrder.getOrderTotal() + tax)));
+		if (this.isReturn) {
+			lblTotal.setText("total: -$" + dec.format(-1 * (curOrder.getOrderTotal() + tax)));
+		}
 		lblTotal.setBounds(104, 577, 150, 16);
 		frame.getContentPane().add(lblTotal);
 
@@ -110,8 +127,15 @@ public class Receipt {
 
 		DecimalFormat dec = new DecimalFormat("#.00");
 
-		for (int i = 0; i < purch.size(); i++) {
-			model.addRow(new Object[]{purch.get(i).getProductName(), purch.get(i).getQuantity(), "$" + dec.format(purch.get(i).getPurchaseTotal())});
+		if (this.isReturn) {
+			for (int i = 0; i < purch.size(); i++) {
+				model.addRow(new Object[]{purch.get(i).getProductName(), -1 * purch.get(i).getQuantity(), "-$" + dec.format(-1 * purch.get(i).getPurchaseTotal())});
+			}
+		}
+		else {
+			for (int i = 0; i < purch.size(); i++) {
+				model.addRow(new Object[]{purch.get(i).getProductName(), purch.get(i).getQuantity(), "$" + dec.format(purch.get(i).getPurchaseTotal())});
+			}
 		}
 	}
 

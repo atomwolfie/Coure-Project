@@ -40,6 +40,7 @@ CREATE TABLE employees (
 employeeid MEDIUMINT NOT NULL AUTO_INCREMENT,
 employeefirstname VARCHAR(255),
 employeelastname VARCHAR(255),
+employeepassword VARCHAR(255),
 employeestatus VARCHAR(255),
 employeepicfilepath VARCHAR(510),
 PRIMARY KEY(employeeid)

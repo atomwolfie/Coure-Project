@@ -11,6 +11,8 @@ public class Payment {
 
 	private JFrame frame;
 	private Order currentOrder;
+	private Employee curEmployee;
+	private boolean isReturn;
 
 	/**
 	 * Launch the application.
@@ -32,6 +34,13 @@ public class Payment {
 	 * Create the application.
 	 */
 	public Payment(Order currentOrder) {
+		this.isReturn = false;
+		initialize(currentOrder);
+	}
+
+	public Payment(Order currentOrder, Employee curEmployee, boolean isReturn) {
+		this.isReturn = isReturn;
+		this.curEmployee = curEmployee;
 		initialize(currentOrder);
 	}
 
@@ -56,15 +65,22 @@ public class Payment {
 		JButton btnGoBack = new JButton("Go Back");
 		btnGoBack.setBounds(700, 610, 117, 29);
 		frame.getContentPane().add(btnGoBack);
-		
+
 		JLabel lblNewLabel = new JLabel("Payment Method");
 		lblNewLabel.setBounds(392, 160, 268, 16);
+		if (this.isReturn) {
+			lblNewLabel.setText("Refund Method");
+			lblNewLabel.setBounds(396, 160, 268, 16);
+		}
 		frame.getContentPane().add(lblNewLabel);
 
 		Double tax = this.currentOrder.getOrderTotal() * .03;
 
 		DecimalFormat dec = new DecimalFormat("#.00");
 		JLabel lblTotal = new JLabel("Total: $" + dec.format(this.currentOrder.getOrderTotal() + tax));
+		if (this.isReturn) {
+			lblTotal.setText("Total: -$" + dec.format(-1 * this.currentOrder.getOrderTotal() + tax));
+		}
 		lblTotal.setBounds(405, 190, 268, 16);
 		frame.getContentPane().add(lblTotal);
 		
@@ -76,19 +92,26 @@ public class Payment {
 	            if (e.getSource() == btnGoBack) { //return to checkout screen
 
 	            	this.setVisible(false);
-	            	Checkout check = new Checkout(currentOrder);
-	            	check.setVisible(true);
+	            	if (isReturn) {
+						ReturnProducts retItems = new ReturnProducts(currentOrder, curEmployee);
+						retItems.setVisible(true);
+					}
+					else {
+						Checkout check = new Checkout(currentOrder, curEmployee);
+						check.setVisible(true);
+					}
+					frame.dispose();
 	            } 
 	            if (e.getSource() == btnCash) { //return to checkout screen
 
 	            	this.setVisible(false);
-	            	Cash cash = new Cash(currentOrder);
+	            	Cash cash = new Cash(currentOrder, curEmployee, isReturn);
 	            	cash.setVisible(true);
 	            } 
 	            if (e.getSource() == btnCard) { //return to checkout screen
 
 	            	this.setVisible(false);
-	            	Card card = new Card(currentOrder);
+	            	Card card = new Card(currentOrder, curEmployee, isReturn);
 	            	card.setVisible(true);
 	            }
 	            

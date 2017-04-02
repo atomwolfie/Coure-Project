@@ -15,6 +15,7 @@ public class Purchases {
 	private double purchaseTotal;
 	private boolean isValidProduct;
 	private boolean isValidOrder;
+	private boolean isReturn;
 	private PurchasesValidator validator;
 	private ArrayList<String> items;
 	private	String[] str;
@@ -96,6 +97,36 @@ public class Purchases {
 		}*/
 	}
 
+	public Purchases(String name, int quantity, boolean isReturn) {
+		this.isReturn = isReturn;
+		this.validator = new PurchasesValidator();
+		items = new ArrayList();
+		str = new String[items.size()];
+
+		ResultSet myRsProducts = DBConnection.dbSelectAllFromTableWhere("products", "productname=\"" + name + "\"");
+
+		this.orderId = -1;
+		try {
+			if (myRsProducts.next()) {
+				this.prodId = myRsProducts.getInt("productid");
+				if (this.validator.quantityIsValid(quantity, this.isReturn)) {
+					this.quantity = quantity;
+				} else {
+					this.isValidProduct = false;
+				}
+				this.prodPrice = myRsProducts.getFloat("productprice");
+				this.purchaseTotal = this.prodPrice * this.quantity;
+				this.productName = myRsProducts.getString("productname");
+				this.isValidProduct = true;
+			} else {
+				this.isValidProduct = false;
+			}
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
 	public Purchases(String name, int quantity) {
 		this.validator = new PurchasesValidator();
 		items = new ArrayList();
@@ -156,6 +187,48 @@ public class Purchases {
 		catch (Exception e){
 			e.printStackTrace();
 		}*/
+	}
+
+	public Purchases(int prodId, int quantity, boolean isReturn) {
+		this.isReturn = isReturn;
+		this.validator = new PurchasesValidator();
+		items = new ArrayList();
+		str = new String[items.size()];
+
+		ResultSet myRsProducts = DBConnection.dbSelectAllFromTableWhere("products", "productid=\"" + prodId + "\"");
+
+		/*try {
+			Class.forName("com.mysql.jdbc.Driver");
+		}
+		catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		}*/
+		try {
+			/*Connection con = DriverManager.getConnection(url, "root", "W01fp@ck");
+			Statement myStmt = con.createStatement();
+			ResultSet myRsProducts = myStmt.executeQuery("select * from products where productid=" + prodId);*/
+			this.orderId = -1;
+			if(myRsProducts.next()){
+				this.prodId = prodId;
+				if (this.validator.quantityIsValid(quantity, this.isReturn)) {
+					this.quantity = quantity;
+				}
+				else {
+					this.isValidProduct = false;
+				}
+				this.prodPrice = myRsProducts.getFloat("productprice");
+				this.purchaseTotal = this.prodPrice * this.quantity;
+				this.productName = myRsProducts.getString("productname");
+				this.isValidProduct = true;
+			}
+			else {
+				this.isValidProduct = false;
+			}
+
+		}
+		catch (Exception e){
+			e.printStackTrace();
+		}
 	}
 
 	public Purchases(int prodId, int quantity) {
