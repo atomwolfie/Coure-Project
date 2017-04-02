@@ -13,6 +13,8 @@ public class Cash {
 	private JFrame frame;
 	private JTextField textField;
 	private Order currentOrder;
+	private Employee curEmployee;
+	private boolean isReturn;
 
 	/**
 	 * Launch the application.
@@ -34,6 +36,20 @@ public class Cash {
 	 * Create the application.
 	 */
 	public Cash(Order curOrder) {
+		this.isReturn = false;
+		initialize(curOrder);
+	}
+
+
+	public Cash(Order curOrder, Employee curEmployee) {
+		this.isReturn = false;
+		this.curEmployee = curEmployee;
+		initialize(curOrder);
+	}
+
+	public Cash(Order curOrder, Employee curEmployee, boolean isReturn) {
+		this.curEmployee = curEmployee;
+		this.isReturn = isReturn;
 		initialize(curOrder);
 	}
 
@@ -48,40 +64,61 @@ public class Cash {
 		frame.getContentPane().setLayout(null);
 		
 		JLabel lblCash = new JLabel("Cash");
-		lblCash.setBounds(392, 160, 268, 16);
+		if (this.isReturn) {
+			lblCash.setBounds(425, 210, 268, 16);
+		}
+		else {
+			lblCash.setBounds(425, 160, 268, 16);
+		}
 		frame.getContentPane().add(lblCash);
 		
 		JButton btnPrintReceipt = new JButton("Print Receipt");
-		btnPrintReceipt.setBounds(370, 400, 150, 67);
+		btnPrintReceipt.setBounds(370, 350, 150, 67);
 		btnPrintReceipt.setBackground(new Color(95,186,125));
-		btnPrintReceipt.setEnabled(false);
+		if (!this.isReturn) {
+			btnPrintReceipt.setEnabled(false);
+			btnPrintReceipt.setBounds(370, 400, 150, 67);
+		}
 		frame.getContentPane().add(btnPrintReceipt);
 		
 		textField = new JTextField();
 		textField.setText("");
 		textField.setBounds(380, 240, 130, 26);
-		frame.getContentPane().add(textField);
+		if (!this.isReturn) {
+			frame.getContentPane().add(textField);
+		}
 		textField.setColumns(10);
-		
+
 		JLabel lblEnterAmmount = new JLabel("Enter amount:");
 		lblEnterAmmount.setBounds(280, 245, 150, 16);
-		frame.getContentPane().add(lblEnterAmmount);
+		if (!this.isReturn) {
+			frame.getContentPane().add(lblEnterAmmount);
+		}
 
 		Double tax = this.currentOrder.getOrderTotal() * .03;
 
 		DecimalFormat dec = new DecimalFormat("#.00");
 		JLabel lblTotal = new JLabel("Total: $" + dec.format(this.currentOrder.getOrderTotal() + tax));
-		lblTotal.setBounds(380, 185, 150, 16);
+		if (this.isReturn) {
+			lblTotal.setText("Total: -$" + dec.format(-1 * this.currentOrder.getOrderTotal() + tax));
+			lblTotal.setBounds(380, 265, 150, 16);
+		}
+		else {
+			lblTotal.setBounds(380, 185, 150, 16);
+		}
 		frame.getContentPane().add(lblTotal);
 		
 		JLabel lblChange = new JLabel("Change:");
 		lblChange.setBounds(280, 285, 150, 16);
-		frame.getContentPane().add(lblChange);
-		
+		if (!this.isReturn) {
+			frame.getContentPane().add(lblChange);
+		}
+
 		JButton btnEnter = new JButton("enter");
 		btnEnter.setBounds(520, 240, 91, 29);
-		frame.getContentPane().add(btnEnter);
-		
+		if (!this.isReturn) {
+			frame.getContentPane().add(btnEnter);
+		}
 		JButton btnGoBack = new JButton("Go Back");
 		btnGoBack.setBounds(700, 610, 117, 29);
 		frame.getContentPane().add(btnGoBack);
@@ -94,7 +131,7 @@ public class Cash {
 	            if (e.getSource() == btnGoBack) { //return to checkout screen
 
 	            	this.setVisible(false);
-	            	Payment payment = new Payment(currentOrder);
+	            	Payment payment = new Payment(currentOrder, curEmployee, isReturn);
 	            	payment.setVisible(true);
 	            } 	
 
@@ -117,8 +154,8 @@ public class Cash {
 					frame.dispose();
 					//Write new data to mysql db
 
-	            	MainScreen main = new MainScreen();
-					Receipt receipt = new Receipt(currentOrder);
+	            	MainScreen main = new MainScreen(curEmployee);
+					Receipt receipt = new Receipt(currentOrder, isReturn);
 					
 					main.setVisible(true);
 					receipt.setVisible(true);

@@ -21,6 +21,8 @@ public class Card {
 	private JLabel lblName;
 	private Order currentOrder;
 	private CardValidator validator;
+	private Employee curEmployee;
+	private boolean isReturn;
 
 	/**
 	 * Launch the application.
@@ -42,6 +44,13 @@ public class Card {
 	 * Create the application.
 	 */
 	public Card(Order curOrder) {
+		this.isReturn = false;
+		initialize(curOrder);
+	}
+
+	public Card(Order curOrder, Employee curEmployee, boolean isReturn) {
+		this.curEmployee = curEmployee;
+		this.isReturn = isReturn;
 		initialize(curOrder);
 	}
 
@@ -65,19 +74,19 @@ public class Card {
 		frame.getContentPane().add(lblNewLabel_1);
 
 		JButton btnPrintReceipt = new JButton("Print Receipt");
-		btnPrintReceipt.setBounds(360, 400, 150, 67);
+		btnPrintReceipt.setBounds(375, 400, 150, 67);
 		btnPrintReceipt.setBackground(new Color(95,186,125));
 		frame.getContentPane().add(btnPrintReceipt);
 
 		txtfldName = new JTextField();
 		txtfldName.setText("Enter Name");
-		txtfldName.setBounds(380, 240, 268, 16);
+		txtfldName.setBounds(380, 240, 268, 26);
 		frame.getContentPane().add(txtfldName);
 		txtfldName.setColumns(10);
 		
 		txtfldCardNumb = new JTextField();
 		txtfldCardNumb.setText("4244-4232-4322-4323");
-		txtfldCardNumb.setBounds(380, 280, 268, 16);
+		txtfldCardNumb.setBounds(380, 280, 268, 26);
 		frame.getContentPane().add(txtfldCardNumb);
 		txtfldCardNumb.setColumns(10);
 		
@@ -100,23 +109,23 @@ public class Card {
 		txtfldCRV.setColumns(10);
 
 		lblName = new JLabel("Full Name:");
-		lblName.setBounds(310, 240, 108, 16);
+		lblName.setBounds(305, 240, 108, 26);
 		frame.getContentPane().add(lblName);
 		
 		lblCardNumb = new JLabel("Card number:");
-		lblCardNumb.setBounds(290, 280, 108, 16);
+		lblCardNumb.setBounds(284, 280, 108, 26);
 		frame.getContentPane().add(lblCardNumb);
 		
 		lblExpDate = new JLabel("Exp. Date:");
-		lblExpDate.setBounds(311, 325, 74, 16);
+		lblExpDate.setBounds(307, 320, 74, 26);
 		frame.getContentPane().add(lblExpDate);
 		
 		lblCrv = new JLabel("CRV:");
-		lblCrv.setBounds(340, 365, 61, 16);
+		lblCrv.setBounds(347, 359, 61, 26);
 		frame.getContentPane().add(lblCrv);
 		
 		JButton btnGoBack = new JButton("Go Back");
-		btnGoBack.setBounds(700, 610, 117, 29);
+		btnGoBack.setBounds(703, 610, 117, 29);
 		frame.getContentPane().add(btnGoBack);
 		
 		ActionListener buttonListener = new ActionListener() {
@@ -127,8 +136,9 @@ public class Card {
 	            if (e.getSource() == btnGoBack) { //return to checkout screen
 
 	            	this.setVisible(false);
-	            	Payment payment = new Payment(currentOrder);
-	            	payment.setVisible(true);
+					Payment payment = new Payment(currentOrder, curEmployee, isReturn);
+					payment.setVisible(true);
+					frame.dispose();
 	            } 	          
 	            if (e.getSource() == btnPrintReceipt) { //go to receipt screen
 					boolean infoValid = true;
@@ -170,12 +180,12 @@ public class Card {
 					currentOrder.setPaymentMethod("Card");
 					currentOrder.setCustId(custId);
 					currentOrder.writeToDatabase();
-					frame.dispose();
 	            	//Write new data to mysql db
-	            	MainScreen main = new MainScreen();
-					Receipt receipt = new Receipt(currentOrder);
+	            	MainScreen main = new MainScreen(curEmployee);
+					Receipt receipt = new Receipt(currentOrder, isReturn);
 					main.setVisible(true);
 					receipt.setVisible(true);
+					frame.dispose();
 	            }
 	            
 	        }
