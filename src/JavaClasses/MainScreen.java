@@ -64,7 +64,7 @@ public class MainScreen {
 		JButton btnInventory = new JButton("Inventory");
 		btnInventory.setBounds(190, 251, 250, 190);
 
-		JButton btnReturnItem = new JButton("Return Item");
+		JButton btnReturnItem = new JButton("Return Products");
 		btnReturnItem.setBounds(190, 251, 250, 190);
 
 		JButton btnMngEmployees = new JButton("Manage Employees");
@@ -105,7 +105,7 @@ public class MainScreen {
 	            if (e.getSource() == btnCheckout) { //check to see if the source is the checkout
 
 	            	this.setVisible(false);
-	                Checkout check = new Checkout();
+	                Checkout check = new Checkout(curEmployee);
 	                check.setVisible(true);
 					frame.dispose();
 
@@ -131,9 +131,8 @@ public class MainScreen {
 				}
 				else if (e.getSource() == btnReturnItem) {
 					this.setVisible(false);
-					//TODO add btnReturnItem
-					//ReturnItem retItem = new ReturnItem();
-					//retItem.setVisible(true);
+					ReturnProducts retItem = new ReturnProducts(curEmployee);
+					retItem.setVisible(true);
 					frame.dispose();
 				}
 	        }
