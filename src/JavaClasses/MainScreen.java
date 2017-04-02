@@ -125,8 +125,8 @@ public class MainScreen {
 				else if (e.getSource() == btnMngEmployees) {
 					this.setVisible(false);
 					//TODO add btnMngEmployees
-					//EmployeeManagement mngEmpl = new EmployeeManagement();
-					//mngEmpl.setVisible(true);
+					EditEmployee mngEmpl = new EditEmployee();
+					mngEmpl.setVisible(true);
 					frame.dispose();
 				}
 				else if (e.getSource() == btnReturnItem) {
