@@ -152,10 +152,14 @@ public class MainScreen {
 			imageLabel.addMouseListener(new MouseListener() {
 				@Override
 				public void mouseClicked(MouseEvent e) {
-					//TODO open window to edit employee pic
-					//ChangeEmplPic changePic = new ChangeEmplPic();
-					//changePic.setVisible(true);
+					this.setVisible(false);
+					ChangeEmplPic changePic = new ChangeEmplPic(curEmployee);
+					changePic.setVisible(true);
+					frame.dispose();
 				}
+
+				private void setVisible(boolean b) { frame.setVisible(false); }
+
 				@Override
 				public void mousePressed(MouseEvent e) {
 				}
