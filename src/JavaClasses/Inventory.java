@@ -33,6 +33,10 @@ public class Inventory {
 	private JTextField txtInStock;
 	private Employee curEmployee;
 
+	
+	private String curId;
+	
+
 	/**
 	 * Launch the application.
 	 */
@@ -199,6 +203,21 @@ public class Inventory {
 				txtProvider.setText(model.getValueAt(row,3).toString());
 				txtType.setText(model.getValueAt(row,4).toString());
 				txtInStock.setText(model.getValueAt(row,5).toString());			
+			
+				try{
+			
+				ResultSet myRs = DBConnection.dbSelectAllFromTable("products");
+        		
+        		myRs.next();
+        		
+        		curId = model.getValueAt(row,0).toString();
+        		
+        		
+				}
+				catch(Exception e2){
+					 e2.printStackTrace();
+				}
+			
 			}
 			});
 		
@@ -214,8 +233,7 @@ public class Inventory {
 				
 				//EDIT ITEM IN DATABASE
         		try {
-					//String url = "jdbc:mysql://localhost:3306/demo?autoReconnect=true&useSSL=false";
-					//Connection con = (Connection) DriverManager.getConnection(url, "root", "W01fp@ck");
+					
 					Connection myCon = (Connection) DriverManager.getConnection(DBConnection.dbUrl, DBConnection.dbUser, DBConnection.dbPassword);
 					Statement myStmt = (Statement) myCon.createStatement();
         		
@@ -223,71 +241,42 @@ public class Inventory {
         			if(txtPrice.getText().isEmpty()){
         				System.out.println("price not updated");
         			}else{
-        				String price = txtPrice.getText();
-    	        		double  newProductPrice = Double.parseDouble(price);
-        				
-        		String updateTableSQL = "UPDATE products SET productprice = ? WHERE productname = ?";
-        		java.sql.PreparedStatement preparedStatement = myCon.prepareStatement(updateTableSQL);
-           		preparedStatement.setDouble(1, newProductPrice);
-        		preparedStatement.setString(2, productName);
-        		// execute insert SQL statement		
-        		preparedStatement.executeUpdate();
+    	        		DBConnection.dbUpdateRecord("products", "productprice =\"" + txtPrice.getText() + "\"", "productid = " + curId );
+
         			}
-        		
-        			
+        		      			
         		if(txtId.getText().isEmpty()){
         		System.out.println("id not updated");
         		}
         		else{
-        			String stringId = txtId.getText();
-	        		double id = Double.parseDouble(stringId);
-        		String updateTableSQL2 = "UPDATE products SET productid = ? WHERE productname = ?";
-        		java.sql.PreparedStatement preparedStatement2 = myCon.prepareStatement(updateTableSQL2);
-           		preparedStatement2.setDouble(1, id);
-        		preparedStatement2.setString(2, productName);
-        		// execute insert SQL statement		
-        		preparedStatement2.executeUpdate();
+	        		DBConnection.dbUpdateRecord("products", "productname =\"" + txtId.getText() + "\"", "productid = " + curId );
+
         		}
         		
         		if(txtName.getText().isEmpty()){
         			System.out.println("name not updated");
         		}else{	
-	        		String newProductName = txtName.getText();
-//        		String updateTableSQL3 = "UPDATE products SET productname = ? WHERE productname = ?";
-//        		java.sql.PreparedStatement preparedStatement3 = myCon.prepareStatement(updateTableSQL3);
-//           		preparedStatement3.setString(1, newProductName);
-//        		preparedStatement3.setString(2, productName);
-//        		// execute insert SQL statement		
-//        		preparedStatement3.executeUpdate();
-	        		System.out.println("productname: " +productName);
-	        		System.out.println("new productname: " +newProductName);
-
-	        		DBConnection.dbUpdateRecord("products", "productname =\"" + productName + "\"", "productname = " + newProductName );
+	        		DBConnection.dbUpdateRecord("products", "productname =\"" + productName + "\"", "productid = " + curId );
         		}
         		
         		if(txtType.getText().isEmpty()){
         			System.out.println("type not updated");
         		}else{
-	        	String newProductType = txtType.getText();
-        		String updateTableSQL4 = "UPDATE products SET type = ? WHERE productname = ?";
-        		java.sql.PreparedStatement preparedStatement4 = myCon.prepareStatement(updateTableSQL4);
-           		preparedStatement4.setString(1, newProductType);
-        		preparedStatement4.setString(2, productName);
-        		// execute insert SQL statement		
-        		preparedStatement4.executeUpdate();
+	        		DBConnection.dbUpdateRecord("products", "type =\"" + txtType.getText() + "\"", "productid = " + curId );
+
         		}
         		
         		if(txtProvider.getText().isEmpty()){
         			System.out.println("provider not updated");
         		}else{
-        			String newProductProvider = txtProvider.getText();
-        		
-        		String updateTableSQL5 = "UPDATE products SET provider = ? WHERE productname = ?";
-        		java.sql.PreparedStatement preparedStatement5 = myCon.prepareStatement(updateTableSQL5);
-           		preparedStatement5.setString(1, newProductProvider);
-        		preparedStatement5.setString(2, productName);
-        		// execute insert SQL statement		
-        		preparedStatement5.executeUpdate();
+	        		DBConnection.dbUpdateRecord("products", "provider =\"" + txtProvider.getText() + "\"", "productid = " + curId );
+
+        		}
+        		if(txtInStock.getText().isEmpty()){
+        			System.out.println("provider not updated");
+        		}else{
+	        		DBConnection.dbUpdateRecord("products", "inStock =\"" + txtInStock.getText() + "\"", "productid = " + curId );
+
         		}
         		}
         		catch (Exception e1){
