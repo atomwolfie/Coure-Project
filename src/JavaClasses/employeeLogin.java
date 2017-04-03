@@ -2,13 +2,8 @@ import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JButton;
-import javax.swing.JTable;
 
 import com.mysql.jdbc.Connection;
-import com.mysql.jdbc.PreparedStatement;
-import com.mysql.jdbc.Statement;
-
-import net.proteanit.sql.DbUtils;
 
 import javax.swing.JScrollPane;
 import java.awt.event.ActionListener;
@@ -18,16 +13,11 @@ import java.sql.*;
 import java.util.Collections;
 import java.util.Vector;
 
-import javax.swing.table.*;
-
-
-
 
 
 public class employeeLogin {
 
 	private JFrame frame;
-	private JTable table;
 	private JTextField txtName;
 	private JTextField textField;
 
@@ -61,21 +51,21 @@ public class employeeLogin {
 	 */
 	private void initialize() {
 		frame = new JFrame();
-		frame.setBounds(100, 100, 739, 545);
+		frame.setBounds(480, 177, 739, 545);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		
 //		
 		
 		txtName = new JTextField();
-		txtName.setText("name");
-		txtName.setBounds(100, 225, 130, 26);
+		txtName.setText("");
+		txtName.setBounds(105, 225, 130, 26);
 		frame.getContentPane().add(txtName);
 		txtName.setColumns(10);
 		
 		
 		JLabel lblProductName = new JLabel("Name:");
-		lblProductName.setBounds(47, 230, 82, 16);
+		lblProductName.setBounds(57, 230, 82, 16);
 		frame.getContentPane().add(lblProductName);
 
 		
@@ -87,14 +77,14 @@ public class employeeLogin {
 		btnGoBack.setBounds(601, 477, 117, 29);
 		frame.getContentPane().add(btnGoBack);
 		
-		textField = new JTextField();
-		textField.setText("********");
-		textField.setBounds(100, 273, 130, 26);
+		textField = new JPasswordField();
+		textField.setText("");
+		textField.setBounds(105, 273, 130, 26);
 		frame.getContentPane().add(textField);
 		textField.setColumns(10);
 		
 		JLabel lblPassword = new JLabel("Password:");
-		lblPassword.setBounds(27, 278, 72, 16);
+		lblPassword.setBounds(27, 278, 92, 16);
 		frame.getContentPane().add(lblPassword);
 		
 		JButton btnLogin = new JButton("login");
@@ -105,60 +95,52 @@ public class employeeLogin {
 		btnLogin.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 			
-			String passEntered = textField.getText();
-			System.out.println("pass entered: " + passEntered);
-			//compare passwords
-			String realPass;
-			String employeename = txtName.getText();
-			System.out.println("employee name: " + employeename);
-			Employee employee = null;
-		    //get real password
-			
-			try{
-					
-	    		ResultSet myRs = DBConnection.dbSelectAllFromTableWhere("employees", "employeefirstname=\"" + employeename + "\"");
-	    		
-	    		myRs.next();
-	    		
-	     		realPass = myRs.getString("employeepassword"); 
-				 employee = new Employee(myRs.getInt("employeeid")); 
+				String passEntered = textField.getText();
+				System.out.println("pass entered: " + passEntered);
+				//compare passwords
+				String realPass;
+				String employeename = txtName.getText();
+				System.out.println("employee name: " + employeename);
+				Employee employee = null;
+				//get real password
 
-			}
-			catch(Exception e1){
-				e1.printStackTrace();
-				realPass = "nothing";
-			}
-						//if correct go to main screen
-			
-			if(passEntered.equals(realPass)){
-		
-				this.setVisible(false);
-				MainScreen main = new MainScreen(employee);
-				main.setVisible(true);
-				frame.dispose();
+				try{
 
-			}
-			else{
-				System.out.println("password not correct");
-			}
-			
-			//if not little window saying incorrect password
+					ResultSet myRs = DBConnection.dbSelectAllFromTableWhere("employees", "employeefirstname=\"" + employeename + "\"");
+
+					myRs.next();
+
+					realPass = myRs.getString("employeepassword");
+					 employee = new Employee(myRs.getInt("employeeid"));
+
+				}
+				catch(Exception e1){
+					e1.printStackTrace();
+					realPass = "nothing";
+				}
+				//if correct go to main screen
+				if(passEntered.equals(realPass)){
+
+					this.setVisible(false);
+					MainScreen main = new MainScreen(employee);
+					main.setVisible(true);
+					frame.dispose();
+
+				}
+				else{
+					System.out.println("password not correct");
+					//if not little window saying incorrect password
+				}
 			}
 
 			private void setVisible(boolean b) {
-				// TODO Auto-generated method stub
 				frame.setVisible(b);
 			}
-			});
-		
-		
-		
-		
+		});
+
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setBounds(346, 149, 253, 252);
 		frame.getContentPane().add(scrollPane);
-		
-
 					
 		//get employees into vector
 		Vector<String> employeeNames = new Vector<String>(10,2);
@@ -171,15 +153,14 @@ public class employeeLogin {
      		ResultSet myRs = myStmt.executeQuery("select * from employees");
      		
      		while(myRs.next()){
-     		employeeNames.add(myRs.getString("employeefirstname"));
+     			employeeNames.add(myRs.getString("employeefirstname"));
      		}
      		
 		}
 		catch(Exception e){
 			e.printStackTrace();
 		}
-		
-		
+
 		//sort employees
 		Collections.sort(employeeNames);
 		
@@ -187,8 +168,8 @@ public class employeeLogin {
 		JList list = new JList(employeeNames);
 		scrollPane.setViewportView(list);
 		
-		JButton btnSelectEmployee = new JButton("select employee");
-		btnSelectEmployee.setBounds(343, 411, 141, 29);
+		JButton btnSelectEmployee = new JButton("Select Employee");
+		btnSelectEmployee.setBounds(343, 411, 151, 29);
 		frame.getContentPane().add(btnSelectEmployee);
 		
 		btnSelectEmployee.addActionListener(new ActionListener() {
@@ -198,9 +179,7 @@ public class employeeLogin {
 			}
 		});
 		
-		
-	
-		
+
 		btnGoBack.addActionListener(new ActionListener() {
 		public void actionPerformed(ActionEvent e) {
 				
@@ -211,15 +190,13 @@ public class employeeLogin {
 			}
 
 			public void setVisible(boolean b) {
-				// TODO Auto-generated method stub
-				//this.frame.setVisible(b);		
+				frame.setVisible(b);
 			}
-			});
+		});
 	
-			}
+	}
 
 	public void setVisible(boolean b) {
-		// TODO Auto-generated method stub
 		this.frame.setVisible(b);
 
 	}

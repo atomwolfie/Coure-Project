@@ -44,14 +44,11 @@ public class LoginScreen {
 		frame.getContentPane().setLayout(null);
 		
 		JButton btnEmployeeLogin = new JButton("Employee Login");
-		btnEmployeeLogin.setBounds(308, 211, 210, 114);
+		btnEmployeeLogin.setBounds(345, 293, 210, 114);
 		frame.getContentPane().add(btnEmployeeLogin);
 		
-		
-		
-		
 		JLabel lblStoreManagementSystem = new JLabel("Store Management System");
-		lblStoreManagementSystem.setBounds(336, 117, 196, 16);
+		lblStoreManagementSystem.setBounds(353, 117, 196, 16);
 		frame.getContentPane().add(lblStoreManagementSystem);
 		
 		JButton btnClose = new JButton("close");
@@ -63,26 +60,28 @@ public class LoginScreen {
 	        //we have to define this method in order for an Action Listener to work
 	        public void actionPerformed(ActionEvent e) { //'e' is the Action Event which is a button being clicked in our case
 
-	            if (e.getSource() == btnEmployeeLogin) { //check to see if the source is the checkout
+	            if (e.getSource() == btnEmployeeLogin) {
 
 	            	this.setVisible(false);
 	                employeeLogin emp = new employeeLogin();
-	                emp.setVisible(true);	            	 
-	            } 
+	                emp.setVisible(true);
+	                frame.dispose();
+	            }
+	            else if (e.getSource() == btnClose) {
+	            	frame.dispose();
+				}
 	        }
 
 			private void setVisible(boolean b) {
-				// TODO Auto-generated method stub
 				frame.setVisible(b);
 			}
 	    };
 	    
 	    btnEmployeeLogin.addActionListener(buttonListener);
+	    btnClose.addActionListener(buttonListener);
 	}
 
 	public void setVisible(boolean b) {
-		// TODO Auto-generated method stub
 		frame.setVisible(b);
-
 	}
 }
