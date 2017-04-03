@@ -249,7 +249,7 @@ public class Inventory {
         		System.out.println("id not updated");
         		}
         		else{
-	        		DBConnection.dbUpdateRecord("products", "productname =\"" + txtId.getText() + "\"", "productid = " + curId );
+	        		DBConnection.dbUpdateRecord("products", "productid =\"" + txtId.getText() + "\"", "productid = " + curId );
 
         		}
         		
@@ -273,7 +273,7 @@ public class Inventory {
 
         		}
         		if(txtInStock.getText().isEmpty()){
-        			System.out.println("provider not updated");
+        			System.out.println("inStock not updated");
         		}else{
 	        		DBConnection.dbUpdateRecord("products", "inStock =\"" + txtInStock.getText() + "\"", "productid = " + curId );
 
@@ -286,7 +286,7 @@ public class Inventory {
 				
 				int row = table.getSelectedRow();			
 			
-				Inventory myInv = new Inventory();
+				Inventory myInv = new Inventory(curEmployee);
 	         	myInv.setVisible(true);
 	         	frame.dispose();
 				
@@ -348,7 +348,7 @@ public class Inventory {
          		catch (Exception exc) {
          		exc.printStackTrace();
          		}		 
-			 Inventory myInv = new Inventory();
+			 Inventory myInv = new Inventory(curEmployee);
          	myInv.setVisible(true);
          	frame.dispose();
 			}
@@ -409,7 +409,7 @@ public class Inventory {
         		catch (Exception e1){
         		    e1.printStackTrace();
         		}
-        		Inventory myInv = new Inventory();
+        		Inventory myInv = new Inventory(curEmployee);
             	myInv.setVisible(true);
             	frame.dispose();
 			}
