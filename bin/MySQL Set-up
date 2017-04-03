@@ -15,6 +15,7 @@ productname VARCHAR(255),
 productprice FLOAT(10,2), 
 provider VARCHAR(255), 
 type VARCHAR(255), 
+inStock VARCHAR(225), 
 UNIQUE KEY (productname), 
 PRIMARY KEY (productid) 
 );
