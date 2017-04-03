@@ -5,7 +5,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.sql.*;
 
 
 public class MainScreen {
@@ -124,7 +123,6 @@ public class MainScreen {
 				}
 				else if (e.getSource() == btnMngEmployees) {
 					this.setVisible(false);
-					//TODO add btnMngEmployees
 					EditEmployee mngEmpl = new EditEmployee(curEmployee);
 					mngEmpl.setVisible(true);
 					frame.dispose();
@@ -160,17 +158,13 @@ public class MainScreen {
 				private void setVisible(boolean b) { frame.setVisible(false); }
 
 				@Override
-				public void mousePressed(MouseEvent e) {
-				}
+				public void mousePressed(MouseEvent e) { }
 				@Override
-				public void mouseReleased(MouseEvent e) {
-				}
+				public void mouseReleased(MouseEvent e) { }
 				@Override
-				public void mouseEntered(MouseEvent e) {
-				}
+				public void mouseEntered(MouseEvent e) { }
 				@Override
-				public void mouseExited(MouseEvent e) {
-				}
+				public void mouseExited(MouseEvent e) { }
 			});
 		}
 	}

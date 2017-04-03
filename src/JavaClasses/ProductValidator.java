@@ -13,4 +13,8 @@ public class ProductValidator {
 	public boolean prodPriceIsValid(double prodPrice) {
 		return prodPrice > 0;
 	}
+
+	public boolean prodIdIsValid(double prodId) {
+		return prodId > 0;
+	}
 }

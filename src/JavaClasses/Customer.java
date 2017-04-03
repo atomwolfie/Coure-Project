@@ -1,7 +1,4 @@
-import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.ResultSet;
-import java.sql.Statement;
 
 public class Customer {
 
@@ -69,30 +66,6 @@ public class Customer {
 			e.printStackTrace();
 		}
 
-		/*try {
-			String url = "jdbc:mysql://localhost:3306/demo?autoReconnect=true&useSSL=false";
-			Connection con = DriverManager.getConnection(url, "root", "W01fp@ck");
-			Statement myStmt = con.createStatement();
-			ResultSet myRsProducts = myStmt.executeQuery("SELECT * FROM customers WHERE customername='" + this.custName + "'");
-			if (!myRsProducts.next()) {
-				myStmt.executeUpdate("INSERT INTO customers (customername,email,phonenumber) VALUES ("
-						+ "'" +this.custName + "'"
-						+ ", NULL"
-						+ ", NULL"
-						+ ")");
-				ResultSet myRsProducts2 = myStmt.executeQuery("SELECT * FROM customers ORDER BY customerid DESC LIMIT 1");
-				myRsProducts2.next();
-				customerid = myRsProducts2.getInt("customerid");
-			}
-			// In the future when we collect additional info update records here
-			else {
-				customerid = myRsProducts.getInt("customerid");
-			}
-
-		}
-		catch (Exception e){
-			e.printStackTrace();
-		}*/
 		return customerid;
 	}
 

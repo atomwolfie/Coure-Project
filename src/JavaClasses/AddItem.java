@@ -96,21 +96,11 @@ public class AddItem {
 		frame.getContentPane().add(txtName);
 		txtName.setColumns(10);
 		
-//		String productName = txtName.getText();
-//		System.out.println("product name:" + productName);
-
-		
 		txtPrice = new JTextField();
 		txtPrice.setText("price");
 		txtPrice.setBounds(128, 137, 130, 26);
 		frame.getContentPane().add(txtPrice);
 		txtPrice.setColumns(10);
-				
-//		String price = txtPrice.getText();
-//		double  productPrice = Double.parseDouble(price);
-//		System.out.println("product price:" + productPrice);
-
-		
 		
 		txtType = new JTextField();
 		txtType.setText("type");
@@ -118,22 +108,11 @@ public class AddItem {
 		frame.getContentPane().add(txtType);
 		txtType.setColumns(10);
 		
-		
-//		String productType = txtType.getText();
-//		System.out.println("product type:" + productType);
-
-		
 		txtProvider = new JTextField();
 		txtProvider.setText("Provider");
 		txtProvider.setBounds(128, 219, 130, 26);
 		frame.getContentPane().add(txtProvider);
 		txtProvider.setColumns(10);
-		
-//		String productProvider = txtType.getText();
-//		System.out.println("product provider:" + productProvider);
-
-		
-		
 		
 		JButton btnSaveItem = new JButton("Save Item");
 		btnSaveItem.setBounds(304, 135, 117, 68);
@@ -178,37 +157,6 @@ public class AddItem {
 
 	        		DBConnection.dbInsertInto("products (productid,productname,productprice,provider,type)", id
 							+ ",\"" + productName + "\"," + productPrice + ",\"" + productProvider + "\",\"" + productType + "\"");
-
-	        		//try catch here
-	        		
-	        		/*try {
-	        		    String url = "jdbc:mysql://localhost:3306/store?autoReconnect=true&useSSL=false";
-	        		    Connection myCon = (Connection) DriverManager.getConnection(url, "storeuser", "*fad!@plo*");
-	        		Statement myStmt = (Statement) myCon.createStatement();
-	        		
-	        		
-	        		
-	        		
-	        		
-	        		
-	        		  String sql = "INSERT into products"
-	        		            + "(productid,productname,productprice,provider,type) VALUES"
-	        		            + "(?,?,?,?,?)";
-	        		    PreparedStatement ps = myCon.prepareStatement(sql);
-	        		    ps.setDouble(1, id);
-	        		    ps.setString(2, productName);
-	        		    ps.setDouble(3, productPrice);
-	        		    ps.setString(4, productProvider);
-	        		    ps.setString(5, productType);
-	        		    ps.executeUpdate();
-	        		
-	  
-
-	        		
-	        		}
-	        		catch (Exception e1){
-	        		    e1.printStackTrace();
-	        		}*/
 	        		
 	        		this.setVisible(true);
 	        		Inventory inv = new Inventory();
@@ -218,7 +166,6 @@ public class AddItem {
 	        }
 
 			private void setVisible(boolean b) {
-				// TODO Auto-generated method stub
 				frame.setVisible(b);
 			}
 	    };
@@ -228,7 +175,6 @@ public class AddItem {
 	}
 
 	public void setVisible(boolean b) {
-		// TODO Auto-generated method stub
 		frame.setVisible(b);
 
 	}
