@@ -1,3 +1,6 @@
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
 public class Product {
 
 	private String prodName;
@@ -5,78 +8,104 @@ public class Product {
 	private String provider;
 	private double price;
 	private int prodId;
+	private int stock;
+	private boolean isValidProd;
+
+	public int getStock() { return stock; }
+
+	public void setStock(int stock) {
+		if (DBConnection.dbUpdateRecord("products","inStock=" + stock,"productid=" + this.prodId)) {
+			this.stock = stock;
+		}
+	}
+	public void decrementStockBy(int decr) {
+		if (DBConnection.dbUpdateRecord("products","inStock=" + (this.stock - decr),"productid=" + this.prodId)) {
+			this.stock -= decr;
+		}
+	}
+	public void incrementStockBy(int incr) {
+		if (DBConnection.dbUpdateRecord("products","inStock=" + (this.stock + incr),"productid=" + this.prodId)) {
+			this.stock += incr;
+		}
+	}
 
 	public String getProdName() {
 		return this.prodName;
 	}
 
-	/**
-	 * 
-	 * @param prodName
-	 */
 	public void setProdName(String prodName) {
-		this.prodName = prodName;
+		if (DBConnection.dbUpdateRecord("products","productname=" + prodName,"productid=" + this.prodId)) {
+			this.prodName = prodName;
+		}
 	}
 
 	public String getType() {
 		return this.type;
 	}
 
-	/**
-	 * 
-	 * @param type
-	 */
 	public void setType(String type) {
-		this.type = type;
+		if (DBConnection.dbUpdateRecord("products","type=" + type,"productid=" + this.prodId)) {
+			this.type = type;
+		}
 	}
 
 	public String getProvider() {
 		return this.provider;
 	}
 
-	/**
-	 * 
-	 * @param provider
-	 */
 	public void setProvider(String provider) {
-		this.provider = provider;
+		if (DBConnection.dbUpdateRecord("products","provider=" + provider,"productid=" + this.prodId)) {
+			this.provider = provider;
+		}
 	}
 
 	public double getPrice() {
 		return this.price;
 	}
 
-	/**
-	 * 
-	 * @param price
-	 */
 	public void setPrice(double price) {
-		this.price = price;
+		ProductValidator valid = new ProductValidator();
+		if (!valid.prodPriceIsValid(price)) {
+			return;
+		}
+		if (DBConnection.dbUpdateRecord("products","productprice=" + price,"productid=" + this.prodId)) {
+			this.price = price;
+		}
 	}
 
 	public int getProdId() {
 		return this.prodId;
 	}
 
-	/**
-	 * 
-	 * @param prodId
-	 */
 	public void setProdId(int prodId) {
-		this.prodId = prodId;
+		ProductValidator valid = new ProductValidator();
+		if (!valid.prodIdIsValid(prodId)) {
+			return;
+		}
+		if (DBConnection.dbUpdateRecord("products","productid=" + prodId,"productid=" + this.prodId)) {
+			this.prodId = prodId;
+		}
 	}
 
-	/**
-	 * 
-	 * @param prodName
-	 * @param type
-	 * @param provider
-	 * @param price
-	 * @param prodId
-	 */
-	public Product(String prodName, String type, String provider, double price, int prodId) {
-		// TODO - implement Product.Product
-		throw new UnsupportedOperationException();
-	}
+	public boolean isValidProd() { return isValidProd; }
 
+	public void setValidProd(boolean validProd) { isValidProd = validProd; }
+
+	public Product(int id) {
+		ResultSet rs = DBConnection.dbSelectAllFromTableWhere("products","productid=" + id);
+		try {
+			this.isValidProd = false;
+			if (rs.next()) {
+				this.prodId = rs.getInt("productid");
+				this.prodName = rs.getString("productname");
+				this.price = rs.getDouble("productprice");
+				this.provider = rs.getString("provider");
+				this.type = rs.getString("type");
+				this.stock = rs.getInt("inStock");
+				this.isValidProd = true;
+            }
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
 }
