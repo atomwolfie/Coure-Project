@@ -179,8 +179,7 @@ public class Card {
 					int custId = cust.writeToDatabase();
 					currentOrder.setPaymentMethod("Card");
 					currentOrder.setCustId(custId);
-					currentOrder.writeToDatabase();
-	            	//Write new data to mysql db
+					currentOrder.writeToDatabase(isReturn);
 	            	MainScreen main = new MainScreen(curEmployee);
 					Receipt receipt = new Receipt(currentOrder, isReturn);
 					main.setVisible(true);

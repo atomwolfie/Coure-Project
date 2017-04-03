@@ -150,7 +150,7 @@ public class Cash {
 
 	            	this.setVisible(false);
 	            	currentOrder.setPaymentMethod("Cash");
-					currentOrder.writeToDatabase();
+					currentOrder.writeToDatabase(isReturn);
 					frame.dispose();
 					//Write new data to mysql db
 

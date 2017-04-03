@@ -1,7 +1,4 @@
-import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.ResultSet;
-import java.sql.Statement;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 
@@ -101,7 +98,7 @@ public class Order {
 		clearPurchases();
 	}
 
-	public int writeToDatabase(){
+	public int writeToDatabase(boolean isReturn){
 		int orderid = -1;
 		String tableAndCols = "orders (customerid,ordertotal,paymentmethod,date_time)";
 		String values;
@@ -130,46 +127,13 @@ public class Order {
 
 			for (int i = 0; i < this.purchases.size(); i++) {
 				this.purchases.get(i).setOrderId(orderid);
-				this.purchases.get(i).writeToDatabase();
+				this.purchases.get(i).writeToDatabase(isReturn);
 			}
 		}
 		catch (Exception e){
 			e.printStackTrace();
 		}
 
-		/*try {
-			String url = "jdbc:mysql://localhost:3306/demo?autoReconnect=true&useSSL=false";
-			Connection con = DriverManager.getConnection(url, "root", "W01fp@ck");
-			Statement myStmt = con.createStatement();
-			DecimalFormat dec = new DecimalFormat("#.00");
-			if (this.custId != -1) {
-				myStmt.executeUpdate("INSERT INTO orders (customerid,ordertotal,paymentmethod,date_time) VALUES ("
-						+ "'" + this.custId
-						+ "','" + dec.format(this.orderTotal * 1.03)
-						+ "','" + this.paymentMethod
-						+ "','" + this.dateTime
-						+ "')");
-			}
-			else {
-				myStmt.executeUpdate("INSERT INTO orders (customerid,ordertotal,paymentmethod,date_time) VALUES (NULL"
-						+ ",'" + dec.format(this.orderTotal * 1.03)
-						+ "','" + this.paymentMethod
-						+ "','" + this.dateTime
-						+ "')");
-			}
-
-			ResultSet myRsProducts = myStmt.executeQuery("SELECT * FROM orders ORDER BY orderid DESC LIMIT 1");
-			myRsProducts.next();
-			orderid = myRsProducts.getInt("orderid");
-
-			for (int i = 0; i < this.purchases.size(); i++) {
-				this.purchases.get(i).setOrderId(orderid);
-				this.purchases.get(i).writeToDatabase();
-			}
-		}
-		catch (Exception e){
-			e.printStackTrace();
-		}*/
 		return orderid;
 	}
 
@@ -188,7 +152,6 @@ public class Order {
 		this.custId = -1;
 		this.paymentMethod = null;
 		this.purchases = new ArrayList();
-
 	}
 
 }
