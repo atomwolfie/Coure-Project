@@ -15,7 +15,7 @@ productname VARCHAR(255),
 productprice FLOAT(10,2), 
 provider VARCHAR(255), 
 type VARCHAR(255), 
-inStock VARCHAR(225), 
+inStock MEDIUMINT, 
 UNIQUE KEY (productname), 
 PRIMARY KEY (productid) 
 );
@@ -41,8 +41,8 @@ CREATE TABLE employees (
 employeeid MEDIUMINT NOT NULL AUTO_INCREMENT,
 employeefirstname VARCHAR(255),
 employeelastname VARCHAR(255),
-employeepassword VARCHAR(255),
 employeestatus VARCHAR(255),
 employeepicfilepath VARCHAR(510),
+employeepassword VARCHAR(255),
 PRIMARY KEY(employeeid)
 );

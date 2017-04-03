@@ -1,3 +1,3 @@
-INSERT INTO employees VALUES (NULL,"Fred","Smith","password","Manager","/src/EmployeePictures/FredSmith.jpg");
-INSERT INTO employees VALUES (NULL,"Happy","Sloth","password","Cashier","/src/EmployeePictures/HappySloth.jpg");
+INSERT INTO employees VALUES (NULL,"Fred","Smith","Manager","/src/EmployeePictures/FredSmith.jpg","password");
+INSERT INTO employees VALUES (NULL,"Happy","Sloth","Cashier","/src/EmployeePictures/HappySloth.jpg","password");
 
