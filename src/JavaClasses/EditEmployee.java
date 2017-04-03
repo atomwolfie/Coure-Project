@@ -26,12 +26,10 @@ public class EditEmployee {
 	private JFrame frame;
 	private JTable table;
 	private JTextField txtId;
-	//private JTextField txtName;
 	private JTextField txtLastName;
 	private JTextField txtStatus;
 	private JTextField txtPic;
 	private JTextField txtPass;
-	//private JTextField txtFirstName;
 	private JTextField txtFirstName_1;
 	private Employee curEmployee;
 
@@ -69,13 +67,13 @@ public class EditEmployee {
 	 */
 	private void initialize() {
 		frame = new JFrame();
-		frame.setBounds(100, 100, 739, 545);
+		frame.setBounds(400, 100, 900, 700);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		
 		
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(292, 139, 426, 292);
+		scrollPane.setBounds(292, 139, 576, 382);
 		frame.getContentPane().add(scrollPane);
 		
 		table = new JTable();
@@ -119,48 +117,44 @@ public class EditEmployee {
 		
 		
 		JLabel employeeFirst = new JLabel("first name:");
-		employeeFirst.setBounds(24, 232, 82, 16);
+		employeeFirst.setBounds(21, 232, 82, 16);
 		frame.getContentPane().add(employeeFirst);
 		
 		JLabel lblEnterId = new JLabel("Id:");
-		lblEnterId.setBounds(68, 192, 61, 16);
+		lblEnterId.setBounds(80, 192, 61, 16);
 		frame.getContentPane().add(lblEnterId);
 		
 		JLabel employeeLast = new JLabel("last name:");
-		employeeLast.setBounds(24, 270, 82, 16);
+		employeeLast.setBounds(23, 270, 82, 16);
 		frame.getContentPane().add(employeeLast);
 		
 		JLabel employeeStat = new JLabel("status:");
-		employeeStat.setBounds(44, 308, 92, 16);
+		employeeStat.setBounds(46, 308, 92, 16);
 		frame.getContentPane().add(employeeStat);
 		
 		JLabel employeePic = new JLabel("photo:");
-		employeePic.setBounds(57, 345, 72, 16);
+		employeePic.setBounds(52, 345, 72, 16);
 		frame.getContentPane().add(employeePic);
 		
 		JLabel employeePass = new JLabel("password:");
-		employeePass.setBounds(24, 383, 92, 16);
+		employeePass.setBounds(23, 383, 92, 16);
 		frame.getContentPane().add(employeePass);
 		
-		JButton btnAddUser = new JButton("Add user");
-		btnAddUser.setBounds(30, 416, 106, 29);
+		JButton btnAddUser = new JButton("Add User");
+		btnAddUser.setBounds(23, 416, 113, 29);
 		frame.getContentPane().add(btnAddUser);
 
 		
 		JLabel lblInventory = new JLabel("Edit Employees");
-		lblInventory.setBounds(346, 72, 138, 16);
+		lblInventory.setBounds(406, 72, 138, 16);
 		frame.getContentPane().add(lblInventory);
 		
 		JButton btnGoBack = new JButton("go back");
-		btnGoBack.setBounds(601, 477, 117, 29);
+		btnGoBack.setBounds(700, 610, 117, 29);
 		frame.getContentPane().add(btnGoBack);
-		
-		
-		
-		//TODO this needs to work normally
+
 		btnGoBack.addActionListener(new ActionListener() {
 		public void actionPerformed(ActionEvent e) {
-							
 				this.setVisible(false);
 				MainScreen main = new MainScreen(curEmployee);
 				main.setVisible(true);
@@ -168,21 +162,16 @@ public class EditEmployee {
 		}
 
 		private void setVisible(boolean b) {
-			// TODO Auto-generated method stub
 			frame.setVisible(b);
 		}		
 			});
 		
-		
-
-		
 		JButton btnEditSelectedItem = new JButton("edit selected user");
-		btnEditSelectedItem.setBounds(302, 436, 181, 29);
+		btnEditSelectedItem.setBounds(302, 526, 181, 29);
 		frame.getContentPane().add(btnEditSelectedItem);
 			
 		btnEditSelectedItem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-			
 				//get row
 				int row = table.getSelectedRow();
 				TableModel model = table.getModel();
@@ -192,17 +181,15 @@ public class EditEmployee {
 				txtFirstName_1.setText(model.getValueAt(row,1).toString());
 				txtLastName.setText(model.getValueAt(row,2).toString());
 				txtStatus.setText(model.getValueAt(row,3).toString());
-				txtPic.setText(model.getValueAt(row,4).toString());
+				txtPic.setText(System.getProperty("user.dir") + model.getValueAt(row,4).toString());
 				txtPass.setText(model.getValueAt(row,5).toString());			
 			}
 			});
 		
-		JButton updateNewBtn = new JButton("update user");
-		updateNewBtn.setBounds(148, 416, 117, 29);
+		JButton updateNewBtn = new JButton("Update User");
+		updateNewBtn.setBounds(148, 416, 125, 29);
 		frame.getContentPane().add(updateNewBtn);
-		
-		
-		
+
 		updateNewBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 			
@@ -264,9 +251,6 @@ public class EditEmployee {
         		catch (Exception e1){
         		    e1.printStackTrace();
         		}
-        				
-				
-				int row = table.getSelectedRow();			
 			
 				try {
 					Connection con = (Connection) DriverManager.getConnection(DBConnection.dbUrl, DBConnection.dbUser, DBConnection.dbPassword);
@@ -291,13 +275,18 @@ public class EditEmployee {
 		//Loads the products immediately so you don't have to click load products like before
 		try {
 			Connection con = (Connection) DriverManager.getConnection(DBConnection.dbUrl, DBConnection.dbUser, DBConnection.dbPassword);
-		String query  = "select * from employees";
-		
-		java.sql.PreparedStatement  pst = con.prepareStatement(query);
-		ResultSet rs = pst.executeQuery();
+			String query  = "select * from employees";
 
-		table.setModel(DbUtils.resultSetToTableModel(rs));
-			//do stuff				
+			java.sql.PreparedStatement  pst = con.prepareStatement(query);
+			ResultSet rs = pst.executeQuery();
+
+			table.setModel(DbUtils.resultSetToTableModel(rs));
+			table.getColumnModel().getColumn(0).setHeaderValue("ID");
+			table.getColumnModel().getColumn(1).setHeaderValue("First Name");
+			table.getColumnModel().getColumn(2).setHeaderValue("Last Name");
+			table.getColumnModel().getColumn(3).setHeaderValue("Status");
+			table.getColumnModel().getColumn(4).setHeaderValue("Picture");
+			table.getColumnModel().getColumn(5).setHeaderValue("Password");
 		}
 	
 		catch (Exception e1){
@@ -305,50 +294,41 @@ public class EditEmployee {
 			e1.printStackTrace();
 		}
 		
-		
-		
-		
-		JButton btnDelete = new JButton("delete selected user");
-		btnDelete.setBounds(492, 436, 181, 29);
-		frame.getContentPane().add(btnDelete);
-		
 
+		JButton btnDelete = new JButton("delete selected user");
+		btnDelete.setBounds(492, 526, 181, 29);
+		frame.getContentPane().add(btnDelete);
 				
 		btnDelete.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-			int row = table.getSelectedRow();
-			
-			TableModel model = table.getModel();
-			txtFirstName_1.setText(model.getValueAt(row,1).toString());
-			 String Name = txtFirstName_1.getText(); 
-			 txtFirstName_1.setText("name");	
-			 
-			 try {
+				int row = table.getSelectedRow();
 
-				 
-				 Connection myConn2 = (Connection) DriverManager.getConnection(DBConnection.dbUrl, DBConnection.dbUser, DBConnection.dbPassword);
-         		// 2. Create a statement
-         		java.sql.Statement myStmt = myConn2.createStatement();
-         		// 3. Execute SQL query
-         		String sql = "delete from employees where employeefirstname = ?";
-         		
-         		PreparedStatement preparedStmt = (PreparedStatement) myConn2.prepareStatement(sql);
-         		
-         		preparedStmt.setString(1, Name);
-         		preparedStmt.execute();
-         		}
-         		catch (Exception exc) {
-         		exc.printStackTrace();
-         		}		 
-			 EditEmployee myEdit = new EditEmployee();
-         	myEdit.setVisible(true);
-         	frame.dispose();
+				TableModel model = table.getModel();
+				txtFirstName_1.setText(model.getValueAt(row,1).toString());
+				 String Name = txtFirstName_1.getText();
+				 txtFirstName_1.setText("name");
+
+				 try {
+					 Connection myConn2 = (Connection) DriverManager.getConnection(DBConnection.dbUrl, DBConnection.dbUser, DBConnection.dbPassword);
+					// 2. Create a statement
+					java.sql.Statement myStmt = myConn2.createStatement();
+					// 3. Execute SQL query
+					String sql = "delete from employees where employeefirstname = ?";
+
+					PreparedStatement preparedStmt = (PreparedStatement) myConn2.prepareStatement(sql);
+
+					preparedStmt.setString(1, Name);
+					preparedStmt.execute();
+				}
+				catch (Exception exc) {
+					exc.printStackTrace();
+				}
+				EditEmployee myEdit = new EditEmployee();
+				myEdit.setVisible(true);
+				frame.dispose();
 			}
-			});
-		
-		
-		
-		
+		});
+
 		btnAddUser.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 	
@@ -359,8 +339,7 @@ public class EditEmployee {
         		String employeeFirstName = txtFirstName_1.getText();
 
         		String employeeLastName = txtLastName.getText();
-        		
-        		
+
         		String employeStatus = txtStatus.getText();
         		
         		String employeePicFilePath = txtPic.getText();
@@ -369,22 +348,21 @@ public class EditEmployee {
         		
         		
         		try {
-					
 					Connection myCon = (Connection) DriverManager.getConnection(DBConnection.dbUrl, DBConnection.dbUser, DBConnection.dbPassword);
-        		Statement myStmt = (Statement) myCon.createStatement();
+        			Statement myStmt = (Statement) myCon.createStatement();
         		       		
         		
-        		  String sql = "INSERT into employees"
+        		 	 String sql = "INSERT into employees"
         		            + "(employeeid,employeefirstname,employeelastname,employeestatus,employeepicfilepath,employeepassword) VALUES"
         		            + "(?,?,?,?,?,?)";
-        		    java.sql.PreparedStatement ps = myCon.prepareStatement(sql);
-        		    ps.setDouble(1, id);
-        		    ps.setString(2, employeeFirstName);
-        		    ps.setString(3, employeeLastName);
-        		    ps.setString(4, employeStatus);
-        		    ps.setString(5, employeePicFilePath);
-        		    ps.setString(6, employeePassword);
-        		    ps.executeUpdate();
+					java.sql.PreparedStatement ps = myCon.prepareStatement(sql);
+					ps.setDouble(1, id);
+					ps.setString(2, employeeFirstName);
+					ps.setString(3, employeeLastName);
+					ps.setString(4, employeStatus);
+					ps.setString(5, employeePicFilePath);
+					ps.setString(6, employeePassword);
+					ps.executeUpdate();
        		
         			txtId.setText("id");
         			txtFirstName_1.setText("first name");
@@ -404,10 +382,9 @@ public class EditEmployee {
 			
 		});
 	
-			}
+	}
 
 	public void setVisible(boolean b) {
-		// TODO Auto-generated method stub
 		this.frame.setVisible(b);
 
 	}

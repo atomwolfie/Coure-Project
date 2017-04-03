@@ -32,8 +32,6 @@ public class Inventory {
 	private JTextField txtType;
 	private JTextField txtInStock;
 	private Employee curEmployee;
-
-	
 	private String curId;
 	
 
@@ -72,16 +70,12 @@ public class Inventory {
 	 */
 	private void initialize() {
 		frame = new JFrame();
-		frame.setBounds(100, 100, 739, 545);
+		frame.setBounds(400, 100, 900, 700);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		
-		
-		
-
-		
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(292, 139, 426, 292);
+		scrollPane.setBounds(292, 139, 576, 382);
 		frame.getContentPane().add(scrollPane);
 		
 		table = new JTable();
@@ -149,49 +143,38 @@ public class Inventory {
 		frame.getContentPane().add(lblEnter);
 		
 		JButton btnAddItem = new JButton("Add Item");
-		btnAddItem.setBounds(30, 416, 106, 29);
+		btnAddItem.setBounds(25, 416, 111, 29);
 		frame.getContentPane().add(btnAddItem);
 
 		
 		JLabel lblInventory = new JLabel("Inventory");
-		lblInventory.setBounds(346, 72, 138, 16);
+		lblInventory.setBounds(406, 72, 138, 16);
 		frame.getContentPane().add(lblInventory);
 		
 		JButton btnGoBack = new JButton("go back");
-		btnGoBack.setBounds(601, 477, 117, 29);
+		btnGoBack.setBounds(700, 610, 117, 29);
 		frame.getContentPane().add(btnGoBack);
 		
 		btnGoBack.addActionListener(new ActionListener() {
 		public void actionPerformed(ActionEvent e) {
-				
-//			System.out.println("go back was pushed");
-//			this.setVisible(false);
-//            	MainScreen main = new MainScreen();
-//            	main.setVisible(true);
-//            	frame.dispose();	
-			System.out.println("employee getting passed to MainSreen" + curEmployee);
-			this.setVisible(false);
-        	MainScreen main = new MainScreen(curEmployee);
-        	main.setVisible(true);
-        	frame.dispose();
+				System.out.println("employee getting passed to MainSreen" + curEmployee);
+				this.setVisible(false);
+				MainScreen main = new MainScreen(curEmployee);
+				main.setVisible(true);
+				frame.dispose();
 			}
 
 			public void setVisible(boolean b) {
-				// TODO Auto-generated method stub
-				//this.frame.setVisible(b);		
+				frame.setVisible(b);
 			}
-			});
-		
-		
-		
-		
+		});
+
 		JButton btnEditSelectedItem = new JButton("edit selected item");
-		btnEditSelectedItem.setBounds(302, 436, 181, 29);
+		btnEditSelectedItem.setBounds(302, 526, 181, 29);
 		frame.getContentPane().add(btnEditSelectedItem);
 			
 		btnEditSelectedItem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-			
 				//get row
 				int row = table.getSelectedRow();
 				TableModel model = table.getModel();
@@ -202,30 +185,24 @@ public class Inventory {
 				txtPrice.setText(model.getValueAt(row,2).toString());
 				txtProvider.setText(model.getValueAt(row,3).toString());
 				txtType.setText(model.getValueAt(row,4).toString());
-				txtInStock.setText(model.getValueAt(row,5).toString());			
+				txtInStock.setText(model.getValueAt(row,5).toString());
 			
 				try{
-			
-				ResultSet myRs = DBConnection.dbSelectAllFromTable("products");
-        		
-        		myRs.next();
-        		
-        		curId = model.getValueAt(row,0).toString();
-        		
-        		
+					ResultSet myRs = DBConnection.dbSelectAllFromTable("products");
+					myRs.next();
+
+					curId = model.getValueAt(row,0).toString();
 				}
 				catch(Exception e2){
 					 e2.printStackTrace();
 				}
-			
 			}
-			});
+		});
 		
-		JButton updateNewBtn = new JButton("update item");
-		updateNewBtn.setBounds(148, 416, 117, 29);
+		JButton updateNewBtn = new JButton("Update Item");
+		updateNewBtn.setBounds(148, 416, 122, 29);
 		frame.getContentPane().add(updateNewBtn);
-		
-		
+
 		updateNewBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 			
@@ -233,81 +210,76 @@ public class Inventory {
 				
 				//EDIT ITEM IN DATABASE
         		try {
-					
 					Connection myCon = (Connection) DriverManager.getConnection(DBConnection.dbUrl, DBConnection.dbUser, DBConnection.dbPassword);
 					Statement myStmt = (Statement) myCon.createStatement();
-        		
-        		
+
         			if(txtPrice.getText().isEmpty()){
         				System.out.println("price not updated");
-        			}else{
+        			}
+        			else{
     	        		DBConnection.dbUpdateRecord("products", "productprice =\"" + txtPrice.getText() + "\"", "productid = " + curId );
-
         			}
         		      			
-        		if(txtId.getText().isEmpty()){
-        		System.out.println("id not updated");
-        		}
-        		else{
-	        		DBConnection.dbUpdateRecord("products", "productid =\"" + txtId.getText() + "\"", "productid = " + curId );
-
-        		}
+					if(txtId.getText().isEmpty()){
+						System.out.println("id not updated");
+					}
+					else{
+						DBConnection.dbUpdateRecord("products", "productid =\"" + txtId.getText() + "\"", "productid = " + curId );
+					}
         		
-        		if(txtName.getText().isEmpty()){
-        			System.out.println("name not updated");
-        		}else{	
-	        		DBConnection.dbUpdateRecord("products", "productname =\"" + productName + "\"", "productid = " + curId );
-        		}
+					if(txtName.getText().isEmpty()){
+						System.out.println("name not updated");
+					}
+					else{
+						DBConnection.dbUpdateRecord("products", "productname =\"" + productName + "\"", "productid = " + curId );
+					}
+
+					if(txtType.getText().isEmpty()){
+						System.out.println("type not updated");
+					}
+					else{
+						DBConnection.dbUpdateRecord("products", "type =\"" + txtType.getText() + "\"", "productid = " + curId );
+					}
         		
-        		if(txtType.getText().isEmpty()){
-        			System.out.println("type not updated");
-        		}else{
-	        		DBConnection.dbUpdateRecord("products", "type =\"" + txtType.getText() + "\"", "productid = " + curId );
+					if(txtProvider.getText().isEmpty()){
+						System.out.println("provider not updated");
+					}
+					else{
+						DBConnection.dbUpdateRecord("products", "provider =\"" + txtProvider.getText() + "\"", "productid = " + curId );
+					}
 
-        		}
-        		
-        		if(txtProvider.getText().isEmpty()){
-        			System.out.println("provider not updated");
-        		}else{
-	        		DBConnection.dbUpdateRecord("products", "provider =\"" + txtProvider.getText() + "\"", "productid = " + curId );
-
-        		}
-        		if(txtInStock.getText().isEmpty()){
-        			System.out.println("inStock not updated");
-        		}else{
-	        		DBConnection.dbUpdateRecord("products", "inStock =\"" + txtInStock.getText() + "\"", "productid = " + curId );
-
-        		}
+        			if(txtInStock.getText().isEmpty()){
+        				System.out.println("inStock not updated");
+        			}
+					else{
+	        			DBConnection.dbUpdateRecord("products", "inStock =\"" + txtInStock.getText() + "\"", "productid = " + curId );
+       		 		}
         		}
         		catch (Exception e1){
         		    e1.printStackTrace();
         		}
-        				
-				
-				int row = table.getSelectedRow();			
 			
 				Inventory myInv = new Inventory(curEmployee);
 	         	myInv.setVisible(true);
 	         	frame.dispose();
-				
-			
-			
+
 			}
-			});
-		
-		
-		//Loads the products immediatlley so you don't have to click load products like before
+		});
+
 		try {
 			Connection con = (Connection) DriverManager.getConnection(DBConnection.dbUrl, DBConnection.dbUser, DBConnection.dbPassword);
-		String query  = "select * from products";
-		
-		java.sql.PreparedStatement  pst = con.prepareStatement(query);
-		ResultSet rs = pst.executeQuery();
+			String query  = "select * from products";
 
-		//~~~~~~~~~~~~~~~ I commented this code out to test if the db connection stuff would work ~~~~~~~~~~~~~~~~~~~~
-		table.setModel(DbUtils.resultSetToTableModel(rs));
-		//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-			//do stuff				
+			java.sql.PreparedStatement  pst = con.prepareStatement(query);
+			ResultSet rs = pst.executeQuery();
+
+			table.setModel(DbUtils.resultSetToTableModel(rs));
+			table.getColumnModel().getColumn(0).setHeaderValue("ID");
+			table.getColumnModel().getColumn(1).setHeaderValue("Name");
+			table.getColumnModel().getColumn(2).setHeaderValue("Price");
+			table.getColumnModel().getColumn(3).setHeaderValue("Provider");
+			table.getColumnModel().getColumn(4).setHeaderValue("Type");
+			table.getColumnModel().getColumn(5).setHeaderValue("Stock");
 		}
 	
 		catch (Exception e1){
@@ -315,48 +287,41 @@ public class Inventory {
 			e1.printStackTrace();
 		}
 		
-		
-		
-		
 		JButton btnDelete = new JButton("delete selected item");
-		btnDelete.setBounds(492, 436, 181, 29);
+		btnDelete.setBounds(492, 526, 181, 29);
 		frame.getContentPane().add(btnDelete);
 		
 		btnDelete.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-			int row = table.getSelectedRow();
-			
-			TableModel model = table.getModel();
-			 txtName.setText(model.getValueAt(row,1).toString());
-			 String Name = txtName.getText(); 
-			txtName.setText("name");	
-			 
-			 try {
+				int row = table.getSelectedRow();
 
-				 
-				 Connection myConn2 = (Connection) DriverManager.getConnection(DBConnection.dbUrl, DBConnection.dbUser, DBConnection.dbPassword);
-         		// 2. Create a statement
-         		java.sql.Statement myStmt = myConn2.createStatement();
-         		// 3. Execute SQL query
-         		String sql = "delete from products where productname = ?";
-         		
-         		PreparedStatement preparedStmt = (PreparedStatement) myConn2.prepareStatement(sql);
-         		
-         		preparedStmt.setString(1, Name);
-         		preparedStmt.execute();
-         		}
-         		catch (Exception exc) {
-         		exc.printStackTrace();
-         		}		 
-			 Inventory myInv = new Inventory(curEmployee);
-         	myInv.setVisible(true);
-         	frame.dispose();
+				TableModel model = table.getModel();
+				 txtName.setText(model.getValueAt(row,1).toString());
+				 String Name = txtName.getText();
+				txtName.setText("name");
+
+				 try {
+				 	Connection myConn2 = (Connection) DriverManager.getConnection(DBConnection.dbUrl, DBConnection.dbUser, DBConnection.dbPassword);
+					// 2. Create a statement
+					java.sql.Statement myStmt = myConn2.createStatement();
+					// 3. Execute SQL query
+					String sql = "delete from products where productname = ?";
+
+					PreparedStatement preparedStmt = (PreparedStatement) myConn2.prepareStatement(sql);
+
+					preparedStmt.setString(1, Name);
+					preparedStmt.execute();
+				}
+				catch (Exception exc) {
+					exc.printStackTrace();
+				}
+				Inventory myInv = new Inventory(curEmployee);
+				myInv.setVisible(true);
+				frame.dispose();
 			}
-			});
-		
-		
-		
-		
+		});
+
+
 		btnAddItem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 	
@@ -368,24 +333,18 @@ public class Inventory {
 
         		String price = txtPrice.getText();
         		double  productPrice = Double.parseDouble(price);
-        		
-        		
+
         		String productType = txtType.getText();
         		
         		String productProvider = txtProvider.getText();
 				
 				String stringStock = txtInStock.getText();
 				double stock = Double.parseDouble(stringStock);
-        		
-        		
+
         		try {
-					//String url = "jdbc:mysql://localhost:3306/demo?autoReconnect=true&useSSL=false";
-					//Connection con = (Connection) DriverManager.getConnection(url, "root", "W01fp@ck");
 					Connection myCon = (Connection) DriverManager.getConnection(DBConnection.dbUrl, DBConnection.dbUser, DBConnection.dbPassword);
-        		Statement myStmt = (Statement) myCon.createStatement();
-        		       		
-        		
-        		  String sql = "INSERT into products"
+
+        		 	String sql = "INSERT into products"
         		            + "(productid,productname,productprice,provider,type,inStock) VALUES"
         		            + "(?,?,?,?,?,?)";
         		    java.sql.PreparedStatement ps = myCon.prepareStatement(sql);
@@ -403,8 +362,6 @@ public class Inventory {
         			txtProvider.setText("Provider");
         			txtType.setText("Type");
         			txtInStock.setText("# In Stock");
-
-
         		}
         		catch (Exception e1){
         		    e1.printStackTrace();
@@ -413,13 +370,10 @@ public class Inventory {
             	myInv.setVisible(true);
             	frame.dispose();
 			}
-			
 		});
-	
-			}
+	}
 
 	public void setVisible(boolean b) {
-		// TODO Auto-generated method stub
 		this.frame.setVisible(b);
 
 	}
