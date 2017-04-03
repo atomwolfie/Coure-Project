@@ -253,12 +253,16 @@ public class Inventory {
         			System.out.println("name not updated");
         		}else{	
 	        		String newProductName = txtName.getText();
-        		String updateTableSQL3 = "UPDATE products SET productname = ? WHERE productname = ?";
-        		java.sql.PreparedStatement preparedStatement3 = myCon.prepareStatement(updateTableSQL3);
-           		preparedStatement3.setString(1, newProductName);
-        		preparedStatement3.setString(2, productName);
-        		// execute insert SQL statement		
-        		preparedStatement3.executeUpdate();
+//        		String updateTableSQL3 = "UPDATE products SET productname = ? WHERE productname = ?";
+//        		java.sql.PreparedStatement preparedStatement3 = myCon.prepareStatement(updateTableSQL3);
+//           		preparedStatement3.setString(1, newProductName);
+//        		preparedStatement3.setString(2, productName);
+//        		// execute insert SQL statement		
+//        		preparedStatement3.executeUpdate();
+	        		System.out.println("productname: " +productName);
+	        		System.out.println("new productname: " +newProductName);
+
+	        		DBConnection.dbUpdateRecord("products", "productname =\"" + productName + "\"", "productname = " + newProductName );
         		}
         		
         		if(txtType.getText().isEmpty()){
@@ -293,7 +297,9 @@ public class Inventory {
 				
 				int row = table.getSelectedRow();			
 			
-				
+				Inventory myInv = new Inventory();
+	         	myInv.setVisible(true);
+	         	frame.dispose();
 				
 			
 			
@@ -343,7 +349,7 @@ public class Inventory {
          		// 2. Create a statement
          		java.sql.Statement myStmt = myConn2.createStatement();
          		// 3. Execute SQL query
-         		String sql = "delete from employees where productname = ?";
+         		String sql = "delete from products where productname = ?";
          		
          		PreparedStatement preparedStmt = (PreparedStatement) myConn2.prepareStatement(sql);
          		
