@@ -31,6 +31,7 @@ public class Inventory {
 	private JTextField txtProvider;
 	private JTextField txtType;
 	private JTextField txtInStock;
+	private Employee curEmployee;
 
 	/**
 	 * Launch the application.
@@ -57,6 +58,11 @@ public class Inventory {
 		initialize();
 	}
 
+	public Inventory(Employee curEmployee) {
+		this.curEmployee = curEmployee;
+		initialize();
+	}
+
 	/**
 	 * Initialize the contents of the frame.
 	 */
@@ -68,34 +74,7 @@ public class Inventory {
 		
 		
 		
-		
-		
-//		JButton btnLoadProducts = new JButton("Load Products");
-//		btnLoadProducts.addActionListener(new ActionListener() {
-//			public void actionPerformed(ActionEvent e) {
-//
-//				try {
-//					Connection con = (Connection) DriverManager.getConnection(DBConnection.dbUrl, DBConnection.dbUser, DBConnection.dbPassword);
-//				String query  = "select * from products";
-//				
-//				java.sql.PreparedStatement  pst = con.prepareStatement(query);
-//				ResultSet rs = pst.executeQuery();
-//
-//				//~~~~~~~~~~~~~~~ I commented this code out to test if the db connection stuff would work ~~~~~~~~~~~~~~~~~~~~
-//				table.setModel(DbUtils.resultSetToTableModel(rs));
-//				//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//					//do stuff				
-//				}
-//			
-//				catch (Exception e1){
-//				    System.out.println("NOT WORKING");
-//					e1.printStackTrace();
-//				}
-//			
-//			}
-//		});
-//		btnLoadProducts.setBounds(589, 98, 117, 29);
-//		frame.getContentPane().add(btnLoadProducts);
+
 		
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setBounds(292, 139, 426, 292);
@@ -181,11 +160,16 @@ public class Inventory {
 		btnGoBack.addActionListener(new ActionListener() {
 		public void actionPerformed(ActionEvent e) {
 				
-			System.out.println("go back was pushed");
+//			System.out.println("go back was pushed");
+//			this.setVisible(false);
+//            	MainScreen main = new MainScreen();
+//            	main.setVisible(true);
+//            	frame.dispose();	
+			System.out.println("employee getting passed to MainSreen" + curEmployee);
 			this.setVisible(false);
-            	MainScreen main = new MainScreen();
-            	main.setVisible(true);
-            	frame.dispose();		
+        	MainScreen main = new MainScreen(curEmployee);
+        	main.setVisible(true);
+        	frame.dispose();
 			}
 
 			public void setVisible(boolean b) {

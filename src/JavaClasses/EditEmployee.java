@@ -33,6 +33,7 @@ public class EditEmployee {
 	private JTextField txtPass;
 	//private JTextField txtFirstName;
 	private JTextField txtFirstName_1;
+	private Employee curEmployee;
 
 	/**
 	 * Launch the application.
@@ -59,6 +60,10 @@ public class EditEmployee {
 		initialize();
 	}
 
+	public EditEmployee(Employee curEmployee) {
+		this.curEmployee = curEmployee;
+		initialize();
+	}
 	/**
 	 * Initialize the contents of the frame.
 	 */
@@ -155,38 +160,17 @@ public class EditEmployee {
 		//TODO this needs to work normally
 		btnGoBack.addActionListener(new ActionListener() {
 		public void actionPerformed(ActionEvent e) {
-				
-			try{
-				
-	    		ResultSet myRs = DBConnection.dbSelectAllFromTableWhere("employees", "employeefirstname=\"" + txtFirstName_1.getText() + "\"");
-	    		
-	    		myRs.next();
-	    		
-				Employee employee = new Employee(myRs.getInt("employeeid")); 
-				
+							
 				this.setVisible(false);
-				MainScreen main = new MainScreen(employee);
+				MainScreen main = new MainScreen(curEmployee);
 				main.setVisible(true);
-				frame.dispose();
-			}
-			catch(Exception e1){
-				e1.printStackTrace();
-			}
-						//if correct go to main screen
-			
-		
-			
-
-			}
+				frame.dispose();		
+		}
 
 		private void setVisible(boolean b) {
 			// TODO Auto-generated method stub
 			frame.setVisible(b);
-		}
-				
-			
-
-		
+		}		
 			});
 		
 		
@@ -377,9 +361,9 @@ public class EditEmployee {
         		String employeeLastName = txtLastName.getText();
         		
         		
-        		String employeStatus = txtPic.getText();
+        		String employeStatus = txtStatus.getText();
         		
-        		String employeePicFilePath = txtStatus.getText();
+        		String employeePicFilePath = txtPic.getText();
 				
 				String employeePassword = txtPass.getText();
         		

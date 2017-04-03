@@ -112,7 +112,7 @@ public class MainScreen {
 	            } else if (e.getSource() == btnInventory) { //check to see if the source is the inventory
 	            	
 	            	this.setVisible(false);
-	                Inventory inv = new Inventory();
+	                Inventory inv = new Inventory(curEmployee);
 	                inv.setVisible(true);
 	                frame.dispose();
 	            }
@@ -125,7 +125,7 @@ public class MainScreen {
 				else if (e.getSource() == btnMngEmployees) {
 					this.setVisible(false);
 					//TODO add btnMngEmployees
-					EditEmployee mngEmpl = new EditEmployee();
+					EditEmployee mngEmpl = new EditEmployee(curEmployee);
 					mngEmpl.setVisible(true);
 					frame.dispose();
 				}
