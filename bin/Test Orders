@@ -1,0 +1,13 @@
+INSERT INTO orders (orderid,customerid,ordertotal,paymentmethod,date_time) VALUES (NULL,1,2.84,"Cash","2017-04-03 15:44:38");
+INSERT INTO orders (orderid,customerid,ordertotal,paymentmethod,date_time) VALUES (NULL,1,6.55,Card","2017-04-03 15:45:07");
+INSERT INTO orders (orderid,customerid,ordertotal,paymentmethod,date_time) VALUES (NULL,2,-6.55,Cash","2017-04-03 15:45:53");
+INSERT INTO orders (orderid,customerid,ordertotal,paymentmethod,date_time) VALUES (NULL,1,-6.55,"Card","2017-04-03 15:46:18");
+INSERT INTO orders (orderid,customerid,ordertotal,paymentmethod,date_time) VALUES (NULL,3,-6.55,"Cash","2017-04-03 15:48:37");
+INSERT INTO orders (orderid,customerid,ordertotal,paymentmethod,date_time) VALUES (NULL,4,-27.29,"Cash","2017-04-03 15:51:55");
+INSERT INTO orders (orderid,customerid,ordertotal,paymentmethod,date_time) VALUES (NULL,5,4.88,"Cash","2017-04-03 16:45:22");
+INSERT INTO orders (orderid,customerid,ordertotal,paymentmethod,date_time) VALUES (NULL,1,0,"Cash","2017-04-03 15:44:38");
+INSERT INTO orders (orderid,customerid,ordertotal,paymentmethod,date_time) VALUES (NULL,2 ,26.62,"Card","2017-04-05 00:26:25");
+INSERT INTO orders (orderid,customerid,ordertotal,paymentmethod,date_time) VALUES (NULL,NULL,28.83,"Cash","2017-04-05 00:27:28");
+INSERT INTO orders (orderid,customerid,ordertotal,paymentmethod,date_time) VALUES (NULL,2,46.08,"Card","2017-04-05 00:28:11");
+INSERT INTO orders (orderid,customerid,ordertotal,paymentmethod,date_time) VALUES (NULL,3,-26.55,"Card","2017-04-05 00:29:27");
+INSERT INTO orders (orderid,customerid,ordertotal,paymentmethod,date_time) VALUES (NULL,NULL,2.73,"Cash","2017-04-05 00:30:15");
