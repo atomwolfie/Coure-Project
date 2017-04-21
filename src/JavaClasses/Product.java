@@ -7,6 +7,7 @@ public class Product {
 	private String type;
 	private String provider;
 	private double price;
+	private double discount;
 	private int prodId;
 	private int stock;
 	private boolean isValidProd;
@@ -60,6 +61,7 @@ public class Product {
 	}
 
 	public double getPrice() {
+			
 		return this.price;
 	}
 

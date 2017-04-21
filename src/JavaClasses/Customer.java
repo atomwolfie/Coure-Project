@@ -6,6 +6,7 @@ public class Customer {
 	private int custId;
 	private int phoneNumb;
 	private String email;
+	private int rewardPoints;
 
 	public String getCustName() {
 		return this.custName;
@@ -18,7 +19,29 @@ public class Customer {
 	public int getCustId() {
 		return this.custId;
 	}
+	public int getCustPoints(){
+		
+		System.out.println("get cust id:  " + this.custName );
+	
+		try{
 
+			ResultSet myRs = DBConnection.dbSelectAllFromTableWhere("customers", "customerid=\"" + this.custName + "\"");
+
+			myRs.next();
+
+			this.rewardPoints = myRs.getInt(5);
+			System.out.println("get cust points:  " + this.rewardPoints);
+
+		}
+		catch(Exception e1){
+			e1.printStackTrace();
+		}
+	return this.rewardPoints;
+	}
+
+	public void setCustPoints(int points){
+		this.rewardPoints = points;
+	}
 	public void setCustId(int custId) {
 		this.custId = custId;
 	}

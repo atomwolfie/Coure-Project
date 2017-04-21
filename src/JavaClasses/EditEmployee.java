@@ -323,7 +323,7 @@ public class EditEmployee {
 				catch (Exception exc) {
 					exc.printStackTrace();
 				}
-				EditEmployee myEdit = new EditEmployee();
+				EditEmployee myEdit = new EditEmployee(curEmployee);
 				myEdit.setVisible(true);
 				frame.dispose();
 			}
@@ -333,6 +333,10 @@ public class EditEmployee {
 			public void actionPerformed(ActionEvent e) {
 	
 				String stringId = txtId.getText();
+//				if(stringId.equals("id")){
+//        			JOptionPane.showMessageDialog(frame, "Enter valid information");
+//				}
+				
         		double id = Double.parseDouble(stringId);
         		System.out.println("id:" + stringId);
             	 
@@ -373,9 +377,10 @@ public class EditEmployee {
 
         		}
         		catch (Exception e1){
+        			//JOptionPane.showMessageDialog(frame, "Eggs are not supposed to be green.");
         		    e1.printStackTrace();
         		}
-   			 EditEmployee myEdit = new EditEmployee();
+   			 EditEmployee myEdit = new EditEmployee(curEmployee);
    			myEdit.setVisible(true);
             	frame.dispose();
 			}

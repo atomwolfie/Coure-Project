@@ -62,6 +62,10 @@ public class Payment {
 		btnCard.setBounds(500, 251, 250, 190);
 		frame.getContentPane().add(btnCard);
 		
+		JButton reward = new JButton("reward points");
+		reward.setBounds(360, 451, 250, 100);
+		frame.getContentPane().add(reward);
+		
 		JButton btnGoBack = new JButton("Go Back");
 		btnGoBack.setBounds(700, 610, 117, 29);
 		frame.getContentPane().add(btnGoBack);
@@ -114,6 +118,12 @@ public class Payment {
 	            	Card card = new Card(currentOrder, curEmployee, isReturn);
 	            	card.setVisible(true);
 	            }
+	            if (e.getSource() == reward) { //return to checkout screen
+
+	            	this.setVisible(false);
+	            	RewardPoints rewards = new RewardPoints(currentOrder, curEmployee, isReturn);
+	            	rewards.setVisible(true);
+	            }
 	            
 	            
 	        }
@@ -126,7 +136,7 @@ public class Payment {
 		btnGoBack.addActionListener(buttonListener);
 		btnCash.addActionListener(buttonListener);
 		btnCard.addActionListener(buttonListener);
-		
+		reward.addActionListener(buttonListener);
 	}
 
 	public void setVisible(boolean b) {

@@ -31,6 +31,7 @@ public class Inventory {
 	private JTextField txtProvider;
 	private JTextField txtType;
 	private JTextField txtInStock;
+	private JTextField txtDiscount;
 	private Employee curEmployee;
 	private String curId;
 	
@@ -117,6 +118,11 @@ public class Inventory {
 		frame.getContentPane().add(txtInStock);
 		txtInStock.setColumns(10);
 		
+		txtDiscount = new JTextField();
+		txtDiscount.setText("0 for no discount");
+		txtDiscount.setBounds(100, 419, 130, 26);
+		frame.getContentPane().add(txtDiscount);
+		txtDiscount.setColumns(10);
 		
 		JLabel lblProductName = new JLabel("Name:");
 		lblProductName.setBounds(47, 230, 82, 16);
@@ -142,8 +148,12 @@ public class Inventory {
 		lblEnter.setBounds(24, 383, 92, 16);
 		frame.getContentPane().add(lblEnter);
 		
+		JLabel lblDiscount = new JLabel("Discount:");
+		lblDiscount.setBounds(24, 423, 92, 16);
+		frame.getContentPane().add(lblDiscount);
+		
 		JButton btnAddItem = new JButton("Add Item");
-		btnAddItem.setBounds(25, 416, 111, 29);
+		btnAddItem.setBounds(25, 466, 111, 29);
 		frame.getContentPane().add(btnAddItem);
 
 		
@@ -186,7 +196,8 @@ public class Inventory {
 				txtProvider.setText(model.getValueAt(row,3).toString());
 				txtType.setText(model.getValueAt(row,4).toString());
 				txtInStock.setText(model.getValueAt(row,5).toString());
-			
+				txtDiscount.setText(model.getValueAt(row,6).toString());
+				
 				try{
 					ResultSet myRs = DBConnection.dbSelectAllFromTable("products");
 					myRs.next();
@@ -200,7 +211,7 @@ public class Inventory {
 		});
 		
 		JButton updateNewBtn = new JButton("Update Item");
-		updateNewBtn.setBounds(148, 416, 122, 29);
+		updateNewBtn.setBounds(148, 466, 122, 29);
 		frame.getContentPane().add(updateNewBtn);
 
 		updateNewBtn.addActionListener(new ActionListener() {
@@ -253,6 +264,13 @@ public class Inventory {
         			}
 					else{
 	        			DBConnection.dbUpdateRecord("products", "inStock =\"" + txtInStock.getText() + "\"", "productid = " + curId );
+       		 		}
+        			if(txtDiscount.getText().isEmpty()){
+        				System.out.println("Discount not updated");
+        			}
+					else{
+	        			
+						DBConnection.dbUpdateRecord("products", "discountPrice =\"" + txtDiscount.getText() + "\"", "productid = " + curId );
        		 		}
         		}
         		catch (Exception e1){
@@ -340,13 +358,16 @@ public class Inventory {
 				
 				String stringStock = txtInStock.getText();
 				double stock = Double.parseDouble(stringStock);
-
+				
+				String discount = txtDiscount.getText();
+				double productDiscount = Double.parseDouble(discount);
+				
         		try {
 					Connection myCon = (Connection) DriverManager.getConnection(DBConnection.dbUrl, DBConnection.dbUser, DBConnection.dbPassword);
 
         		 	String sql = "INSERT into products"
-        		            + "(productid,productname,productprice,provider,type,inStock) VALUES"
-        		            + "(?,?,?,?,?,?)";
+        		            + "(productid,productname,productprice,provider,type,inStock, discountPrice) VALUES"
+        		            + "(?,?,?,?,?,?,?)";
         		    java.sql.PreparedStatement ps = myCon.prepareStatement(sql);
         		    ps.setDouble(1, id);
         		    ps.setString(2, productName);
@@ -354,14 +375,8 @@ public class Inventory {
         		    ps.setString(4, productProvider);
         		    ps.setString(5, productType);
         		    ps.setDouble(6, stock);
+        		    ps.setDouble(7, productDiscount);
         		    ps.executeUpdate();
-       		
-        			txtId.setText("id");
-        			txtName.setText("name");
-        			txtPrice.setText("price");
-        			txtProvider.setText("Provider");
-        			txtType.setText("Type");
-        			txtInStock.setText("# In Stock");
         		}
         		catch (Exception e1){
         		    e1.printStackTrace();

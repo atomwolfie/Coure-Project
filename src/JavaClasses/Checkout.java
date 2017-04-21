@@ -3,6 +3,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.sql.ResultSet;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 
@@ -330,7 +331,9 @@ public class Checkout {
 			this.table.setValueAt(this.currentOrder.getPurchases().get(temp).getProductName(), temp, 0);
 			this.table.setValueAt(this.currentOrder.getPurchases().get(temp).getQuantity(), temp, 2);
 			this.table.setValueAt("$" + dec.format(this.currentOrder.getPurchases().get(temp).getPurchaseTotal()), temp, 4);
-		}
+
+			}
+			
 		if (!this.btnPay.isEnabled()) {
 			this.btnPay.setEnabled(true);
 		}
