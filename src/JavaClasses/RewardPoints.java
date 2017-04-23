@@ -84,10 +84,6 @@ public class RewardPoints{
 		frame.getContentPane().add(textField);
 		textField.setColumns(10);
 		
-		JLabel lblPassword = new JLabel("Search name:");
-		lblPassword.setBounds(51, 224, 92, 16);
-		frame.getContentPane().add(lblPassword);
-		
 		JButton btnLogin = new JButton("enter");
 		btnLogin.setBounds(151, 257, 117, 29);
 		frame.getContentPane().add(btnLogin);
@@ -135,13 +131,17 @@ public class RewardPoints{
 			});
 		
 		JLabel lblSelectCustomer = new JLabel("Select Customer");
-		lblSelectCustomer.setBounds(265, 74, 130, 16);
+		lblSelectCustomer.setBounds(312, 76, 130, 16);
 		frame.getContentPane().add(lblSelectCustomer);
 		
 		
 		JButton btnContinue = new JButton("continue");
 		btnContinue.setBounds(481, 477, 117, 29);
 		frame.getContentPane().add(btnContinue);
+		
+		JLabel lblCusomer = new JLabel("Cusomer:");
+		lblCusomer.setBounds(63, 224, 88, 16);
+		frame.getContentPane().add(lblCusomer);
 		
 		
 		

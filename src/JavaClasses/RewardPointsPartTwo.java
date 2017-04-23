@@ -89,7 +89,7 @@ public class RewardPointsPartTwo {
 		frame.getContentPane().add(lblAmmountToPay);
 		
 		txtPoints = new JTextField();
-		txtPoints.setText("points");
+		txtPoints.setText("0.00");
 		txtPoints.setBounds(207, 253, 130, 26);
 		frame.getContentPane().add(txtPoints);
 		txtPoints.setColumns(10);
@@ -100,11 +100,11 @@ public class RewardPointsPartTwo {
 		
 	
 		
-		JLabel lblPointsRemaining = new JLabel("points remaining: $");
+		JLabel lblPointsRemaining = new JLabel("Points remaining: $" + points);
 		lblPointsRemaining.setBounds(88, 310, 232, 16);
 		frame.getContentPane().add(lblPointsRemaining);
 		
-		JLabel lblOrderTotalRemaining = new JLabel("Order Total Remaining: $");
+		JLabel lblOrderTotalRemaining = new JLabel("Order Total Remaining: $" + orderTotal);
 		lblOrderTotalRemaining.setBounds(55, 347, 274, 16);
 		frame.getContentPane().add(lblOrderTotalRemaining);
 		
@@ -120,12 +120,17 @@ public class RewardPointsPartTwo {
 			
 			if(ammountWanted > points){
 				JOptionPane.showMessageDialog(frame, "not enough points. Enter lower amount");
+				txtPoints.setText("0.00");
+				lblPointsRemaining.setText("Points remaining: $" + points);
+				lblOrderTotalRemaining.setText("Order Total Remaining: $" + orderTotal);
 			return;
 			}
 			//also need to check to see if more points than needed is used.
 			if(ammountWanted > orderTotal){
 				JOptionPane.showMessageDialog(frame, "Points exceeds Order total");
 				txtPoints.setText("0.00");
+				lblPointsRemaining.setText("Points remaining: $" + points);
+				lblOrderTotalRemaining.setText("Order Total Remaining: $" + orderTotal);
 				return;
 			}
 			
@@ -152,6 +157,54 @@ public class RewardPointsPartTwo {
 		JButton btnContinue = new JButton("continue");
 		btnContinue.setBounds(465, 464, 117, 29);
 		frame.getContentPane().add(btnContinue);
+		
+		btnContinue.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {	
+
+				String ammountWantedString = txtPoints.getText();
+				double ammountWanted = Double.parseDouble(ammountWantedString);
+
+				double leftOver = orderTotal - ammountWanted;
+				//subtract points from customer
+				
+				double pointsLeft = points - ammountWanted;
+				
+				DBConnection.dbUpdateRecord("customers", "rewardPoints =\"" + pointsLeft*10 + "\"", "customerid = " + curCustomer.getCustName() );
+				
+				
+				
+				if(leftOver == 0.0){
+	           
+				//go to receipt	
+					this.setVisible(false);
+	            	Customer cust = new Customer(curCustomer.getCustName());
+					int custId = cust.writeToDatabase();
+					currentOrder.setPaymentMethod("Reward points");
+					currentOrder.setCustId(custId);
+					currentOrder.writeToDatabase(isReturn);
+	            	MainScreen main = new MainScreen(curEmployee);
+					Receipt receipt = new Receipt(currentOrder, isReturn);
+					main.setVisible(true);
+					receipt.setVisible(true);
+					frame.dispose();
+					
+				}
+				else{
+					//go back to payment method to pay the rest
+					currentOrder.setOrderTotal(leftOver);
+					Payment paymnt = new Payment(currentOrder, curEmployee, false);
+	            	paymnt.setVisible(true);
+				}
+			
+				}
+
+			private void setVisible(boolean b) {
+				// TODO Auto-generated method stub
+				frame.setVisible(b);
+			}
+			});
+		
+		
 	}
 
 	public void setVisible(boolean b) {

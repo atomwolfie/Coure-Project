@@ -1,6 +1,7 @@
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.ResultSet;
 import java.text.DecimalFormat;
 
 import javax.swing.JFrame;
@@ -12,9 +13,11 @@ public class Cash {
 
 	private JFrame frame;
 	private JTextField textField;
+	private JTextField rewardField;
 	private Order currentOrder;
 	private Employee curEmployee;
 	private boolean isReturn;
+	private double curPoints;
 
 	/**
 	 * Launch the application.
@@ -72,6 +75,17 @@ public class Cash {
 		}
 		frame.getContentPane().add(lblCash);
 		
+		
+		JLabel rewardsMember = new JLabel("Enter id or swipe reward card (optional): ");
+		rewardsMember.setBounds(120, 330, 268, 16);
+		frame.getContentPane().add(rewardsMember);
+		
+		rewardField = new JTextField();
+		rewardField.setText("");
+		rewardField.setBounds(380, 325, 130, 26);
+			frame.getContentPane().add(rewardField);
+		
+		
 		JButton btnPrintReceipt = new JButton("Print Receipt");
 		btnPrintReceipt.setBounds(370, 350, 150, 67);
 		btnPrintReceipt.setBackground(new Color(95,186,125));
@@ -115,7 +129,7 @@ public class Cash {
 		}
 
 		JButton btnEnter = new JButton("enter");
-		btnEnter.setBounds(520, 240, 91, 29);
+		btnEnter.setBounds(520, 360, 91, 29);
 		if (!this.isReturn) {
 			frame.getContentPane().add(btnEnter);
 		}
@@ -148,6 +162,26 @@ public class Cash {
 
 	            if (e.getSource() == btnPrintReceipt) { //go to receipt screen, also brings up main screen to start again
 
+	            	String rewardString = rewardField.getText();
+	            	int custId = Integer.parseInt(rewardString);
+	            	try{
+
+						ResultSet myRs = DBConnection.dbSelectAllFromTableWhere("customers", "customerid=\"" + custId + "\"");
+						//gets the current points
+						myRs.next();
+						 curPoints = myRs.getDouble(5);
+					}
+					catch(Exception e1){
+						e1.printStackTrace();
+						 curPoints = 0.0;
+					}
+					//updates to new points
+					double newPoints = currentOrder.getOrderTotal() + curPoints;
+					
+					System.out.println("goint to add " + newPoints + " to customer " + custId);
+					DBConnection.dbUpdateRecord("customers", "rewardPoints =\"" + newPoints  + "\"", "customerid = " + custId);
+
+	            	
 	            	this.setVisible(false);
 	            	currentOrder.setPaymentMethod("Cash");
 					currentOrder.writeToDatabase(isReturn);
