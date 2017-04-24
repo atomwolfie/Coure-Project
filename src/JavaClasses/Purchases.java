@@ -9,6 +9,7 @@ public class Purchases {
 	private int quantity;
 	private String productName;
 	private double prodPrice;
+	private double discountPrice;
 	private double purchaseTotal;
 	private boolean isValidProduct;
 	private boolean isValidOrder;
@@ -52,9 +53,21 @@ public class Purchases {
 		this.quantity -= quantity;
 		this.purchaseTotal -= this.prodPrice * quantity;
 	}
+	public double getDiscountPrice(){return discountPrice;}
 
-	public double getProdPrice() { return prodPrice; }
+	
+	public double getProdPrice() { 
+		if(getDiscountPrice() == 0.0){
+		return prodPrice;
+		} 
+		else{
+			return getDiscountPrice();
+		}
+		
+		}
 
+	//public double getDiscountPrice(){return discountPrice;}
+	
 	public String getProductName() { return productName; }
 
 	public double getPurchaseTotal() {
@@ -104,6 +117,12 @@ public class Purchases {
 					this.isValidProduct = false;
 				}
 				this.prodPrice = myRsProducts.getFloat("productprice");
+				System.out.println("regular price: " + this.prodPrice);
+				this.discountPrice = myRsProducts.getDouble("discountPrice");
+				if(this.discountPrice > 0.0){
+					this.prodPrice = this.discountPrice;
+				}
+				System.out.println("discount price: " + this.discountPrice);
 				this.purchaseTotal = this.prodPrice * this.quantity;
 				this.productName = myRsProducts.getString("productname");
 				this.isValidProduct = true;
@@ -132,6 +151,11 @@ public class Purchases {
 					this.isValidProduct = false;
 				}
 				this.prodPrice = myRsProducts.getFloat("productprice");
+				this.discountPrice = myRsProducts.getDouble("discountPrice");
+				System.out.println("discount price: " + this.discountPrice);
+				if(this.discountPrice > 0.0){
+					this.prodPrice = this.discountPrice;
+				}
 				this.purchaseTotal = this.prodPrice * this.quantity;
 				this.productName = myRsProducts.getString("productname");
 				this.isValidProduct = true;
@@ -163,6 +187,11 @@ public class Purchases {
 					this.isValidProduct = false;
 				}
 				this.prodPrice = myRsProducts.getFloat("productprice");
+				this.discountPrice = myRsProducts.getDouble("discountPrice");
+				System.out.println("discount price: " + this.discountPrice);
+				if(this.discountPrice > 0.0){
+					this.prodPrice = this.discountPrice;
+				}
 				this.purchaseTotal = this.prodPrice * this.quantity;
 				this.productName = myRsProducts.getString("productname");
 				this.isValidProduct = true;
@@ -194,6 +223,11 @@ public class Purchases {
 					this.isValidProduct = false;
 				}
 				this.prodPrice = myRsProducts.getFloat("productprice");
+				this.discountPrice = myRsProducts.getDouble("discountPrice");
+				System.out.println("discount price: " + this.discountPrice);
+				if(this.discountPrice > 0.0){
+					this.prodPrice = this.discountPrice;
+				}
 				this.purchaseTotal = this.prodPrice * this.quantity;
 				this.productName = myRsProducts.getString("productname");
 				this.isValidProduct = true;
@@ -226,6 +260,12 @@ public class Purchases {
 					this.isValidProduct = false;
 				}
 				this.prodPrice = myRsProducts.getFloat("productprice");
+				this.discountPrice = myRsProducts.getDouble("discountPrice");
+				System.out.println("discount price: " + this.discountPrice);
+				
+				if(this.discountPrice > 0.0){
+					this.prodPrice = this.discountPrice;
+				}
 				this.purchaseTotal = this.quantity*this.prodPrice;
 				this.productName = myRsProducts.getString("productname");
 				this.isValidProduct = true;
