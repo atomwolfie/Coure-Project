@@ -75,15 +75,16 @@ public class Cash {
 		}
 		frame.getContentPane().add(lblCash);
 		
-		
-		JLabel rewardsMember = new JLabel("Enter id or swipe reward card (optional): ");
-		rewardsMember.setBounds(120, 330, 268, 16);
-		frame.getContentPane().add(rewardsMember);
-		
-		rewardField = new JTextField();
-		rewardField.setText("");
-		rewardField.setBounds(380, 325, 130, 26);
+		if (!isReturn) {
+			JLabel rewardsMember = new JLabel("Enter id or swipe reward card (optional): ");
+			rewardsMember.setBounds(120, 330, 268, 16);
+			frame.getContentPane().add(rewardsMember);
+
+			rewardField = new JTextField();
+			rewardField.setText("");
+			rewardField.setBounds(380, 325, 130, 26);
 			frame.getContentPane().add(rewardField);
+		}
 		
 		
 		JButton btnPrintReceipt = new JButton("Print Receipt");
@@ -114,7 +115,8 @@ public class Cash {
 		DecimalFormat dec = new DecimalFormat("#.00");
 		JLabel lblTotal = new JLabel("Total: $" + dec.format(this.currentOrder.getOrderTotal() + tax));
 		if (this.isReturn) {
-			lblTotal.setText("Total: -$" + dec.format(-1 * this.currentOrder.getOrderTotal() + tax));
+			tax = this.currentOrder.getReturnTotal() * 0.03;
+			lblTotal.setText("Total: -$" + dec.format(-1 * (this.currentOrder.getReturnTotal() + tax)));
 			lblTotal.setBounds(380, 265, 150, 16);
 		}
 		else {
@@ -161,9 +163,14 @@ public class Cash {
 				}
 
 	            if (e.getSource() == btnPrintReceipt) { //go to receipt screen, also brings up main screen to start again
-
-	            	String rewardString = rewardField.getText();
-	            	int custId = Integer.parseInt(rewardString);
+					int custId;
+					if (!isReturn) {
+						String rewardString = rewardField.getText();
+						custId = Integer.parseInt(rewardString);
+					}
+					else {
+						custId = currentOrder.getCustId();
+					}
 	            	try{
 
 						ResultSet myRs = DBConnection.dbSelectAllFromTableWhere("customers", "customerid=\"" + custId + "\"");
@@ -177,6 +184,9 @@ public class Cash {
 					}
 					//updates to new points
 					double newPoints = currentOrder.getOrderTotal() + curPoints;
+					if (isReturn) {
+						newPoints = currentOrder.getReturnTotal() + curPoints;
+					}
 					
 					System.out.println("goint to add " + newPoints + " to customer " + custId);
 					DBConnection.dbUpdateRecord("customers", "rewardPoints =\"" + newPoints  + "\"", "customerid = " + custId);
@@ -184,7 +194,12 @@ public class Cash {
 	            	
 	            	this.setVisible(false);
 	            	currentOrder.setPaymentMethod("Cash");
-					currentOrder.writeToDatabase(isReturn);
+	            	if(!isReturn) {
+						currentOrder.writeToDatabase(isReturn);
+					}
+					else {
+	            		curOrder.updateOrder();
+					}
 					frame.dispose();
 					//Write new data to mysql db
 

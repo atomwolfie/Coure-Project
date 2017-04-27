@@ -14,6 +14,7 @@ public class Employee {
     private String m_lastName;
     private boolean m_isManager;
     private String m_picFilePath;
+    private String m_password;
 
     Employee(int employeeId) {
         ResultSet rs = DBConnection.dbSelectAllFromTableWhere("employees", "employeeid=" + employeeId);
@@ -24,6 +25,7 @@ public class Employee {
                 m_lastName = rs.getString("employeelastname");
                 m_isManager = rs.getString("employeestatus").equals("Manager");
                 m_picFilePath = System.getProperty("user.dir") + rs.getString("employeepicfilepath");
+                m_password = rs.getString("employeepassword");
             }
             else {
                 m_id = -1;
@@ -56,7 +58,7 @@ public class Employee {
     }
 
     public void setPicFilePath(String newPicFilePath) {
-        if (DBConnection.dbUpdateRecord("employees", "employeepicfilepath=" + newPicFilePath, "employeeid=" + m_id)) {
+        if (DBConnection.dbUpdateRecord("employees", "employeepicfilepath=\"" + newPicFilePath + "\"", "employeeid=" + m_id)) {
             this.m_picFilePath = newPicFilePath;
         }
     }
@@ -75,7 +77,7 @@ public class Employee {
             status = "Cashier";
             this.m_isManager = false;
         }
-        DBConnection.dbUpdateRecord("employees", "employeestatus=" + status, "employeeid=" + m_id);
+        DBConnection.dbUpdateRecord("employees", "employeestatus=\"" + status + "\"", "employeeid=" + m_id);
     }
 
     public String getLastName() {
@@ -83,7 +85,7 @@ public class Employee {
     }
 
     public void setLastName(String newLastName) {
-        if (DBConnection.dbUpdateRecord("employees", "employeelastname=" + newLastName, "employeeid=" + m_id)) {
+        if (DBConnection.dbUpdateRecord("employees", "employeelastname=\"" + newLastName + "\"", "employeeid=" + m_id)) {
             this.m_lastName = newLastName;
         }
     }
@@ -93,13 +95,20 @@ public class Employee {
     }
 
     public void setFirstName(String newFirstName) {
-        if (DBConnection.dbUpdateRecord("employees", "employeefirstname=" + newFirstName, "employeeid=" + m_id)) {
+        if (DBConnection.dbUpdateRecord("employees", "employeefirstname=\"" + newFirstName + "\"", "employeeid=" + m_id)) {
             this.m_firstName = newFirstName;
         }
     }
 
     public int getId() {
         return m_id;
+    }
+
+    public String getPassword() { return m_password; }
+    public void setPassword(String newPass) {
+        if (DBConnection.dbUpdateRecord("employees", "employeepassword=\"" + newPass +"\"", "employeeid=" + m_id)) {
+            this.m_password = newPass;
+        }
     }
 
     public String toString() {

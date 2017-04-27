@@ -19,7 +19,6 @@ public class RewardPoints{
 
 	private JFrame frame;
 	private JTextField txtName;
-	private JTextField textField;
 	private Employee curEmployee;
 	private Customer curCustomerGuy;
 	private Order currentOrder;
@@ -77,12 +76,12 @@ public class RewardPoints{
 		JButton btnGoBack = new JButton("go back");
 		btnGoBack.setBounds(601, 477, 117, 29);
 		frame.getContentPane().add(btnGoBack);
-		
-		textField = new JPasswordField();
-		textField.setText("");
-		textField.setBounds(138, 219, 130, 26);
-		frame.getContentPane().add(textField);
-		textField.setColumns(10);
+
+		txtName = new JTextField();
+		txtName.setText("");
+		txtName.setBounds(138, 219, 130, 26);
+		frame.getContentPane().add(txtName);
+		txtName.setColumns(10);
 		
 		JButton btnLogin = new JButton("enter");
 		btnLogin.setBounds(151, 257, 117, 29);
@@ -125,8 +124,8 @@ public class RewardPoints{
 		frame.getContentPane().add(btnSelectEmployee);
 		
 		btnSelectEmployee.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {	
-				textField.setText((String) list.getSelectedValue());		
+			public void actionPerformed(ActionEvent e) {
+				txtName.setText((String) list.getSelectedValue());
 				}
 			});
 		
@@ -139,18 +138,18 @@ public class RewardPoints{
 		btnContinue.setBounds(481, 477, 117, 29);
 		frame.getContentPane().add(btnContinue);
 		
-		JLabel lblCusomer = new JLabel("Cusomer:");
-		lblCusomer.setBounds(63, 224, 88, 16);
-		frame.getContentPane().add(lblCusomer);
+		JLabel lblCustomer = new JLabel("Customer:");
+		lblCustomer.setBounds(63, 224, 88, 16);
+		frame.getContentPane().add(lblCustomer);
 		
 		
 		
 		
 				btnContinue.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
-							
-						textField.setText((String) list.getSelectedValue());		
-						String name = textField.getText();
+
+						txtName.setText((String) list.getSelectedValue());
+						String name = txtName.getText();
 						System.out.println(name);
 						
 						try{

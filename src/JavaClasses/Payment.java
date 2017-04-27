@@ -4,6 +4,7 @@ import javax.swing.JFrame;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.sql.ResultSet;
 import java.text.DecimalFormat;
 import javax.swing.JLabel;
 
@@ -83,7 +84,8 @@ public class Payment {
 		DecimalFormat dec = new DecimalFormat("#.00");
 		JLabel lblTotal = new JLabel("Total: $" + dec.format(this.currentOrder.getOrderTotal() + tax));
 		if (this.isReturn) {
-			lblTotal.setText("Total: -$" + dec.format(-1 * this.currentOrder.getOrderTotal() + tax));
+			tax = this.currentOrder.getReturnTotal() * .03;
+			lblTotal.setText("Total: -$" + dec.format(-1 * (this.currentOrder.getReturnTotal() + tax)));
 		}
 		lblTotal.setBounds(405, 190, 268, 16);
 		frame.getContentPane().add(lblTotal);
@@ -109,8 +111,20 @@ public class Payment {
 	            if (e.getSource() == btnCash) { //return to checkout screen
 
 	            	this.setVisible(false);
-	            	Cash cash = new Cash(currentOrder, curEmployee, isReturn);
-	            	cash.setVisible(true);
+	            	if (isReturn) {
+						addToRewardPoints();
+						currentOrder.updateOrder();
+						MainScreen main = new MainScreen(curEmployee);
+						Receipt receipt = new Receipt(currentOrder, isReturn);
+
+						main.setVisible(true);
+						receipt.setVisible(true);
+					}
+					else {
+						Cash cash = new Cash(currentOrder, curEmployee, isReturn);
+						cash.setVisible(true);
+					}
+	            	frame.dispose();
 	            } 
 	            if (e.getSource() == btnCard) { //return to checkout screen
 
@@ -121,10 +135,22 @@ public class Payment {
 	            if (e.getSource() == reward) { //return to checkout screen
 
 	            	this.setVisible(false);
-	            	RewardPoints rewards = new RewardPoints(currentOrder, curEmployee, isReturn);
-	            	rewards.setVisible(true);
+					if (isReturn) {
+						addToRewardPoints();
+						currentOrder.updateOrder();
+						MainScreen main = new MainScreen(curEmployee);
+						Receipt receipt = new Receipt(currentOrder, isReturn);
+
+						main.setVisible(true);
+						receipt.setVisible(true);
+					}
+					else {
+						RewardPoints rewards = new RewardPoints(currentOrder, curEmployee, isReturn);
+						rewards.setVisible(true);
+					}
+					frame.dispose();
 	            }
-	            
+
 	            
 	        }
 
@@ -137,6 +163,24 @@ public class Payment {
 		btnCash.addActionListener(buttonListener);
 		btnCard.addActionListener(buttonListener);
 		reward.addActionListener(buttonListener);
+	}
+
+	public void addToRewardPoints() {
+
+		int custId = this.currentOrder.getCustId();
+		double curPoints = 0;
+		try {
+			ResultSet myRs = DBConnection.dbSelectAllFromTableWhere("customers", "customerid=\"" + custId + "\"");
+			//gets the current points
+			myRs.next();
+			curPoints = myRs.getDouble(5);
+		}
+		catch(Exception e1){
+			e1.printStackTrace();
+			curPoints = 0.0;
+		}
+		//updates to new points
+		double newPoints = (-1 * currentOrder.getReturnTotal()) + curPoints;
 	}
 
 	public void setVisible(boolean b) {

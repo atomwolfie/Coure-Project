@@ -194,6 +194,7 @@ public class RewardPointsPartTwo {
 					currentOrder.setOrderTotal(leftOver);
 					Payment paymnt = new Payment(currentOrder, curEmployee, false);
 	            	paymnt.setVisible(true);
+	            	frame.dispose();
 				}
 			
 				}

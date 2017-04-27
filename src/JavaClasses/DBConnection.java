@@ -9,9 +9,9 @@ import java.text.DecimalFormat;
  * Created by jeff on 3/24/17.
  */
 public class DBConnection {
-    public static final String dbUrl = "jdbc:mysql://localhost:3306/demo?autoReconnect=true&useSSL=false";
-    public static final String dbUser = "root";
-    public static final String dbPassword = "W01fp@ck";
+    public static final String dbUrl = "jdbc:mysql://localhost:3306/store?autoReconnect=true&useSSL=false";
+    public static final String dbUser = "storeuser";
+    public static final String dbPassword = "*fad!@plo*";
 
     public static int dbGetRecordCountForTable(String table) {
         try {
@@ -94,6 +94,7 @@ public class DBConnection {
             Connection con = (Connection) DriverManager.getConnection(dbUrl, dbUser, dbPassword);
             Statement myStmt = con.createStatement();
             DecimalFormat dec = new DecimalFormat("#.00");
+            System.out.println("UPDATE " + table + " SET " + setValue + " WHERE " + constraint);
             myStmt.executeUpdate("UPDATE " + table + " SET " + setValue + " WHERE " + constraint);
             return true;
         }
