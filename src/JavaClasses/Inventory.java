@@ -1,16 +1,11 @@
 import java.awt.EventQueue;
 
-import javax.swing.JFrame;
-import javax.swing.JButton;
-import javax.swing.JTable;
-
 import com.mysql.jdbc.Connection;
 import com.mysql.jdbc.PreparedStatement;
 import com.mysql.jdbc.Statement;
 
 import net.proteanit.sql.DbUtils;
 
-import javax.swing.JScrollPane;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.*;
@@ -119,7 +114,7 @@ public class Inventory {
 		txtInStock.setColumns(10);
 		
 		txtDiscount = new JTextField();
-		txtDiscount.setText("0 for no discount");
+		txtDiscount.setText("0 or none for no discount");
 		txtDiscount.setBounds(100, 419, 130, 26);
 		frame.getContentPane().add(txtDiscount);
 		txtDiscount.setColumns(10);
@@ -149,6 +144,7 @@ public class Inventory {
 		frame.getContentPane().add(lblEnter);
 		
 		JLabel lblDiscount = new JLabel("Discount:");
+		lblDiscount.setToolTipText("Enter 0 or none if there is no discount");
 		lblDiscount.setBounds(24, 423, 92, 16);
 		frame.getContentPane().add(lblDiscount);
 		
@@ -196,7 +192,14 @@ public class Inventory {
 				txtProvider.setText(model.getValueAt(row,3).toString());
 				txtType.setText(model.getValueAt(row,4).toString());
 				txtInStock.setText(model.getValueAt(row,5).toString());
-				txtDiscount.setText(model.getValueAt(row,6).toString());
+				
+				if(model.getValueAt(row,6).toString().equals(0.0)){
+					txtDiscount.setText("none");
+				}
+				else{
+					txtDiscount.setText(model.getValueAt(row,6).toString());
+				}
+				
 				
 				try{
 					ResultSet myRs = DBConnection.dbSelectAllFromTable("products");
@@ -219,6 +222,21 @@ public class Inventory {
 			
 			String productName = txtName.getText();
 				
+			String price = txtPrice.getText();
+    		double  productPrice = Double.parseDouble(price);
+			
+    		String discountString = txtDiscount.getText();
+			double discount = Double.parseDouble(discountString);
+			
+			if(discountString.equals("none") || discountString.equals("None")){
+				discount = 0.0;
+			}
+			
+			if(discount > productPrice){
+				JOptionPane.showMessageDialog(frame, "item not updated, discount price greater than product price");
+				return;
+			}
+			
 				//EDIT ITEM IN DATABASE
         		try {
 					Connection myCon = (Connection) DriverManager.getConnection(DBConnection.dbUrl, DBConnection.dbUser, DBConnection.dbPassword);
@@ -268,6 +286,9 @@ public class Inventory {
         			if(txtDiscount.getText().isEmpty()){
         				System.out.println("Discount not updated");
         			}
+        			if(txtDiscount.getText().equals("none")){
+        				DBConnection.dbUpdateRecord("products", "discountPrice =\"" + 0.0 + "\"", "productid = " + curId );
+        			}
 					else{
 	        			
 						DBConnection.dbUpdateRecord("products", "discountPrice =\"" + txtDiscount.getText() + "\"", "productid = " + curId );
@@ -291,7 +312,7 @@ public class Inventory {
 			java.sql.PreparedStatement  pst = con.prepareStatement(query);
 			ResultSet rs = pst.executeQuery();
 
-			table.setModel(DbUtils.resultSetToTableModel(rs));
+			table.setModel(DbUtils.resultSetToTableModel(rs));		
 			table.getColumnModel().getColumn(0).setHeaderValue("ID");
 			table.getColumnModel().getColumn(1).setHeaderValue("Name");
 			table.getColumnModel().getColumn(2).setHeaderValue("Price");
@@ -359,8 +380,19 @@ public class Inventory {
 				String stringStock = txtInStock.getText();
 				double stock = Double.parseDouble(stringStock);
 				
-				String discount = txtDiscount.getText();
-				double productDiscount = Double.parseDouble(discount);
+				String discountString = txtDiscount.getText();
+				double discount = Double.parseDouble(discountString);
+				
+				
+				if(discountString.equals("none") || discountString.equals("None")){
+					discount = 0.0;
+				}
+				
+				
+				if(discount > productPrice){
+					JOptionPane.showMessageDialog(frame, "item not updated, discount price greater than product price");
+					return;
+				}
 				
         		try {
 					Connection myCon = (Connection) DriverManager.getConnection(DBConnection.dbUrl, DBConnection.dbUser, DBConnection.dbPassword);
@@ -375,7 +407,8 @@ public class Inventory {
         		    ps.setString(4, productProvider);
         		    ps.setString(5, productType);
         		    ps.setDouble(6, stock);
-        		    ps.setDouble(7, productDiscount);
+        		    ps.setDouble(7, discount);
+        		     		    
         		    ps.executeUpdate();
         		}
         		catch (Exception e1){

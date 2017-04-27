@@ -7,6 +7,7 @@ public class Order {
 	private String dateTime;
 	private double orderTotal;
 	private int custId;
+	private int phoneNum;
 	private String paymentMethod;
 	private ArrayList<Purchases> purchases;
 	private OrderValidator validator;

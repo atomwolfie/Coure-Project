@@ -128,7 +128,8 @@ public class employeeLogin {
 
 				}
 				else{
-					System.out.println("password not correct");
+					JOptionPane.showMessageDialog(frame, "password incorrect.");
+					textField.setText("");
 					//if not little window saying incorrect password
 				}
 			}
