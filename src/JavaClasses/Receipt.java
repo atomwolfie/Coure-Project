@@ -63,7 +63,7 @@ public class Receipt {
 		frame.getContentPane().add(lblReceipt);
 
 		JLabel lblOrderId = new JLabel("Order ID: " + curOrder.getOrderId());
-		lblOrderId.setBounds(120,40,150,29);
+		lblOrderId.setBounds(115,30,150,29);
 		frame.getContentPane().add(lblOrderId);
 		
 		JLabel lblNewLabel = new JLabel("Mr. Smith's Store");

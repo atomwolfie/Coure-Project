@@ -69,6 +69,9 @@ public class MainScreen {
 		JButton btnMngEmployees = new JButton("Manage Employees");
 		btnMngEmployees.setBounds(340, 501, 250, 50);
 
+		JButton btnReport = new JButton("Report");
+		btnReport.setBounds(340, 561, 250, 50);
+
 		JButton btnLogout = new JButton("Logout");
 		btnLogout.setBounds(10,160,100,25);
 
@@ -79,6 +82,7 @@ public class MainScreen {
 			if (this.curEmployee.getIsManager()) {
 				frame.getContentPane().add(btnInventory);
 				frame.getContentPane().add(btnMngEmployees);
+				frame.getContentPane().add(btnReport);
 			}
 			else {
 				frame.getContentPane().add(btnReturnItem);
@@ -133,6 +137,12 @@ public class MainScreen {
 					retItem.setVisible(true);
 					frame.dispose();
 				}
+				else if (e.getSource() == btnReport) {
+					this.setVisible(false);
+					Report report = new Report(curEmployee);
+					report.setVisible(true);
+					frame.dispose();
+				}
 	        }
 
 			private void setVisible(boolean b) {
@@ -144,6 +154,7 @@ public class MainScreen {
 		btnCheckout.addActionListener(buttonListener);
 		btnLogout.addActionListener(buttonListener);
 		btnMngEmployees.addActionListener(buttonListener);
+		btnReport.addActionListener(buttonListener);
 		btnReturnItem.addActionListener(buttonListener);
 		if (imageLabel != null) {
 			imageLabel.addMouseListener(new MouseListener() {

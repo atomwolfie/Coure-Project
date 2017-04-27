@@ -1,3 +1,4 @@
+import javax.imageio.IIOException;
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -39,8 +40,13 @@ public class Employee {
         BufferedImage img = null;
         try {
             img = ImageIO.read(new File(m_picFilePath));
-        } catch (IOException e) {
-            e.printStackTrace();
+        } catch (Exception e) {
+            //e.printStackTrace();
+            try {
+                img = ImageIO.read(new File(System.getProperty("user.dir") + "/src/EmployeePictures/HappySloth.jpg"));
+            } catch (Exception e2) {
+                e2.printStackTrace();
+            }
         }
         return img;
     }
