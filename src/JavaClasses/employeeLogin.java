@@ -128,7 +128,8 @@ public class employeeLogin {
 
 				}
 				else{
-					System.out.println("password not correct");
+					JOptionPane.showMessageDialog(frame, "password incorrect.");
+					textField.setText("");
 					//if not little window saying incorrect password
 				}
 			}
@@ -148,7 +149,6 @@ public class employeeLogin {
 		try{
 			 Connection myConn2 = (Connection) DriverManager.getConnection(DBConnection.dbUrl, DBConnection.dbUser, DBConnection.dbPassword);
       		java.sql.Statement myStmt = myConn2.createStatement();
-     		String sql = "select * from employees";
      		
      		ResultSet myRs = myStmt.executeQuery("select * from employees");
      		

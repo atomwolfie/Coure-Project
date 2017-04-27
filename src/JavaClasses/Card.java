@@ -77,8 +77,8 @@ public class Card {
 		frame.getContentPane().add(lblNewLabel_1);
 
 		
-		JLabel rewardsMember = new JLabel("Enter id or swipe reward card (optional): ");
-		rewardsMember.setBounds(120, 400, 268, 16);
+		JLabel rewardsMember = new JLabel("Enter phone # or swipe reward card (optional): ");
+		rewardsMember.setBounds(80, 400, 300, 16);
 		frame.getContentPane().add(rewardsMember);
 		
 		rewardField = new JTextField();
@@ -194,11 +194,12 @@ public class Card {
 	            	Customer cust = new Customer(txtfldName.getText());
 					int custId = cust.writeToDatabase();
 	            	
-					String rewardString = rewardField.getText();
-					int custIdNum = Integer.parseInt(rewardString);
-	            	try{
+					String phoneNum = rewardField.getText();
+					//int custIdNum = Integer.parseInt(rewardString);
+	            	
+					try{
 
-						ResultSet myRs = DBConnection.dbSelectAllFromTableWhere("customers", "customerid=\"" + custIdNum + "\"");
+						ResultSet myRs = DBConnection.dbSelectAllFromTableWhere("customers", "phonenumber=\"" + phoneNum + "\"");
 						//gets the current points
 						myRs.next();
 						 curPoints = myRs.getDouble(5);
@@ -210,8 +211,8 @@ public class Card {
 					//updates to new points
 					double newPoints = currentOrder.getOrderTotal() + curPoints;
 					
-					System.out.println("goint to add " + newPoints + " to customer " + custIdNum);
-					DBConnection.dbUpdateRecord("customers", "rewardPoints =\"" + newPoints  + "\"", "customerid = " + custIdNum);
+					System.out.println("goint to add " + newPoints + " to customer " + phoneNum);
+					DBConnection.dbUpdateRecord("customers", "rewardPoints =\"" + newPoints  + "\"", "phonenumber = " + phoneNum);
 
 					
 					currentOrder.setPaymentMethod("Card");
