@@ -2,6 +2,7 @@ import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.ResultSet;
+import java.text.DecimalFormat;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -16,6 +17,7 @@ public class RewardPointsPartTwo {
 	private Employee curEmployee;
 	private Customer curCustomer;
 	private Customer customer;
+	private DecimalFormat dec;
 	private Order currentOrder;
 	private boolean isReturn;
 	private double points;
@@ -57,6 +59,8 @@ public class RewardPointsPartTwo {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize(Order curOrder) {
+
+		dec = new DecimalFormat("#.00");
 		this.currentOrder = curOrder;
 
 		orderTotal = this.currentOrder.getOrderTotal();
@@ -76,21 +80,26 @@ public class RewardPointsPartTwo {
 		lblCustomer.setBounds(106, 94, 214, 16);
 		frame.getContentPane().add(lblCustomer);
 		
+<<<<<<< HEAD
 		JLabel lblPoints = new JLabel("points (in Dollars): $" + (this.curCustomer.getCustPoints())/100);
 		lblPoints.setBounds(68, 126, 214, 16);
+=======
+		JLabel lblPoints = new JLabel("Points (in Dollars): $" + dec.format((this.curCustomer.getCustPoints())/100));
+		lblPoints.setBounds(67, 126, 214, 16);
+>>>>>>> 67d001e12f13e8aa053d472c4df371884f86cedc
 		frame.getContentPane().add(lblPoints);
 		
-		JLabel lblOrderTotal = new JLabel("Order Total: $ " + this.currentOrder.getOrderTotal());
+		JLabel lblOrderTotal = new JLabel("Order Total: $ " + dec.format(this.currentOrder.getOrderTotal()));
 		lblOrderTotal.setBounds(106, 214, 255, 16);
 		frame.getContentPane().add(lblOrderTotal);
 		
-		JLabel lblAmmountToPay = new JLabel("Ammount to pay w/ points:");
-		lblAmmountToPay.setBounds(21, 258, 199, 16);
+		JLabel lblAmmountToPay = new JLabel("Amount to pay w/ points:");
+		lblAmmountToPay.setBounds(17, 258, 199, 16);
 		frame.getContentPane().add(lblAmmountToPay);
 		
 		txtPoints = new JTextField();
 		txtPoints.setText("0.00");
-		txtPoints.setBounds(207, 253, 130, 26);
+		txtPoints.setBounds(202, 253, 130, 26);
 		frame.getContentPane().add(txtPoints);
 		txtPoints.setColumns(10);
 		
@@ -100,12 +109,12 @@ public class RewardPointsPartTwo {
 		
 	
 		
-		JLabel lblPointsRemaining = new JLabel("Points remaining: $" + points);
-		lblPointsRemaining.setBounds(88, 310, 232, 16);
+		JLabel lblPointsRemaining = new JLabel("Points remaining: $" + dec.format(points));
+		lblPointsRemaining.setBounds(81, 310, 232, 16);
 		frame.getContentPane().add(lblPointsRemaining);
 		
-		JLabel lblOrderTotalRemaining = new JLabel("Order Total Remaining: $" + orderTotal);
-		lblOrderTotalRemaining.setBounds(55, 347, 274, 16);
+		JLabel lblOrderTotalRemaining = new JLabel("Order Total Remaining: $" + dec.format(orderTotal));
+		lblOrderTotalRemaining.setBounds(45, 347, 274, 16);
 		frame.getContentPane().add(lblOrderTotalRemaining);
 		
 		
@@ -119,25 +128,25 @@ public class RewardPointsPartTwo {
 			double ammountWanted = Double.parseDouble(ammountWantedString);
 			
 			if(ammountWanted > points){
-				JOptionPane.showMessageDialog(frame, "not enough points. Enter lower amount");
+				JOptionPane.showMessageDialog(frame, "Not enough points. Enter lower amount");
 				txtPoints.setText("0.00");
-				lblPointsRemaining.setText("Points remaining: $" + points);
-				lblOrderTotalRemaining.setText("Order Total Remaining: $" + orderTotal);
+				lblPointsRemaining.setText("Points remaining: $" + dec.format(points));
+				lblOrderTotalRemaining.setText("Order Total Remaining: $" + dec.format(orderTotal));
 			return;
 			}
 			//also need to check to see if more points than needed is used.
 			if(ammountWanted > orderTotal){
 				JOptionPane.showMessageDialog(frame, "Points exceeds Order total");
 				txtPoints.setText("0.00");
-				lblPointsRemaining.setText("Points remaining: $" + points);
-				lblOrderTotalRemaining.setText("Order Total Remaining: $" + orderTotal);
+				lblPointsRemaining.setText("Points remaining: $" + dec.format(points));
+				lblOrderTotalRemaining.setText("Order Total Remaining: $" + dec.format(orderTotal));
 				return;
 			}
 			
 			else{
 				//calculate remaining points and new total after.
-				lblPointsRemaining.setText("points remaining: $" + (points - ammountWanted));
-				lblOrderTotalRemaining.setText("Order Total Remaining: $"+ (orderTotal - ammountWanted));
+				lblPointsRemaining.setText("points remaining: $" + dec.format((points - ammountWanted)));
+				lblOrderTotalRemaining.setText("Order Total Remaining: $"+ dec.format((orderTotal - ammountWanted)));
 			}
 			
 				}
