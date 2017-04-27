@@ -75,16 +75,18 @@ public class Cash {
 			lblCash.setBounds(425, 160, 268, 16);
 		}
 		frame.getContentPane().add(lblCash);
-		
-		
-		JLabel rewardsMember = new JLabel("Enter phone # or swipe reward card (optional): ");
-		rewardsMember.setBounds(50, 330, 300, 16);
-		frame.getContentPane().add(rewardsMember);
-		
-		rewardField = new JTextField();
-		rewardField.setText("");
-		rewardField.setBounds(380, 325, 130, 26);
+
+		if (!isReturn) {
+			JLabel rewardsMember = new JLabel("Enter phone # or swipe reward card (optional): ");
+			rewardsMember.setBounds(50, 330, 300, 16);
+			frame.getContentPane().add(rewardsMember);
+
+			rewardField = new JTextField();
+			rewardField.setText("");
+			rewardField.setBounds(380, 325, 130, 26);
+
 			frame.getContentPane().add(rewardField);
+		}
 		
 		
 		JButton btnPrintReceipt = new JButton("Print Receipt");
@@ -115,7 +117,8 @@ public class Cash {
 		DecimalFormat dec = new DecimalFormat("#.00");
 		JLabel lblTotal = new JLabel("Total: $" + dec.format(this.currentOrder.getOrderTotal() + tax));
 		if (this.isReturn) {
-			lblTotal.setText("Total: -$" + dec.format(-1 * this.currentOrder.getOrderTotal() + tax));
+			tax = this.currentOrder.getReturnTotal() * 0.03;
+			lblTotal.setText("Total: -$" + dec.format(-1 * (this.currentOrder.getReturnTotal() + tax)));
 			lblTotal.setBounds(380, 265, 150, 16);
 		}
 		else {
@@ -163,16 +166,23 @@ public class Cash {
 
 	            if (e.getSource() == btnPrintReceipt) { //go to receipt screen, also brings up main screen to start again
 
-	            	
-	            	
-	            	String phoneNum = rewardField.getText();
-	            	long phoneNumInt = Long.parseLong(phoneNum);
-	            	
-	            	System.out.println("customer phone: " + phoneNumInt);
-        	
-	            	try{
+					String phoneNum = "";
+					int custId = 0;
+					if (!isReturn) {
+						phoneNum = rewardField.getText();
+					}
+					else {
+						custId = currentOrder.getCustId();
+					}
 
-						ResultSet myRs = DBConnection.dbSelectAllFromTableWhere("customers", "phonenumber=\"" + phoneNum + "\"");
+	            	try{
+						ResultSet myRs;
+						if (!isReturn) {
+							myRs = DBConnection.dbSelectAllFromTableWhere("customers", "phonenumber=\"" + phoneNum + "\"");
+						}
+						else {
+							myRs = DBConnection.dbSelectAllFromTableWhere("customers", "customerid=" + custId);
+						} 
 						//gets the current points
 						myRs.next();
 						custId = myRs.getInt(1);
@@ -187,6 +197,9 @@ public class Cash {
 					}
 					//updates to new points
 					double newPoints = currentOrder.getOrderTotal() + curPoints;
+					if (isReturn) {
+						newPoints = currentOrder.getReturnTotal() + curPoints;
+					}
 					
 					System.out.println("goint to add " + newPoints + " to customer w/ phone num: " + phoneNum);
 					DBConnection.dbUpdateRecord("customers", "rewardPoints =\"" + newPoints  + "\"", "phonenumber = " + phoneNum);
@@ -195,7 +208,14 @@ public class Cash {
 	            	this.setVisible(false);
 	            	currentOrder.setCustId(custId);
 	            	currentOrder.setPaymentMethod("Cash");
-					currentOrder.writeToDatabase(isReturn); //SOMETHING HERE IS MESSED UP
+
+	            	if(!isReturn) {
+						currentOrder.writeToDatabase(isReturn);
+					}
+					else {
+	            		curOrder.updateOrder();
+					}
+
 					frame.dispose();
 					//Write new data to mysql db
 

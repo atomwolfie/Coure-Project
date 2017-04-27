@@ -74,7 +74,7 @@ public class Customer {
 
 		try {
 			if (!myRsProducts.next()) {
-				DBConnection.dbInsertInto("customers", "NULL" + ",\"" +this.custName + "\"" + ", NULL" + ", NULL");
+				DBConnection.dbInsertInto("customers", "NULL" + ",\"" +this.custName + "\"" + ", NULL" + ", NULL," + 0);
 				ResultSet myRsProducts2 = DBConnection.dbSelectAllFromTableOrderBy("customers", "customerid DESC LIMIT 1");
 				myRsProducts2.next();
 				customerid = myRsProducts2.getInt("customerid");

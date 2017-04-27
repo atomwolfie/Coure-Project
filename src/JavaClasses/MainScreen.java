@@ -150,7 +150,7 @@ public class MainScreen {
 				@Override
 				public void mouseClicked(MouseEvent e) {
 					this.setVisible(false);
-					ChangeEmplPic changePic = new ChangeEmplPic(curEmployee);
+					ChangeEmplInfo changePic = new ChangeEmplInfo(curEmployee);
 					changePic.setVisible(true);
 					frame.dispose();
 				}

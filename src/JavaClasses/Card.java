@@ -2,6 +2,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -76,15 +77,18 @@ public class Card {
 		lblNewLabel_1.setBounds(365, 190, 268, 16);
 		frame.getContentPane().add(lblNewLabel_1);
 
-		
-		JLabel rewardsMember = new JLabel("Enter phone # or swipe reward card (optional): ");
-		rewardsMember.setBounds(80, 400, 300, 16);
-		frame.getContentPane().add(rewardsMember);
-		
-		rewardField = new JTextField();
-		rewardField.setText("");
-		rewardField.setBounds(380, 395, 130, 26);
+
+		if (!isReturn) {
+			JLabel rewardsMember = new JLabel("Enter phone # or swipe reward card (optional): ");
+			rewardsMember.setBounds(80, 400, 300, 16);
+			frame.getContentPane().add(rewardsMember);
+
+			rewardField = new JTextField();
+			rewardField.setText("");
+			rewardField.setBounds(380, 395, 130, 26);
+
 			frame.getContentPane().add(rewardField);
+		}
 		
 		JButton btnPrintReceipt = new JButton("Print Receipt");
 		btnPrintReceipt.setBounds(375, 450, 150, 67);
@@ -93,6 +97,19 @@ public class Card {
 
 		txtfldName = new JTextField();
 		txtfldName.setText("Enter Name");
+
+		if (isReturn && curOrder.getPaymentMethod().equals("Card")) {
+			String custName;
+			ResultSet rs = DBConnection.dbSelectAllFromTableWhere("customers", "customerid=" + curOrder.getCustId());
+			try {
+				rs.next();
+				custName = rs.getString("customername");
+				System.out.println(custName);
+				txtfldName.setText(custName);
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
 		txtfldName.setBounds(380, 240, 268, 26);
 		frame.getContentPane().add(txtfldName);
 		txtfldName.setColumns(10);
@@ -193,31 +210,61 @@ public class Card {
 	            	this.setVisible(false);
 	            	Customer cust = new Customer(txtfldName.getText());
 					int custId = cust.writeToDatabase();
-	            	
-					String phoneNum = rewardField.getText();
-					//int custIdNum = Integer.parseInt(rewardString);
-	            	
-					try{
-
-						ResultSet myRs = DBConnection.dbSelectAllFromTableWhere("customers", "phonenumber=\"" + phoneNum + "\"");
-						//gets the current points
-						myRs.next();
-						 curPoints = myRs.getDouble(5);
+					String phoneNum = "";
+					int custIdNum = 0;
+					if (!isReturn) {
+						phoneNum = rewardField.getText();
 					}
-					catch(Exception e1){
-						e1.printStackTrace();
-						 curPoints = 0.0;
+					else {
+						custIdNum = currentOrder.getCustId();
 					}
-					//updates to new points
-					double newPoints = currentOrder.getOrderTotal() + curPoints;
-					
-					System.out.println("goint to add " + newPoints + " to customer " + phoneNum);
-					DBConnection.dbUpdateRecord("customers", "rewardPoints =\"" + newPoints  + "\"", "phonenumber = " + phoneNum);
+					if (!rewardField.getText().equals("")) {
+						try {
+							ResultSet myRs;
+							if (!isReturn) {
+								myRs = DBConnection.dbSelectAllFromTableWhere("customers", "phonenumber=\"" + phoneNum + "\"");
+							}
+							else {
+								myRs = DBConnection.dbSelectAllFromTableWhere("customers", "customerid=\"" + custIdNum + "\"");
+							}
+							//gets the current points
+							myRs.next();
+							curPoints = myRs.getDouble(5);
+						} catch (Exception e1) {
+							e1.printStackTrace();
+							curPoints = 0.0;
+						}
 
-					
+						//updates to new points
+						double newPoints;
+						if (!isReturn) {
+							newPoints = currentOrder.getOrderTotal() + curPoints;
+							System.out.println("goint to add " + newPoints + " to customer " + phoneNum);
+						} else {
+							newPoints = currentOrder.getReturnTotal() + curPoints;
+							System.out.println("goint to add " + newPoints + " to customer " + custIdNum);
+						}
+
+						
+
+						if (!isReturn) {
+							DBConnection.dbUpdateRecord("customers", "rewardPoints =\"" + newPoints  + "\"", "phonenumber = " + phoneNum);
+						}
+						else {
+							DBConnection.dbUpdateRecord("customers", "rewardPoints =\"" + newPoints + "\"", "customerid = " + custIdNum);
+						}
+						
+					}
+
+
 					currentOrder.setPaymentMethod("Card");
 					currentOrder.setCustId(custId);
-					currentOrder.writeToDatabase(isReturn);
+					if (isReturn) {
+						currentOrder.updateOrder();
+					}
+					else {
+						currentOrder.writeToDatabase(isReturn);
+					}
 	            	MainScreen main = new MainScreen(curEmployee);
 					Receipt receipt = new Receipt(currentOrder, isReturn);
 					main.setVisible(true);

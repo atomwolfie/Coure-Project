@@ -61,7 +61,10 @@ public class Receipt {
 			lblReceipt.setBounds(154, 6, 121, 29);
 		}
 		frame.getContentPane().add(lblReceipt);
-	
+
+		JLabel lblOrderId = new JLabel("Order ID: " + curOrder.getOrderId());
+		lblOrderId.setBounds(120,40,150,29);
+		frame.getContentPane().add(lblOrderId);
 		
 		JLabel lblNewLabel = new JLabel("Mr. Smith's Store");
 		lblNewLabel.setBounds(153, 47, 143, 23);
@@ -85,6 +88,7 @@ public class Receipt {
 
 		JLabel lblTax = new JLabel("tax: $" + dec.format(tax));
 		if (this.isReturn) {
+			tax = curOrder.getReturnTotal() * .03;
 			lblTax.setText("tax: -$" + dec.format(-1 * tax));
 		}
 		lblTax.setBounds(104, 535, 150, 16);
@@ -92,7 +96,7 @@ public class Receipt {
 		
 		JLabel lblTotal = new JLabel("total: $" + dec.format((curOrder.getOrderTotal() + tax)));
 		if (this.isReturn) {
-			lblTotal.setText("total: -$" + dec.format(-1 * (curOrder.getOrderTotal() + tax)));
+			lblTotal.setText("total: -$" + dec.format(-1 * (curOrder.getReturnTotal() + tax)));
 		}
 		lblTotal.setBounds(104, 577, 150, 16);
 		frame.getContentPane().add(lblTotal);
@@ -129,7 +133,7 @@ public class Receipt {
 
 		if (this.isReturn) {
 			for (int i = 0; i < purch.size(); i++) {
-				model.addRow(new Object[]{purch.get(i).getProductName(), -1 * purch.get(i).getQuantity(), "-$" + dec.format(-1 * purch.get(i).getPurchaseTotal())});
+				model.addRow(new Object[]{purch.get(i).getProductName(), -1 * curOrder.getReturnQuantity(i), "-$" + dec.format(curOrder.getPurchases().get(i).getProdPrice() * curOrder.getReturnQuantity(i))});
 			}
 		}
 		else {

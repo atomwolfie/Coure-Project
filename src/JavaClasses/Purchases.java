@@ -64,9 +64,7 @@ public class Purchases {
 			return getDiscountPrice();
 		}
 		
-		}
-
-	//public double getDiscountPrice(){return discountPrice;}
+	}
 	
 	public String getProductName() { return productName; }
 
@@ -83,6 +81,13 @@ public class Purchases {
 	public boolean isValidProduct() { return isValidProduct; }
 
 	public boolean isValidOrder() {	return isValidOrder; }
+
+	public void updatePurchases() {
+		//quantity
+		DBConnection.dbUpdateRecord("purchases","quantity=" + this.quantity,"productid=" + this.prodId + " AND orderid=" + this.orderId);
+		//total
+		DBConnection.dbUpdateRecord("purchases","purchasetotal=" + this.purchaseTotal,"productid=" + this.prodId + " AND orderid=" + this.orderId);
+	}
 
 	public void writeToDatabase(boolean isReturn) {
 		DecimalFormat dec = new DecimalFormat("#.00");
@@ -253,7 +258,7 @@ public class Purchases {
 		try {
 			if(myRsProducts.next()){
 				this.prodId = prodId;
-				if (this.validator.quantityIsValid(quantity)) {
+				if (this.validator.quantityIsValid(quantity, this.isReturn)) {
 					this.quantity = quantity;
 				}
 				else {
@@ -283,4 +288,46 @@ public class Purchases {
 			e.printStackTrace();
 		}
 	}
+	public Purchases(int prodId, int orderId, int quantity, boolean isReturn) {
+		this.isReturn = isReturn;
+		this.validator = new PurchasesValidator();
+		items = new ArrayList();
+
+
+		ResultSet myRsProducts = DBConnection.dbSelectAllFromTableWhere("products", "productid=\"" + prodId + "\"");
+
+		try {
+			if(myRsProducts.next()){
+				this.prodId = prodId;
+				if (this.validator.quantityIsValid(quantity)) {
+					this.quantity = quantity;
+				}
+				else {
+					this.isValidProduct = false;
+				}
+				this.prodPrice = myRsProducts.getFloat("productprice");
+				this.discountPrice = myRsProducts.getDouble("discountPrice");
+				System.out.println("discount price: " + this.discountPrice);
+
+				if(this.discountPrice > 0.0){
+					this.prodPrice = this.discountPrice;
+				}
+				this.purchaseTotal = this.quantity*this.prodPrice;
+				this.productName = myRsProducts.getString("productname");
+				this.isValidProduct = true;
+			}
+
+			ResultSet myRsOrders = DBConnection.dbSelectAllFromTableWhere("orders", "orderid=\"" + orderId + "\"");
+
+			if(myRsOrders.next()){
+				this.orderId = orderId;
+				this.isValidOrder = true;
+			}
+
+		}
+		catch (Exception e){
+			e.printStackTrace();
+		}
+	}
+
 }
