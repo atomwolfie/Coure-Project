@@ -16,6 +16,7 @@ public class Employee {
     private boolean m_isManager;
     private String m_picFilePath;
     private String m_password;
+    private String m_username;
 
     Employee(int employeeId) {
         ResultSet rs = DBConnection.dbSelectAllFromTableWhere("employees", "employeeid=" + employeeId);
@@ -27,6 +28,7 @@ public class Employee {
                 m_isManager = rs.getString("employeestatus").equals("Manager");
                 m_picFilePath = System.getProperty("user.dir") + rs.getString("employeepicfilepath");
                 m_password = rs.getString("employeepassword");
+                m_username = rs.getString("employeeusername");
             }
             else {
                 m_id = -1;
@@ -86,6 +88,17 @@ public class Employee {
         DBConnection.dbUpdateRecord("employees", "employeestatus=\"" + status + "\"", "employeeid=" + m_id);
     }
 
+    
+    public String getUser(){
+    	return m_username;
+    }
+    
+    public void setUserName(String newUser){
+    	if (DBConnection.dbUpdateRecord("employees", "employeeusername=\"" + newUser + "\"", "employeeid=" + m_id)) {
+            this.m_username = newUser;
+        }
+    }
+    
     public String getLastName() {
         return m_lastName;
     }

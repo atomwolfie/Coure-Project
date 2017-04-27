@@ -1,3 +1,4 @@
+import java.awt.Color;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
@@ -59,18 +60,18 @@ public class employeeLogin {
 		
 		txtName = new JTextField();
 		txtName.setText("");
-		txtName.setBounds(105, 225, 130, 26);
+		txtName.setBounds(360, 174, 130, 26);
 		frame.getContentPane().add(txtName);
 		txtName.setColumns(10);
 		
 		
-		JLabel lblProductName = new JLabel("Name:");
-		lblProductName.setBounds(57, 230, 82, 16);
+		JLabel lblProductName = new JLabel("username:");
+		lblProductName.setBounds(278, 179, 82, 16);
 		frame.getContentPane().add(lblProductName);
 
 		
 		JLabel lblInventory = new JLabel("Employee Login");
-		lblInventory.setBounds(346, 72, 138, 16);
+		lblInventory.setBounds(310, 76, 138, 16);
 		frame.getContentPane().add(lblInventory);
 		
 		JButton btnGoBack = new JButton("go back");
@@ -79,18 +80,19 @@ public class employeeLogin {
 		
 		textField = new JPasswordField();
 		textField.setText("");
-		textField.setBounds(105, 273, 130, 26);
+		textField.setBounds(360, 220, 130, 26);
 		frame.getContentPane().add(textField);
 		textField.setColumns(10);
 		
 		JLabel lblPassword = new JLabel("Password:");
-		lblPassword.setBounds(27, 278, 92, 16);
+		lblPassword.setBounds(281, 225, 92, 16);
 		frame.getContentPane().add(lblPassword);
 		
 		JButton btnLogin = new JButton("login");
-		btnLogin.setBounds(138, 311, 117, 29);
+		btnLogin.setBounds(382, 270, 117, 29);
+		btnLogin.setBackground(new Color(95, 186, 125));
 		frame.getContentPane().add(btnLogin);
-		
+
 		
 		btnLogin.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -99,18 +101,20 @@ public class employeeLogin {
 				System.out.println("pass entered: " + passEntered);
 				//compare passwords
 				String realPass;
-				String employeename = txtName.getText();
-				System.out.println("employee name: " + employeename);
+				String realUserName;
+				String userNameEntered = txtName.getText();
+				System.out.println("employee username: " + userNameEntered);
 				Employee employee = null;
 				//get real password
 
 				try{
 
-					ResultSet myRs = DBConnection.dbSelectAllFromTableWhere("employees", "employeefirstname=\"" + employeename + "\"");
+					ResultSet myRs = DBConnection.dbSelectAllFromTableWhere("employees", "employeeusername=\"" + userNameEntered + "\"");
 
 					myRs.next();
 
 					realPass = myRs.getString("employeepassword");
+					realUserName = myRs.getString("employeeusername");
 					 employee = new Employee(myRs.getInt("employeeid"));
 
 				}
@@ -139,45 +143,7 @@ public class employeeLogin {
 			}
 		});
 
-		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(346, 149, 253, 252);
-		frame.getContentPane().add(scrollPane);
-					
-		//get employees into vector
-		Vector<String> employeeNames = new Vector<String>(10,2);
 		
-		try{
-			 Connection myConn2 = (Connection) DriverManager.getConnection(DBConnection.dbUrl, DBConnection.dbUser, DBConnection.dbPassword);
-      		java.sql.Statement myStmt = myConn2.createStatement();
-     		
-     		ResultSet myRs = myStmt.executeQuery("select * from employees");
-     		
-     		while(myRs.next()){
-     			employeeNames.add(myRs.getString("employeefirstname"));
-     		}
-     		
-		}
-		catch(Exception e){
-			e.printStackTrace();
-		}
-
-		//sort employees
-		Collections.sort(employeeNames);
-		
-		//put them into the jlist
-		JList list = new JList(employeeNames);
-		scrollPane.setViewportView(list);
-		
-		JButton btnSelectEmployee = new JButton("Select Employee");
-		btnSelectEmployee.setBounds(343, 411, 151, 29);
-		frame.getContentPane().add(btnSelectEmployee);
-		
-		btnSelectEmployee.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				
-				txtName.setText((String) list.getSelectedValue());				
-			}
-		});
 		
 
 		btnGoBack.addActionListener(new ActionListener() {

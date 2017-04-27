@@ -67,10 +67,10 @@ public class MainScreen {
 		btnReturnItem.setBounds(190, 251, 250, 190);
 
 		JButton btnMngEmployees = new JButton("Manage Employees");
-		btnMngEmployees.setBounds(340, 501, 250, 50);
+		btnMngEmployees.setBounds(340, 521, 250, 50);
 
 		JButton btnReport = new JButton("Report");
-		btnReport.setBounds(340, 561, 250, 50);
+		btnReport.setBounds(340, 581, 250, 50);
 
 		JButton btnLogout = new JButton("Logout");
 		btnLogout.setBounds(10,160,100,25);
@@ -83,6 +83,8 @@ public class MainScreen {
 				frame.getContentPane().add(btnInventory);
 				frame.getContentPane().add(btnMngEmployees);
 				frame.getContentPane().add(btnReport);
+				btnReturnItem.setBounds(340, 455, 250, 50);
+				frame.getContentPane().add(btnReturnItem);
 			}
 			else {
 				frame.getContentPane().add(btnReturnItem);
