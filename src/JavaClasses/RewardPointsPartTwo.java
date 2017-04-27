@@ -60,7 +60,7 @@ public class RewardPointsPartTwo {
 		this.currentOrder = curOrder;
 
 		orderTotal = this.currentOrder.getOrderTotal();
-			points = (this.curCustomer.getCustPoints())/10;
+			points = (this.curCustomer.getCustPoints())/100;
 		
 		
 		frame = new JFrame();

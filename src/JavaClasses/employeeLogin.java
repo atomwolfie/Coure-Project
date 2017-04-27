@@ -149,7 +149,6 @@ public class employeeLogin {
 		try{
 			 Connection myConn2 = (Connection) DriverManager.getConnection(DBConnection.dbUrl, DBConnection.dbUser, DBConnection.dbPassword);
       		java.sql.Statement myStmt = myConn2.createStatement();
-     		String sql = "select * from employees";
      		
      		ResultSet myRs = myStmt.executeQuery("select * from employees");
      		
