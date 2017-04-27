@@ -181,7 +181,7 @@ public class EditEmployee {
 				txtFirstName_1.setText(model.getValueAt(row,1).toString());
 				txtLastName.setText(model.getValueAt(row,2).toString());
 				txtStatus.setText(model.getValueAt(row,3).toString());
-				txtPic.setText(System.getProperty("user.dir") + model.getValueAt(row,4).toString());
+				txtPic.setText(model.getValueAt(row,4).toString());
 				txtPass.setText(model.getValueAt(row,5).toString());			
 			}
 			});

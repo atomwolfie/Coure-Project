@@ -9,6 +9,7 @@ public class Order {
 	private double orderTotal;
 	private double returnTotal;
 	private int custId;
+	private int phoneNum;
 	private String paymentMethod;
 	private ArrayList<Purchases> purchases;
 	private ArrayList<Integer> returnQuantities;

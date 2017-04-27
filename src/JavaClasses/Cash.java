@@ -18,6 +18,7 @@ public class Cash {
 	private Employee curEmployee;
 	private boolean isReturn;
 	private double curPoints;
+	private int custId;
 
 	/**
 	 * Launch the application.
@@ -74,15 +75,16 @@ public class Cash {
 			lblCash.setBounds(425, 160, 268, 16);
 		}
 		frame.getContentPane().add(lblCash);
-		
+
 		if (!isReturn) {
-			JLabel rewardsMember = new JLabel("Enter id or swipe reward card (optional): ");
-			rewardsMember.setBounds(120, 330, 268, 16);
+			JLabel rewardsMember = new JLabel("Enter phone # or swipe reward card (optional): ");
+			rewardsMember.setBounds(50, 330, 300, 16);
 			frame.getContentPane().add(rewardsMember);
 
 			rewardField = new JTextField();
 			rewardField.setText("");
 			rewardField.setBounds(380, 325, 130, 26);
+
 			frame.getContentPane().add(rewardField);
 		}
 		
@@ -130,8 +132,8 @@ public class Cash {
 			frame.getContentPane().add(lblChange);
 		}
 
-		JButton btnEnter = new JButton("enter");
-		btnEnter.setBounds(520, 360, 91, 29);
+		JButton btnEnter = new JButton("calculate");
+		btnEnter.setBounds(520, 240, 91, 29);
 		if (!this.isReturn) {
 			frame.getContentPane().add(btnEnter);
 		}
@@ -163,23 +165,34 @@ public class Cash {
 				}
 
 	            if (e.getSource() == btnPrintReceipt) { //go to receipt screen, also brings up main screen to start again
-					int custId;
+
+					String phoneNum = "";
+					int custId = 0;
 					if (!isReturn) {
-						String rewardString = rewardField.getText();
-						custId = Integer.parseInt(rewardString);
+						phoneNum = rewardField.getText();
 					}
 					else {
 						custId = currentOrder.getCustId();
 					}
-	            	try{
 
-						ResultSet myRs = DBConnection.dbSelectAllFromTableWhere("customers", "customerid=\"" + custId + "\"");
+	            	try{
+						ResultSet myRs;
+						if (!isReturn) {
+							myRs = DBConnection.dbSelectAllFromTableWhere("customers", "phonenumber=\"" + phoneNum + "\"");
+						}
+						else {
+							myRs = DBConnection.dbSelectAllFromTableWhere("customers", "customerid=" + custId);
+						} 
 						//gets the current points
 						myRs.next();
+						custId = myRs.getInt(1);
 						 curPoints = myRs.getDouble(5);
+						 
+						System.out.println("cur points: " + curPoints);
 					}
 					catch(Exception e1){
 						e1.printStackTrace();
+						System.out.println("finding customer not working");
 						 curPoints = 0.0;
 					}
 					//updates to new points
@@ -188,18 +201,21 @@ public class Cash {
 						newPoints = currentOrder.getReturnTotal() + curPoints;
 					}
 					
-					System.out.println("goint to add " + newPoints + " to customer " + custId);
-					DBConnection.dbUpdateRecord("customers", "rewardPoints =\"" + newPoints  + "\"", "customerid = " + custId);
+					System.out.println("goint to add " + newPoints + " to customer w/ phone num: " + phoneNum);
+					DBConnection.dbUpdateRecord("customers", "rewardPoints =\"" + newPoints  + "\"", "phonenumber = " + phoneNum);
 
 	            	
 	            	this.setVisible(false);
+	            	currentOrder.setCustId(custId);
 	            	currentOrder.setPaymentMethod("Cash");
+
 	            	if(!isReturn) {
 						currentOrder.writeToDatabase(isReturn);
 					}
 					else {
 	            		curOrder.updateOrder();
 					}
+
 					frame.dispose();
 					//Write new data to mysql db
 

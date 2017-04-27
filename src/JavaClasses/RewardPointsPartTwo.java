@@ -60,7 +60,7 @@ public class RewardPointsPartTwo {
 		this.currentOrder = curOrder;
 
 		orderTotal = this.currentOrder.getOrderTotal();
-			points = (this.curCustomer.getCustPoints())/10;
+			points = (this.curCustomer.getCustPoints())/100;
 		
 		
 		frame = new JFrame();
@@ -150,9 +150,21 @@ public class RewardPointsPartTwo {
 		frame.getContentPane().add(btnGoBack);
 		
 		
+		btnGoBack.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {	
+				this.setVisible(false);
+            	RewardPoints rewards = new RewardPoints(currentOrder, curEmployee, isReturn);
+            	rewards.setVisible(true);
+			
+			
+				}
+
+			private void setVisible(boolean b) {
+				// TODO Auto-generated method stub
+				frame.setVisible(b);
+			}
 		
-		
-		
+		});
 		
 		JButton btnContinue = new JButton("continue");
 		btnContinue.setBounds(465, 464, 117, 29);

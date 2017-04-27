@@ -77,14 +77,16 @@ public class Card {
 		lblNewLabel_1.setBounds(365, 190, 268, 16);
 		frame.getContentPane().add(lblNewLabel_1);
 
+
 		if (!isReturn) {
-			JLabel rewardsMember = new JLabel("Enter id or swipe reward card (optional): ");
-			rewardsMember.setBounds(120, 400, 268, 16);
+			JLabel rewardsMember = new JLabel("Enter phone # or swipe reward card (optional): ");
+			rewardsMember.setBounds(80, 400, 300, 16);
 			frame.getContentPane().add(rewardsMember);
 
 			rewardField = new JTextField();
 			rewardField.setText("");
 			rewardField.setBounds(380, 395, 130, 26);
+
 			frame.getContentPane().add(rewardField);
 		}
 		
@@ -208,23 +210,23 @@ public class Card {
 	            	this.setVisible(false);
 	            	Customer cust = new Customer(txtfldName.getText());
 					int custId = cust.writeToDatabase();
-
-					int custIdNum;
+					String phoneNum = "";
+					int custIdNum = 0;
 					if (!isReturn) {
-						String rewardString = rewardField.getText();
-						if (rewardField.getText().equals("")) {
-							custIdNum = 0;
-						}
-						else{
-							custIdNum = Integer.parseInt(rewardString);
-						}
+						phoneNum = rewardField.getText();
 					}
 					else {
 						custIdNum = currentOrder.getCustId();
 					}
 					if (!rewardField.getText().equals("")) {
 						try {
-							ResultSet myRs = DBConnection.dbSelectAllFromTableWhere("customers", "customerid=\"" + custIdNum + "\"");
+							ResultSet myRs;
+							if (!isReturn) {
+								myRs = DBConnection.dbSelectAllFromTableWhere("customers", "phonenumber=\"" + phoneNum + "\"");
+							}
+							else {
+								myRs = DBConnection.dbSelectAllFromTableWhere("customers", "customerid=\"" + custIdNum + "\"");
+							}
 							//gets the current points
 							myRs.next();
 							curPoints = myRs.getDouble(5);
@@ -237,13 +239,23 @@ public class Card {
 						double newPoints;
 						if (!isReturn) {
 							newPoints = currentOrder.getOrderTotal() + curPoints;
+							System.out.println("goint to add " + newPoints + " to customer " + phoneNum);
 						} else {
 							newPoints = currentOrder.getReturnTotal() + curPoints;
+							System.out.println("goint to add " + newPoints + " to customer " + custIdNum);
 						}
 
-						System.out.println("goint to add " + newPoints + " to customer " + custIdNum);
-						DBConnection.dbUpdateRecord("customers", "rewardPoints =\"" + newPoints + "\"", "customerid = " + custIdNum);
+						
+
+						if (!isReturn) {
+							DBConnection.dbUpdateRecord("customers", "rewardPoints =\"" + newPoints  + "\"", "phonenumber = " + phoneNum);
+						}
+						else {
+							DBConnection.dbUpdateRecord("customers", "rewardPoints =\"" + newPoints + "\"", "customerid = " + custIdNum);
+						}
+						
 					}
+
 
 					currentOrder.setPaymentMethod("Card");
 					currentOrder.setCustId(custId);
