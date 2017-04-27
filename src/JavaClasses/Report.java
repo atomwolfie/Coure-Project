@@ -157,7 +157,8 @@ public class Report {
                 customers[customerRS.getInt("customerid")] = customerRS.getString("customername");
             }
         } catch (SQLException e) {
-            //e.printStackTrace();
+            
+        	e.printStackTrace();
         }
 
         ResultSet rs = DBConnection.dbSelectAllFromTable("orders");
@@ -166,7 +167,7 @@ public class Report {
                 this.model.addRow(new Object[]{customers[rs.getInt("customerid")],rs.getString("paymentmethod"),"$" + dec.format(rs.getFloat("ordertotal")),rs.getString("date_time")});
             }
         } catch (SQLException e) {
-            //e.printStackTrace();
+            e.printStackTrace();
         }
     }
 

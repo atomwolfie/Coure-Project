@@ -76,7 +76,7 @@ public class RewardPointsPartTwo {
 		lblCustomer.setBounds(106, 94, 214, 16);
 		frame.getContentPane().add(lblCustomer);
 		
-		JLabel lblPoints = new JLabel("points (in Dollars): $" + (this.curCustomer.getCustPoints())/10);
+		JLabel lblPoints = new JLabel("points (in Dollars): $" + (this.curCustomer.getCustPoints())/100);
 		lblPoints.setBounds(68, 126, 214, 16);
 		frame.getContentPane().add(lblPoints);
 		

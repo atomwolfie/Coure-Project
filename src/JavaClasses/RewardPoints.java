@@ -1,11 +1,7 @@
 import java.awt.EventQueue;
 
-import javax.swing.JFrame;
-import javax.swing.JButton;
-
 import com.mysql.jdbc.Connection;
 
-import javax.swing.JScrollPane;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.*;
@@ -18,6 +14,7 @@ import java.util.Vector;
 public class RewardPoints{
 
 	private JFrame frame;
+	private JTextField txtPhone;
 	private JTextField txtName;
 	private Employee curEmployee;
 	private Customer curCustomerGuy;
@@ -77,15 +74,13 @@ public class RewardPoints{
 		btnGoBack.setBounds(601, 477, 117, 29);
 		frame.getContentPane().add(btnGoBack);
 
-		txtName = new JTextField();
-		txtName.setText("");
-		txtName.setBounds(138, 219, 130, 26);
-		frame.getContentPane().add(txtName);
-		txtName.setColumns(10);
+		txtPhone = new JTextField();
+		txtPhone.setText("");
+		txtPhone.setBounds(172, 219, 130, 26);
+		frame.getContentPane().add(txtPhone);
+		txtPhone.setColumns(10);
 		
-		JButton btnLogin = new JButton("enter");
-		btnLogin.setBounds(151, 257, 117, 29);
-		frame.getContentPane().add(btnLogin);
+		
 		
 		
 		
@@ -119,9 +114,9 @@ public class RewardPoints{
 		JList list = new JList(custNames);
 		scrollPane.setViewportView(list);
 		
-		JButton btnSelectEmployee = new JButton("Select Customer");
+		JButton btnSelectEmployee = new JButton("Or search by phone number:");
 		btnSelectEmployee.setBounds(343, 411, 151, 29);
-		frame.getContentPane().add(btnSelectEmployee);
+		//frame.getContentPane().add(btnSelectEmployee);
 		
 		btnSelectEmployee.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -138,20 +133,64 @@ public class RewardPoints{
 		btnContinue.setBounds(481, 477, 117, 29);
 		frame.getContentPane().add(btnContinue);
 		
-		JLabel lblCustomer = new JLabel("Customer:");
-		lblCustomer.setBounds(63, 224, 88, 16);
-		frame.getContentPane().add(lblCustomer);
+		JLabel lblOrSearchBy = new JLabel("Or search by phone # :");
+		lblOrSearchBy.setBounds(25, 224, 164, 16);
+		frame.getContentPane().add(lblOrSearchBy);
+		
+		JButton btnSearch = new JButton("search");
+		btnSearch.setBounds(202, 257, 117, 29);
+		frame.getContentPane().add(btnSearch);
+		
+		btnSearch.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				String phone = txtPhone.getText();
+				
+				try{
+
+					ResultSet myRs = DBConnection.dbSelectAllFromTableWhere("customers", "phonenumber=\"" + phone + "\"");
+
+					myRs.next();
+
+					Customer curCustomer = new Customer(myRs.getString(1));
+					curCustomerGuy = curCustomer;
+				}
+				catch(Exception e1){
+					e1.printStackTrace();
+					//no customer found
+					JOptionPane.showMessageDialog(frame, "no customer found");
+					txtPhone.setText("");
+				}
+				
+				
+				this.setVisible(false);
+				RewardPointsPartTwo reward = new RewardPointsPartTwo(currentOrder, curEmployee, curCustomerGuy,isReturn);
+				reward.setVisible(true);
+	            	frame.dispose();		
+				}
+
+				public void setVisible(boolean b) {
+					frame.setVisible(b);
+				}
+			});
+				
+				
+			
 		
 		
 		
 		
 				btnContinue.addActionListener(new ActionListener() {
-					public void actionPerformed(ActionEvent e) {
-
-						txtName.setText((String) list.getSelectedValue());
-						String name = txtName.getText();
-						System.out.println(name);
+					public void actionPerformed(ActionEvent e) {						
+						if(txtPhone.equals("")){
+							System.out.println("do the normal thing");
+						}
 						
+						
+						txtPhone.setText((String) list.getSelectedValue());
+						String name = txtPhone.getText();
+						System.out.println(name);
+												
 						try{
 
 							ResultSet myRs = DBConnection.dbSelectAllFromTableWhere("customers", "customername=\"" + name + "\"");
@@ -162,6 +201,7 @@ public class RewardPoints{
 							curCustomerGuy = curCustomer;
 						}
 						catch(Exception e1){
+							System.out.println("no customer found");
 							e1.printStackTrace();
 						}
 						
