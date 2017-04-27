@@ -24,6 +24,8 @@ public class ChangeEmplInfo {
     private JLabel imageLabel;
     private JTextField txtFName;
     private JTextField txtLName;
+    private JTextField txtUser;
+
     private JPasswordField txtPassword;
     private Employee curEmployee;
     private Path curPicPath;
@@ -33,13 +35,14 @@ public class ChangeEmplInfo {
     private boolean updatedFName;
     private boolean updatedLName;
     private boolean updatedPassword;
-
+    private boolean updatedUser;
 
     ChangeEmplInfo(Employee empl) {
         this.curEmployee = empl;
         this.updatedPic = false;
         this.updatedFName = false;
         this.updatedPassword = false;
+        this.updatedUser = false;
 
         frame = new JFrame();
         frame.setBounds(600, 150, 525, 650);
@@ -82,13 +85,22 @@ public class ChangeEmplInfo {
         txtLName.setBounds(232, 440, 140, 26);
         frame.getContentPane().add(txtLName);
         txtLName.setColumns(10);
+        
+        JLabel lbluser = new JLabel("Username:");
+        lbluser.setBounds(150, 473, 82, 16);
+        frame.getContentPane().add(lbluser);
+        txtUser = new JTextField();
+        txtUser.setText(this.curEmployee.getUser());
+        txtUser.setBounds(232, 469, 140, 26);
+        frame.getContentPane().add(txtUser);
+        txtUser.setColumns(10);
 
         JLabel lblPassword = new JLabel("Password:");
-        lblPassword.setBounds(155, 476, 92, 16);
+        lblPassword.setBounds(155, 505, 92, 16);
         frame.getContentPane().add(lblPassword);
         txtPassword = new JPasswordField();
         txtPassword.setText(this.curEmployee.getPassword());
-        txtPassword.setBounds(232, 470, 140, 26);
+        txtPassword.setBounds(232, 502, 140, 26);
         frame.getContentPane().add(txtPassword);
         txtPassword.setColumns(10);
 
@@ -150,6 +162,9 @@ public class ChangeEmplInfo {
                     if (updatedLName) {
                         curEmployee.setLastName(txtLName.getText());
                     }
+                    if(updatedUser){
+                    	curEmployee.setUserName(txtUser.getText());
+                    }
                     if (updatedPassword) {
                         curEmployee.setPassword(String.valueOf(txtPassword.getPassword()));
                     }
@@ -179,6 +194,9 @@ public class ChangeEmplInfo {
                 else if (e.getDocument() == txtLName.getDocument()) {
                     updatedLName = true;
                 }
+                else if(e.getDocument() == txtUser.getDocument()){
+                	updatedUser = true;
+                }
                 else {
                     updatedPassword = true;
                 }
@@ -192,6 +210,9 @@ public class ChangeEmplInfo {
                 }
                 else if (e.getDocument() == txtLName.getDocument()) {
                     updatedLName = true;
+                }
+                else if (e.getDocument() == txtUser.getDocument()) {
+                    updatedUser = true;
                 }
                 else {
                     updatedPassword = true;
@@ -207,6 +228,9 @@ public class ChangeEmplInfo {
                 else if (e.getDocument() == txtLName.getDocument()) {
                     updatedLName = true;
                 }
+                else if (e.getDocument() == txtUser.getDocument()) {
+                    updatedUser = true;
+                }
                 else {
                     updatedPassword = true;
                 }
@@ -217,6 +241,7 @@ public class ChangeEmplInfo {
         txtFName.getDocument().addDocumentListener(documentListener);
         txtLName.getDocument().addDocumentListener(documentListener);
         txtPassword.getDocument().addDocumentListener(documentListener);
+        txtUser.getDocument().addDocumentListener(documentListener);
     }
 
     private void enableSaveBtn() {
