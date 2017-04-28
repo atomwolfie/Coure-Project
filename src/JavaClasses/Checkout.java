@@ -12,7 +12,9 @@ import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 
-
+/**
+ * GUI to checkout
+ */
 public class Checkout {
 
 	private JFrame frame;

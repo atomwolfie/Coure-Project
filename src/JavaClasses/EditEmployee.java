@@ -18,9 +18,9 @@ import java.sql.*;
 import javax.swing.table.*;
 
 
-
-
-
+/**
+ * GUI to manage employees
+ */
 public class EditEmployee {
 
 	private JFrame frame;

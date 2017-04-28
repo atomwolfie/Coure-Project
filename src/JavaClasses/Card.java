@@ -9,6 +9,9 @@ import javax.swing.JLabel;
 import javax.swing.JButton;
 import javax.swing.JTextField;
 
+/**
+ * GUI to accept card information to pay for an order.
+ */
 public class Card {
 
 	private JFrame frame;

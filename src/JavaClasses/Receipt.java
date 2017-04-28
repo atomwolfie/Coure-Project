@@ -9,6 +9,9 @@ import java.util.ArrayList;
 
 import static com.sun.xml.internal.fastinfoset.alphabet.BuiltInRestrictedAlphabets.table;
 
+/**
+ * GUI to display receipt after purchase
+ */
 public class Receipt {
 
 	private JFrame frame;
@@ -40,6 +43,9 @@ public class Receipt {
 	}
 
 
+	/**
+	 * Create the application.
+	 */
 	public Receipt(Order curOrder, boolean isReturn) {
 		this.isReturn = isReturn;
 		initialize(curOrder);

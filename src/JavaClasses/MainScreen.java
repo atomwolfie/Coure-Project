@@ -6,7 +6,9 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
-
+/**
+ * Main screen GUI once logged in
+ */
 public class MainScreen {
 
 	private JFrame frame;

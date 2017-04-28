@@ -7,6 +7,9 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JButton;
 
+/**
+ * Initial GUI that is shown, allows users to login or close the program
+ */
 public class LoginScreen {
 
 	private JFrame frame;

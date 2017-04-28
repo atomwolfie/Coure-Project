@@ -8,6 +8,9 @@ import java.sql.ResultSet;
 import java.text.DecimalFormat;
 import javax.swing.JLabel;
 
+/**
+ * GUI that appears after checkout, offers the different methods of paying
+ */
 public class Payment {
 
 	private JFrame frame;

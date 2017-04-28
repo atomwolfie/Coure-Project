@@ -3,6 +3,9 @@ import java.sql.SQLException;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 
+/**
+ * Class for storing and manipulating orders
+ */
 public class Order {
 
 	private String dateTime;
@@ -17,6 +20,9 @@ public class Order {
 	private int orderId;
 	private boolean isValidOrder;
 
+	/**
+	 * Add a new purchase to the order
+	 */
 	public int addNewPurchase(Purchases purchase) {
 
 		this.orderTotal += purchase.getPurchaseTotal();

@@ -1,6 +1,11 @@
-
+/**
+ * Class to validate card information
+ */
 public class CardValidator {
 
+    /**
+     * Validate full name
+     */
     public boolean fullNameIsValid (String name) {
         boolean hasFName = false;
 
@@ -16,6 +21,9 @@ public class CardValidator {
         return false;
     }
 
+    /**
+     * Validate the card number
+     */
     public boolean cardNumberIsValid (String cardNumber) {
         if (cardNumber.length() != 19 && cardNumber.length() != 16) { return false; }
 

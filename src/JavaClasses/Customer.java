@@ -1,5 +1,8 @@
 import java.sql.ResultSet;
 
+/**
+ * Customer class
+ */
 public class Customer {
 
 	private String custName;

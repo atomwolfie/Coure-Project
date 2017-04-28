@@ -9,6 +9,10 @@ import javax.swing.JLabel;
 import javax.swing.JButton;
 import javax.swing.JTextField;
 
+/**
+ * GUI for paying with cash
+ */
+
 public class Cash {
 
 	private JFrame frame;

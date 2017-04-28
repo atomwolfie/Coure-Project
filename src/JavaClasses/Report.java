@@ -18,16 +18,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
-
+/**
+ * GUI that reports on orders, only available to managers
+ */
 public class Report {
     private JFrame frame;
     private JTable table;
-    private JLabel lblTotal;
-    private JButton btnPay;
-    private JTextField txtId;
-    private JTextField txtname;
-    private JTextField textField;
-    private Order currentOrder;
     private DefaultTableModel model;
     private DecimalFormat dec;
     private Employee curEmployee;

@@ -2,6 +2,9 @@ import java.sql.ResultSet;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 
+/**
+ * Class to manage purchases
+ */
 public class Purchases {
 
 	private int prodId;
@@ -17,19 +20,30 @@ public class Purchases {
 	private PurchasesValidator validator;
 	private ArrayList<String> items;
 
-
+	/**
+	 * Returns product ID
+	 */
 	public int getProdId() {
 		return this.prodId;
 	}
 
+	/**
+	 * Set product ID
+	 */
 	public void setProdId(int prodId) {
 		this.prodId = prodId;
 	}
 
+	/**
+	 * Returns order ID
+	 */
 	public int getOrderId() {
 		return this.orderId;
 	}
 
+	/**
+	 * Set order ID
+	 */
 	public void setOrderId(int orderId) {
 		this.orderId = orderId;
 	}

@@ -1,9 +1,18 @@
+/**
+ * Used to validate customer info
+ */
 public class CustomerValidator {
 
+	/**
+	 * Validate phone number
+	 */
 	public boolean phoneNumbIsValid(int phoneNumb) {
 		return String.valueOf(phoneNumb).length() == 10;
 	}
 
+	/**
+	 * Validate email
+	 */
 	public boolean emailIsValid(String email) {
 		boolean containsAmpersand = false;
 		boolean containsPeriodAfterAmp = false;

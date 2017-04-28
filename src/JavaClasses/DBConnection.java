@@ -6,13 +6,16 @@ import java.sql.Statement;
 import java.text.DecimalFormat;
 
 /**
- * Created by jeff on 3/24/17.
+ * Class to be used for connecting with the database
  */
 public class DBConnection {
     public static final String dbUrl = "jdbc:mysql://localhost:3306/demo?autoReconnect=true&useSSL=false";
     public static final String dbUser = "root";
     public static final String dbPassword = "W01fp@ck";
 
+    /**
+     * Get the amount of records in a given table
+     */
     public static int dbGetRecordCountForTable(String table) {
         try {
             Connection con = (Connection) DriverManager.getConnection(dbUrl, dbUser, dbPassword);
@@ -28,6 +31,9 @@ public class DBConnection {
         return -1;
     }
 
+    /**
+     * Get the column data for a given table
+     */
     public static ResultSet dbGetColumnDataFromTable(String table, String columns) {
         try {
             Connection con = (Connection) DriverManager.getConnection(dbUrl, dbUser, dbPassword);
@@ -40,6 +46,9 @@ public class DBConnection {
         return null;
     }
 
+    /**
+     * Select all the records from a given table
+     */
     public static ResultSet dbSelectAllFromTable(String table) {
         try {
             Connection con = (Connection) DriverManager.getConnection(dbUrl, dbUser, dbPassword);
@@ -52,6 +61,9 @@ public class DBConnection {
         return null;
     }
 
+    /**
+     * Select all the records from a table that satisfy the given constraint
+     */
     public static ResultSet dbSelectAllFromTableWhere(String table, String constraint) {
         try {
             Connection con = (Connection) DriverManager.getConnection(dbUrl, dbUser, dbPassword);

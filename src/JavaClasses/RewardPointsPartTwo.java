@@ -10,6 +10,9 @@ import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.JButton;
 
+/**
+ * Second GUI seen when using reward points to pay for part/all of a purchase
+ */
 public class RewardPointsPartTwo {
 
 	private JFrame frame;
@@ -79,14 +82,9 @@ public class RewardPointsPartTwo {
 		JLabel lblCustomer = new JLabel("Customer id: " + this.curCustomer.getCustName());
 		lblCustomer.setBounds(106, 94, 214, 16);
 		frame.getContentPane().add(lblCustomer);
-		
-<<<<<<< HEAD
-		JLabel lblPoints = new JLabel("points (in Dollars): $" + (this.curCustomer.getCustPoints())/100);
-		lblPoints.setBounds(68, 126, 214, 16);
-=======
+
 		JLabel lblPoints = new JLabel("Points (in Dollars): $" + dec.format((this.curCustomer.getCustPoints())/100));
 		lblPoints.setBounds(67, 126, 214, 16);
->>>>>>> 67d001e12f13e8aa053d472c4df371884f86cedc
 		frame.getContentPane().add(lblPoints);
 		
 		JLabel lblOrderTotal = new JLabel("Order Total: $ " + dec.format(this.currentOrder.getOrderTotal()));

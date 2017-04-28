@@ -7,7 +7,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 /**
- * Created by jeff on 3/27/17.
+ * Employee class
  */
 public class Employee {
     private int m_id;
@@ -38,6 +38,9 @@ public class Employee {
         }
     }
 
+    /**
+     * Returns a buffered image of the saved employee pic
+     */
     public BufferedImage loadEmployeePic() {
         BufferedImage img = null;
         try {

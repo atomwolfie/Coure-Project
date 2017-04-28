@@ -10,7 +10,9 @@ import java.awt.event.MouseEvent;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 
-
+/**
+ * GUI to return products given an order.
+ */
 public class ReturnProducts {
 
 	private JFrame frame;

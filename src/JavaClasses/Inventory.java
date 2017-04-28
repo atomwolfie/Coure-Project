@@ -13,9 +13,9 @@ import java.sql.*;
 import javax.swing.table.*;
 
 
-
-
-
+/**
+ * GUI to display the store inventory, only available to Managers
+ */
 public class Inventory {
 
 	private JFrame frame;

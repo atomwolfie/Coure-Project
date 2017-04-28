@@ -1,3 +1,6 @@
+/**
+ * Validates Products
+ */
 public class ProductValidator {
 
 	public boolean typeIsValid(String prodType) {
@@ -10,10 +13,16 @@ public class ProductValidator {
 		return true;
 	}
 
+	/**
+	 * Check if product price is valid (negative prices are not valid)
+	 */
 	public boolean prodPriceIsValid(double prodPrice) {
 		return prodPrice > 0;
 	}
 
+	/**
+	 * Check if product ID is valid (negative ID is not valid)
+	 */
 	public boolean prodIdIsValid(double prodId) {
 		return prodId > 0;
 	}

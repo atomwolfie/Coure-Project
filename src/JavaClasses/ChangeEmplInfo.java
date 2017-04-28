@@ -16,7 +16,7 @@ import java.nio.file.Paths;
 import static java.nio.file.StandardCopyOption.REPLACE_EXISTING;
 
 /**
- * Created by admin on 3/31/17.
+ * GUI to change employee's own information
  */
 public class ChangeEmplInfo {
 

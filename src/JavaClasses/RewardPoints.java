@@ -10,7 +10,9 @@ import java.util.Collections;
 import java.util.Vector;
 
 
-
+/**
+ * First GUI seen when using reward points to pay for part/all of a purchase
+ */
 public class RewardPoints{
 
 	private JFrame frame;
