@@ -1,6 +1,6 @@
-INSERT INTO employees VALUES (NULL,"Fred","Smith","Manager","/src/EmployeePictures/FredSmith.jpg","password");
-INSERT INTO employees VALUES (NULL,"Happy","Sloth","Cashier","/src/EmployeePictures/HappySloth.jpg","password");
-INSERT INTO employees VALUES (NULL,"Trogdor","Burninator","Cashier","/src/EmployeePictures/TrogdorBurninator.jpg","password");
+INSERT INTO employees VALUES (NULL,"Fred","Smith","Manager","/src/EmployeePictures/FredSmith.jpg","password","fred");
+INSERT INTO employees VALUES (NULL,"Happy","Sloth","Cashier","/src/EmployeePictures/HappySloth.jpg","password","happy");
+INSERT INTO employees VALUES (NULL,"Trogdor","Burninator","Cashier","/src/EmployeePictures/TrogdorBurninator.jpg","password","trogdor");
 INSERT INTO products (productid,productname,productprice,provider,type, inStock, discountPrice) VALUES (0, "Apple", .53, "Washington", "Food", 100,0);
 INSERT INTO products (productid,productname,productprice,provider,type, inStock, discountPrice) VALUES (1, "Banana", .23, "Mexico", "Food", 100,0);
 INSERT INTO products (productid,productname,productprice,provider,type, inStock, discountPrice) VALUES (2, "Peach", .83, "Washington", "Food", 100,0);
