@@ -33,23 +33,6 @@ public class EditEmployee {
 	private JTextField txtFirstName_1;
 	private Employee curEmployee;
 
-	/**
-	 * Launch the application.
-	 */
-	
-	
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					EditEmployee window = new EditEmployee();
-					window.frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
 
 	/**
 	 * Create the application.
@@ -58,6 +41,9 @@ public class EditEmployee {
 		initialize();
 	}
 
+	/**
+	 * Create the application.
+	 */
 	public EditEmployee(Employee curEmployee) {
 		this.curEmployee = curEmployee;
 		initialize();

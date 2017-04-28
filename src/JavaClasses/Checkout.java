@@ -31,34 +31,24 @@ public class Checkout {
 
 
 	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					Checkout window = new Checkout();
-					window.frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-
-	/**
 	 * Create the application.
 	 */
 	public Checkout() {
 		initialize();
 	}
 
+	/**
+	 * Create the application.
+	 */
 	public Checkout(Employee curEmployee) {
 		this.curEmployee = curEmployee;
 		initialize();
 		populateTable();
 	}
 
+	/**
+	 * Create the application.
+	 */
 	public Checkout(Order curOrder) {
 		this.currentOrder = curOrder;
 		initialize();

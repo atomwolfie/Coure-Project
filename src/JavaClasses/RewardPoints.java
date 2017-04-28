@@ -23,34 +23,18 @@ public class RewardPoints{
 	private Order currentOrder;
 	private boolean isReturn;
 
+
 	/**
-	 * Launch the application.
+	 * Create the application.
 	 */
-	
-	
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					RewardPoints window = new RewardPoints(new Order());
-					window.frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
+	public RewardPoints(Order curOrder) {
+		this.isReturn = false;
+		initialize(curOrder);
 	}
 
 	/**
 	 * Create the application.
 	 */
-	
-	
-	public RewardPoints(Order curOrder) {
-		this.isReturn = false;
-		initialize(curOrder);
-	}
-	
 	public RewardPoints(Order curOrder, Employee curEmployee, boolean isReturn) {
 		this.curEmployee = curEmployee;
 		this.isReturn = isReturn;

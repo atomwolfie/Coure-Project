@@ -11,17 +11,30 @@ public class Customer {
 	private String email;
 	private int rewardPoints;
 
+	/**
+	 * Returns the customer's name
+	 */
 	public String getCustName() {
 		return this.custName;
 	}
 
+	/**
+	 * Sets the customer's name
+	 */
 	public void setCustName(String custName) {
 		this.custName = custName;
 	}
 
+	/**
+	 * Returns the customer's ID
+	 */
 	public int getCustId() {
 		return this.custId;
 	}
+
+	/**
+	 * Returns the customer's points
+	 */
 	public int getCustPoints(){
 		
 		System.out.println("get cust id:  " + this.custName );

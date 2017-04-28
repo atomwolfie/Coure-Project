@@ -1,5 +1,11 @@
+/**
+ * Validate order information
+ */
 public class OrderValidator {
 
+	/**
+	 * Validate the given date time
+	 */
 	public boolean dateTimeIsValid(String dateTime) {
 		if (dateTime.length() != 19) { return false; }
 		for (int i = 0; i < 4; i++){
@@ -19,12 +25,18 @@ public class OrderValidator {
 		return true;
 	}
 
+	/**
+	 * Validate that the order total is more than zero
+	 */
 	public boolean orderTotalIsValid(double orderTotal) {
 		return orderTotal > 0;
 	}
 
+	/**
+	 * Validate that the payment method is either Cash or Card or Reward Points
+	 */
 	public boolean paymentMethodIsValid(String paymentMethod) {
-		return paymentMethod == "Cash" || paymentMethod == "Card";
+		return paymentMethod == "Cash" || paymentMethod == "Card" || paymentMethod == "Reward Points";
 	}
 
 }

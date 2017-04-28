@@ -1,6 +1,9 @@
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+/**
+ * Manage product information
+ */
 public class Product {
 
 	private String prodName;
@@ -12,13 +15,23 @@ public class Product {
 	private int stock;
 	private boolean isValidProd;
 
+	/**
+	 * Returns stock
+	 */
 	public int getStock() { return stock; }
 
+	/**
+	 * Set stock
+	 */
 	public void setStock(int stock) {
 		if (DBConnection.dbUpdateRecord("products","inStock=" + stock,"productid=" + this.prodId)) {
 			this.stock = stock;
 		}
 	}
+
+	/**
+	 * Decrement stock by amount given
+	 */
 	public void decrementStockBy(int decr) {
 		if (DBConnection.dbUpdateRecord("products","inStock=" + (this.stock - decr),"productid=" + this.prodId)) {
 			this.stock -= decr;

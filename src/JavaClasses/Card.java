@@ -31,21 +31,6 @@ public class Card {
 	private boolean isReturn;
 	private double curPoints;
 
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					Card window = new Card(new Order());
-					window.frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
 
 	/**
 	 * Create the application.
@@ -55,6 +40,9 @@ public class Card {
 		initialize(curOrder);
 	}
 
+	/**
+	 * Create the application
+	 */
 	public Card(Order curOrder, Employee curEmployee, boolean isReturn) {
 		this.curEmployee = curEmployee;
 		this.isReturn = isReturn;

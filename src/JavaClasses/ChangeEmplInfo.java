@@ -37,6 +37,9 @@ public class ChangeEmplInfo {
     private boolean updatedPassword;
     private boolean updatedUser;
 
+    /**
+     * Create application
+     */
     ChangeEmplInfo(Employee empl) {
         this.curEmployee = empl;
         this.updatedPic = false;

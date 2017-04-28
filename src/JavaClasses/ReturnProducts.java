@@ -27,34 +27,23 @@ public class ReturnProducts {
 
 
 	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					ReturnProducts window = new ReturnProducts();
-					window.frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-
-	/**
 	 * Create the application.
 	 */
 	public ReturnProducts() {
 		initialize();
 	}
 
-
+	/**
+	 * Create the application.
+	 */
 	public ReturnProducts(Employee curEmployee) {
 		this.curEmployee = curEmployee;
 		initialize();
 	}
 
+	/**
+	 * Create the application.
+	 */
 	public ReturnProducts(Order curOrder, Employee curEmployee) {
 		this.currentOrder = curOrder;
 		this.curEmployee = curEmployee;

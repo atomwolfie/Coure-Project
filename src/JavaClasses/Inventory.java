@@ -29,25 +29,7 @@ public class Inventory {
 	private JTextField txtDiscount;
 	private Employee curEmployee;
 	private String curId;
-	
 
-	/**
-	 * Launch the application.
-	 */
-	
-	
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					Inventory window = new Inventory();
-					window.frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
 
 	/**
 	 * Create the application.

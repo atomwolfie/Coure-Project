@@ -24,21 +24,6 @@ public class Cash {
 	private double curPoints;
 	private int custId;
 
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					Cash window = new Cash(new Order());
-					window.frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
 
 	/**
 	 * Create the application.
@@ -48,13 +33,18 @@ public class Cash {
 		initialize(curOrder);
 	}
 
-
+	/**
+	 * Create the application.
+	 */
 	public Cash(Order curOrder, Employee curEmployee) {
 		this.isReturn = false;
 		this.curEmployee = curEmployee;
 		initialize(curOrder);
 	}
 
+	/**
+	 * Create the application.
+	 */
 	public Cash(Order curOrder, Employee curEmployee, boolean isReturn) {
 		this.curEmployee = curEmployee;
 		this.isReturn = isReturn;

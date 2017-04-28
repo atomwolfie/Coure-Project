@@ -15,30 +15,15 @@ import java.util.Collections;
 import java.util.Vector;
 
 
-
+/**
+ * GUI where the user inputs their username and password to log in
+ */
 public class employeeLogin {
 
 	private JFrame frame;
 	private JTextField txtName;
 	private JTextField textField;
 
-	/**
-	 * Launch the application.
-	 */
-	
-	
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					employeeLogin window = new employeeLogin();
-					window.frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
 
 	/**
 	 * Create the application.

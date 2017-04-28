@@ -26,30 +26,20 @@ public class RewardPointsPartTwo {
 	private double points;
 	private double orderTotal;
 
+
+
 	/**
-	 * Launch the application.
+	 * Create the application.
 	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					RewardPointsPartTwo window = new RewardPointsPartTwo(new Order());
-					window.frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-
-
-	
 	public RewardPointsPartTwo(Order curOrder) {
 		this.isReturn = false;
 		this.currentOrder = curOrder;
 		initialize(curOrder);
 	}
-	
+
+	/**
+	 * Create the application.
+	 */
 	public RewardPointsPartTwo(Order curOrder, Employee curEmployee, Customer curCustomer,boolean isReturn) {
 		this.curEmployee = curEmployee;
 		this.curCustomer = curCustomer;
